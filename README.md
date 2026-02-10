@@ -1,4 +1,4 @@
-# zmk-config-AroundFortyRB
+ # zmk-config-AroundFortyRB
 
 Around Forty RBの**開発版**ファームウェアです。
 
@@ -13,6 +13,8 @@ mainブランチで実装済み
 🟢ZMK Studioに対応
 
 🟢全角半角の切り替えマクロ：全角半角のトグルが一つのキーで可能
+
+🟡Prospector Scannerの対応はいったん見送っています　/ ※Bluetooth接続が不安定になるため
 
 -------------------------------------------------------------------------
 以下はmainブランチには未実装の開発版のみの機能です
