@@ -31,6 +31,14 @@
         // scroll-x-invert;
     };
 
+    /* X軸の移動量を強制的に0にするプロセッサ（垂直スクロール限定モード用） */
+    zip_x_scaler_zero: zip_x_scaler_zero {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_X>;
+    };
+
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
@@ -48,6 +56,7 @@
         v-scroll-layer {
             layers = <7>;
             input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>, 
+                               <&zip_x_scaler_zero 0 1>, 
                                <&zip_xy_to_scroll_mapper>, 
                                <&zip_scroll_scaler 1 45>;
         };
