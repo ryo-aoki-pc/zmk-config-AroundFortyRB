@@ -47,12 +47,16 @@
 
         v-scroll-layer {
             layers = <7>;
-            input-processors = <&zip_xy_scaler 0 1>, <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 45>;
+            input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>, 
+                               <&zip_xy_scaler 0 1>, 
+                               <&zip_xy_to_scroll_mapper>, 
+                               <&zip_scroll_scaler 1 45>;
         };
 
         slow-cursor-layer {
             layers = <2>;
-            input-processors = <&zip_xy_scaler 1 2>;
+            input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>, 
+                               <&zip_xy_scaler 1 2>;
         };
     };
 };
