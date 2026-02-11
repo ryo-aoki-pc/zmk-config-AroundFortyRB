@@ -2,6 +2,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
+#include <input/processors/runtime-input-processor.dtsi>
+#include <behaviors/battery_history_request.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 &default_transform {
@@ -24,14 +26,11 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
-                           <&zip_xy_scaler 1 1>;
-                           /* AMLを有効にしたい場合は下のコメントを外してください */
-                           // <&zip_temp_layer 9 300>;
+                           <&mouse_runtime_input_processor>;
 
         scroll-layer {
             layers = <6 7>;
-            input-processors = <&zip_xy_to_scroll_mapper>, 
-                               <&zip_scroll_scaler 1 45>;
+            input-processors = <&zip_xy_to_scroll_mapper &scroll_runtime_input_processor>;
         };
     };
 };
