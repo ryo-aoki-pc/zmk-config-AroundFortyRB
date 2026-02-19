@@ -1,5 +1,14 @@
 #include "AroundForty-RB.dtsi"
 
+&xiao_serial { status = "disabled"; };
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+    };
+};
+
 &kscan0 {
         col-gpios
             = <&xiao_d 10 GPIO_ACTIVE_HIGH>

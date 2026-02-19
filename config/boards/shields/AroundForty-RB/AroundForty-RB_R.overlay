@@ -68,6 +68,13 @@
 
 &xiao_serial { status = "disabled"; };
 
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+    };
+};
+
 &spi0 {
     status = "okay";
     compatible = "nordic,nrf-spim";
