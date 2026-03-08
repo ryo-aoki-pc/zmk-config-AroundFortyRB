@@ -18,14 +18,6 @@
         ;
 };
 
-&zip_temp_layer {
-    excluded-positions = <
-        17 // K
-    >;
-
-    require-prior-idle-ms = <200>;
-};
-
 / {
     /* スクロール方向をいつでも反転できるようにするための設定 */
     /* 反転させたい場合は compatible を "zmk,input_processor_xy_to_scroll" に変え、*/
@@ -41,15 +33,17 @@
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
-                           <&zip_xy_scaler 1 1>,
-                           <&zip_temp_layer 4 10000>;
+        input-processors =
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
+            <&zip_xy_scaler 1 1>,
+            <&zip_temp_layer 4 10000>;
 
         scroll-layer {
             layers = <5>;
-            input-processors = <&zip_xy_to_scroll_mapper>,
-                               <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-                               <&zip_scroll_scaler 1 20>;
+            input-processors =
+                <&zip_xy_to_scroll_mapper>,
+                <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                <&zip_scroll_scaler 1 20>;
         };
     };
 };

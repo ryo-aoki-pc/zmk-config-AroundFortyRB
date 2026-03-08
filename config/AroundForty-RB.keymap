@@ -8,12 +8,20 @@
 &mt {
     quick-tap-ms = <150>;
     tapping-term-ms = <150>;
-    flavor = "tap-preferred";
+    flavor = "balanced";
 };
 
 &lt {
     tapping-term-ms = <150>;
     quick-tap-ms = <150>;
+};
+
+&zip_temp_layer {
+    excluded-positions = <
+        17 // K
+    >;
+
+    require-prior-idle-ms = <200>;
 };
 
 &mkp_input_listener { input-processors = <&zip_temp_layer 4 10000>; };
@@ -22,41 +30,6 @@
     combos { compatible = "zmk,combos"; };
 
     macros {
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
-        };
-
-        // Windows用入力切り替え：Alt + Grave (~)
-
-        ime_tog: ime_toggle {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LALT>,
-                <&macro_tap>,
-                <&kp GRAVE>,
-                <&macro_release>,
-                <&kp LALT>;
-        };
-
-        // macOS用入力切り替え：Ctrl + Space
-
-        mac_ime: mac_ime_toggle {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL>,
-                <&macro_tap>,
-                <&kp SPACE>,
-                <&macro_release>,
-                <&kp LCTRL>;
-        };
-
         macro_vim_dd: macro_delete_line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -114,25 +87,6 @@
     };
 
     behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
-        // 
-
-        scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
-
-            tap-ms = <20>;
-        };
-
         td_vim_d: td_vim_d {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_VIM_D";
