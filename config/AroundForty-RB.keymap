@@ -66,6 +66,14 @@
             label = "MACRO_VIM_SHIFT_D";
         };
 
+        macro_vim_shift_y: macro_vim_shift_y {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(END)>, <&macro_wait_time 100>, <&kp LC(C)>;
+
+            label = "MACRO_VIM_SHIFT_Y";
+        };
+
         macro_vim_o: macro_vim_o {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -190,6 +198,15 @@
             label = "TD_VIM_Y";
             #binding-cells = <0>;
             bindings = <&kp LC(C)>, <&macro_vim_yy>;
+        };
+
+        mm_vim_shift_y: mm_vim_shift_y {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_VIM_SHIFT_Y";
+            bindings = <&td_vim_y>, <&macro_vim_shift_y>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
         mm_vim_ctrl_u: mm_vim_ctrl_u {
@@ -320,7 +337,7 @@
 
         VIM_NORMAL_1 {
             bindings = <
-&none           &kp LC(RIGHT)  &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &td_vim_y    &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
+&none           &kp LC(RIGHT)  &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
 &kp LCTRL       &none          &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT     &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
 &kp LEFT_SHIFT  &kp DELETE     &none                      &mm_vim_v       &kp LC(LEFT)  &none  &none        &none           &none            &none         &kp RIGHT_SHIFT
 &none           &trans         &trans                     &none           &none         &mo 3  &none        &none           &lt 3 ENTER      &trans        &none

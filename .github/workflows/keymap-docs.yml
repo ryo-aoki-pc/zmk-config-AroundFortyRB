@@ -1,0 +1,43 @@
+name: Update KEYMAP.md
+
+on:
+  push:
+    paths:
+      - 'config/AroundForty-RB.keymap'
+      - 'tools/keymap_docgen.py'
+      - '.github/workflows/keymap-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-keymap-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      - name: Regenerate KEYMAP.md
+        run: python tools/keymap_docgen.py config/AroundForty-RB.keymap VIM_NORMAL_1 VIM_NORMAL_2 VIM_VISUAL -o KEYMAP.xlsx
+
+      - name: Commit KEYMAP.md if changed
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- KEYMAP.md; then
+            echo "KEYMAP.md is up to date."
+          else
+            git add KEYMAP.md
+            git commit -m "docs: regenerate KEYMAP.md from keymap"
+            git push origin HEAD:${GITHUB_REF#refs/heads/}
+          fi
