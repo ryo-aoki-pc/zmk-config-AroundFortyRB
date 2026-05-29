@@ -132,10 +132,10 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&mo 5` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  | L5 |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&mo 5` | .<br>`&none` | /<br>`&none` |
-| 単発タップ |  |  |  |  |  |  |  |  | L5 |  |  |
 | ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
 
@@ -145,11 +145,11 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&mkp MB1` | K<br>`&none` | L<br>`&mkp MB2` | -<br>`&none` |  |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&mkp MB1` | ,<br>`&none` | .<br>`&mkp MB2` | /<br>`&none` |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&mkp MB4` | ,<br>`&none` | .<br>`&mkp MB5` | /<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&mkp MB5` | mo6 (R outer)<br>`&none` |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
 
 ### FUNCTION レイヤー
@@ -320,10 +320,10 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&mo 5` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  | &mo 5 |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&mo 5` | .<br>`&none` | /<br>`&none` |
-| 単発タップ |  |  |  |  |  |  |  |  | &mo 5 |  |  |
 | ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
 
@@ -333,12 +333,12 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&mkp MB1` | K<br>`&none` | L<br>`&mkp MB2` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  | &mkp MB1 |  | &mkp MB2 |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&mkp MB4` | ,<br>`&none` | .<br>`&mkp MB5` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  | &mkp MB4 |  | &mkp MB5 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
-| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&mkp MB1` | ,<br>`&none` | .<br>`&mkp MB2` | /<br>`&none` |
-| 単発タップ |  |  |  |  |  |  |  | &mkp MB1 |  | &mkp MB2 |  |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&mkp MB5` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  |  |  |  |  |  |  |  |  | &mkp MB5 |  |
 
 ### FUNCTION レイヤー
 
