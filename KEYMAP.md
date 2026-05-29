@@ -1,6 +1,6 @@
 # キー割り当て一覧
 
-※ 3 個のレイヤーのキー割り当てを 1 ファイルに集約。各レイヤー 42 バインディング位置を「動作」セクションでまとめてから「経路」セクションに進む。
+※ 9 個のレイヤーのキー割り当てを 1 ファイルに集約。各レイヤー 42 バインディング位置を「動作」セクションでまとめてから「経路」セクションに進む。
 
 - 各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。
 - 各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。
@@ -125,6 +125,58 @@
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |
 | ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |
+
+### MOUSE レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&mo 5` | .<br>`&none` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  | L5 |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+
+### SCROLL レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&mkp MB1` | ,<br>`&none` | .<br>`&mkp MB2` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&mkp MB5` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+
+### FUNCTION レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&kp F1` | W<br>`&kp F2` | E<br>`&kp F3` | R<br>`&kp F4` | T<br>`&kp F5` | Y<br>`&kp F6` | U<br>`&kp F7` | I<br>`&kp F8` | O<br>`&kp F9` | P<br>`&kp F10` |  |
+| 単発タップ | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&sys_reset` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&sys_reset` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&bootloader` | (center mo7)<br>`&none` | N<br>`&bootloader` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+
+### BLUETOOTH レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&bt BT_SEL 0` | W<br>`&bt BT_SEL 1` | E<br>`&bt BT_SEL 2` | R<br>`&bt BT_SEL 3` | T<br>`&bt BT_SEL 4` | Y<br>`&none` | U<br>`&out OUT_USB` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 2 (home row) | A<br>`&bt BT_CLR_ALL` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&bt BT_CLR` | V<br>`&none` | B<br>`&out OUT_BLE` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
 
 ### VIM_VISUAL レイヤー
 
@@ -261,6 +313,58 @@
 | 単発タップ |  |  | &bt BT_CLR |  | &out OUT_BLE |  |  |  |  |  |
 | ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
 | 単発タップ |  |  |  |  |  |  |  |  |  |  |
+
+### MOUSE レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&mo 5` | .<br>`&none` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  | &mo 5 |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+
+### SCROLL レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&none` | E<br>`&none` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&mkp MB1` | ,<br>`&none` | .<br>`&mkp MB2` | /<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  | &mkp MB1 |  | &mkp MB2 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&mkp MB5` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  | &mkp MB5 |  |
+
+### FUNCTION レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&kp F1` | W<br>`&kp F2` | E<br>`&kp F3` | R<br>`&kp F4` | T<br>`&kp F5` | Y<br>`&kp F6` | U<br>`&kp F7` | I<br>`&kp F8` | O<br>`&kp F9` | P<br>`&kp F10` |  |
+| 単発タップ | &kp F1 | &kp F2 | &kp F3 | &kp F4 | &kp F5 | &kp F6 | &kp F7 | &kp F8 | &kp F9 | &kp F10 |  |
+| ■ Row 2 (home row) | A<br>`&none` | S<br>`&sys_reset` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&sys_reset` | -<br>`&none` |  |
+| 単発タップ |  | &sys_reset |  |  |  |  |  |  | &sys_reset |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&bootloader` | (center mo7)<br>`&none` | N<br>`&bootloader` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&none` |
+| 単発タップ |  |  |  |  | &bootloader |  | &bootloader |  |  |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
+
+### BLUETOOTH レイヤー
+
+| 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ■ Row 1 (QWERTY 上段) | Q<br>`&bt BT_SEL 0` | W<br>`&bt BT_SEL 1` | E<br>`&bt BT_SEL 2` | R<br>`&bt BT_SEL 3` | T<br>`&bt BT_SEL 4` | Y<br>`&none` | U<br>`&out OUT_USB` | I<br>`&none` | O<br>`&none` | P<br>`&none` |  |
+| 単発タップ | &bt BT_SEL 0 | &bt BT_SEL 1 | &bt BT_SEL 2 | &bt BT_SEL 3 | &bt BT_SEL 4 |  | &out OUT_USB |  |  |  |  |
+| ■ Row 2 (home row) | A<br>`&bt BT_CLR_ALL` | S<br>`&none` | D<br>`&none` | F<br>`&none` | G<br>`&none` | H<br>`&none` | J<br>`&none` | K<br>`&none` | L<br>`&none` | -<br>`&none` |  |
+| 単発タップ | &bt BT_CLR_ALL |  |  |  |  |  |  |  |  |  |  |
+| ■ Row 3 (Z row) | Z<br>`&none` | X<br>`&none` | C<br>`&bt BT_CLR` | V<br>`&none` | B<br>`&out OUT_BLE` | (center mo7)<br>`&none` | N<br>`&none` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&none` |
+| 単発タップ |  |  | &bt BT_CLR |  | &out OUT_BLE |  |  |  |  |  |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&none` | LEFT_ALT<br>`&none` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&none` | mo2<br>`&none` | mo7 (raised)<br>`&none` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&none` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  |  |  |  |  |  |  |  |  |  |  |
 
 ### VIM_VISUAL レイヤー
 
