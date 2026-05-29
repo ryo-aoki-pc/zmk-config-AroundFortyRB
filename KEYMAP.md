@@ -56,9 +56,9 @@
 | ■ Row 3 (Z row) | Z<br>`&kp LEFT_SHIFT` | X<br>`&kp DELETE` | C<br>`&none` | V<br>`&mm_vim_v` | B<br>`&kp LC(LEFT)` | N<br>`&mm_vim_n` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&kp RIGHT_SHIFT` |
 | 単発タップ | LShift | DEL |  | ⇒L8 | Ctrl+← | F3 |  |  |  | RShift |
 | Shift+ | 〃 | 〃 |  | HOME ▸ Shift+↓ ▸ レイヤー 8 へ | 〃 | Shift+F3 |  |  |  | 〃 |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&none` | lt1 ENTER<br>`&lt 3 ENTER` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  | ▽ | ▽ |  |  | L3 |  | ENTER | ▽ |  |
-| ホールド |  | 〃 | 〃 |  |  | 〃 |  | L3 | 〃 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&lt 3 ENTER` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  | ▽ | ▽ |  |  | L3 | ENTER |  | ▽ |  |
+| ホールド |  | 〃 | 〃 |  |  | 〃 | L3 |  | 〃 |  |
 
 ### VIM_NORMAL_2 レイヤー
 
@@ -192,9 +192,9 @@
 | ■ Row 3 (Z row) | Z<br>`&kp LEFT_SHIFT` | X<br>`&kp DELETE` | C<br>`&none` | V<br>`&mm_vim_v` | B<br>`&kp LC(LEFT)` | N<br>`&mm_vim_n` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&kp RIGHT_SHIFT` |
 | 単発タップ | &kp LEFT_SHIFT | &kp DELETE |  | mm_vim_v[0] → &to 8 | &kp LC(LEFT) | mm_vim_n[0] → &kp F3 |  |  |  | &kp RIGHT_SHIFT |
 | Shift+ | 〃 | 〃 |  | mm_vim_v[1] → macro_vim_v_line | 〃 | mm_vim_n[1] → &kp LS(F3) |  |  |  | 〃 |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&none` | lt1 ENTER<br>`&lt 3 ENTER` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  | ▽ | ▽ |  |  | &mo 3 |  | &lt 3 ENTER | ▽ |  |
-| ホールド |  | 〃 | 〃 |  |  | 〃 |  | &lt 3 ENTER | 〃 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&lt 3 ENTER` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  | ▽ | ▽ |  |  | &mo 3 | &lt 3 ENTER |  | ▽ |  |
+| ホールド |  | 〃 | 〃 |  |  | 〃 | &lt 3 ENTER |  | 〃 |  |
 
 ### VIM_NORMAL_2 レイヤー
 
