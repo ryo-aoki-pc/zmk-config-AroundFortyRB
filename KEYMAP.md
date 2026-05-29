@@ -19,9 +19,9 @@
 | ■ Row 3 (Z row) | Z<br>`&mt LEFT_SHIFT Z` | X<br>`&kp X` | C<br>`&kp C` | V<br>`&kp V` | B<br>`&kp B` | N<br>`&kp N` | M<br>`&kp M` | ,<br>`&kp COMMA` | .<br>`&kp PERIOD` | /<br>`&mt RIGHT_SHIFT SLASH` |
 | 単発タップ | Z | X | C | V | B | N | M | , | . | / |
 | ホールド | LShift | 〃 | 〃 | 〃 | 〃 | 〃 | 〃 | 〃 | 〃 | RShift |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&mo 6` | LEFT_WIN<br>`&kp LEFT_WIN` | LEFT_ALT<br>`&kp LEFT_ALT` | lt2 SPACE<br>`&lt 2 SPACE` | lt2 SPACE<br>`&lt 2 SPACE` | mo1 (L center)<br>`&mo 1` | mo2<br>`&mo 2` | lt1 ENTER<br>`&lt 1 ENTER` | mo6 (R)<br>`&mo 6` | mo6 (R outer)<br>`&mo 6` |
-| 単発タップ | L6 | LWin | LAlt | SPACE | SPACE | L1 | L2 | ENTER | L6 | L6 |
-| ホールド | 〃 | 〃 | 〃 | L2 | L2 | 〃 | 〃 | L1 | 〃 | 〃 |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&mo 6` | LEFT_WIN<br>`&kp LEFT_WIN` | LEFT_ALT<br>`&kp LEFT_ALT` | lt2 SPACE<br>`&lt 2 SPACE` | lt2 SPACE<br>`&lt 2 SPACE` | mo1 (L center)<br>`&mo 1` | mo2<br>`&lt 1 ENTER` | lt1 ENTER<br>`&mo 2` | mo6 (R)<br>`&mo 6` | mo6 (R outer)<br>`&mo 6` |
+| 単発タップ | L6 | LWin | LAlt | SPACE | SPACE | L1 | ENTER | L2 | L6 | L6 |
+| ホールド | 〃 | 〃 | 〃 | L2 | L2 | 〃 | L1 | 〃 | 〃 | 〃 |
 
 ### SYMBOL レイヤー
 
@@ -35,9 +35,9 @@
 | ■ Row 3 (Z row) | Z<br>`&mt LEFT_SHIFT ESCAPE` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | N<br>`&none` | M<br>`&kp EQUAL` | ,<br>`&trans` | .<br>`&trans` | /<br>`&trans` |
 | 単発タップ | ESC |  |  |  |  |  | = | ▽ | ▽ | ▽ |
 | ホールド | LShift |  |  |  |  |  | 〃 | 〃 | 〃 | 〃 |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&lt 3 SPACE` | lt2 SPACE<br>`&lt 3 SPACE` | mo1 (L center)<br>`&none` | mo2<br>`&mo 3` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  | ▽ | ▽ | SPACE | SPACE |  | L3 |  | ▽ |  |
-| ホールド |  | 〃 | 〃 | L3 | L3 |  | 〃 |  | 〃 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&lt 3 SPACE` | lt2 SPACE<br>`&lt 3 SPACE` | mo1 (L center)<br>`&none` | mo2<br>`&none` | lt1 ENTER<br>`&mo 3` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  | ▽ | ▽ | SPACE | SPACE |  |  | L3 | ▽ |  |
+| ホールド |  | 〃 | 〃 | L3 | L3 |  |  | 〃 | 〃 |  |
 
 ### VIM_NORMAL_1 レイヤー
 
@@ -56,9 +56,9 @@
 | ■ Row 3 (Z row) | Z<br>`&kp LEFT_SHIFT` | X<br>`&kp DELETE` | C<br>`&none` | V<br>`&mm_vim_v` | B<br>`&kp LC(LEFT)` | N<br>`&mm_vim_n` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&kp RIGHT_SHIFT` |
 | 単発タップ | LShift | DEL |  | ⇒L8 | Ctrl+← | F3 |  |  |  | RShift |
 | Shift+ | 〃 | 〃 |  | HOME ▸ Shift+↓ ▸ レイヤー 8 へ | 〃 | Shift+F3 |  |  |  | 〃 |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&none` | lt1 ENTER<br>`&lt 3 ENTER` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  | ▽ | ▽ |  |  | L3 |  | ENTER | ▽ |  |
-| ホールド |  | 〃 | 〃 |  |  | 〃 |  | L3 | 〃 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&lt 3 ENTER` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  | ▽ | ▽ |  |  | L3 | ENTER |  | ▽ |  |
+| ホールド |  | 〃 | 〃 |  |  | 〃 | L3 |  | 〃 |  |
 
 ### VIM_NORMAL_2 レイヤー
 
@@ -155,9 +155,9 @@
 | ■ Row 3 (Z row) | Z<br>`&mt LEFT_SHIFT Z` | X<br>`&kp X` | C<br>`&kp C` | V<br>`&kp V` | B<br>`&kp B` | N<br>`&kp N` | M<br>`&kp M` | ,<br>`&kp COMMA` | .<br>`&kp PERIOD` | /<br>`&mt RIGHT_SHIFT SLASH` |
 | 単発タップ | &mt LEFT_SHIFT Z | &kp X | &kp C | &kp V | &kp B | &kp N | &kp M | &kp COMMA | &kp PERIOD | &mt RIGHT_SHIFT SLASH |
 | ホールド | &mt LEFT_SHIFT Z | 〃 | 〃 | 〃 | 〃 | 〃 | 〃 | 〃 | 〃 | &mt RIGHT_SHIFT SLASH |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&mo 6` | LEFT_WIN<br>`&kp LEFT_WIN` | LEFT_ALT<br>`&kp LEFT_ALT` | lt2 SPACE<br>`&lt 2 SPACE` | lt2 SPACE<br>`&lt 2 SPACE` | mo1 (L center)<br>`&mo 1` | mo2<br>`&mo 2` | lt1 ENTER<br>`&lt 1 ENTER` | mo6 (R)<br>`&mo 6` | mo6 (R outer)<br>`&mo 6` |
-| 単発タップ | &mo 6 | &kp LEFT_WIN | &kp LEFT_ALT | &lt 2 SPACE | &lt 2 SPACE | &mo 1 | &mo 2 | &lt 1 ENTER | &mo 6 | &mo 6 |
-| ホールド | 〃 | 〃 | 〃 | &lt 2 SPACE | &lt 2 SPACE | 〃 | 〃 | &lt 1 ENTER | 〃 | 〃 |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&mo 6` | LEFT_WIN<br>`&kp LEFT_WIN` | LEFT_ALT<br>`&kp LEFT_ALT` | lt2 SPACE<br>`&lt 2 SPACE` | lt2 SPACE<br>`&lt 2 SPACE` | mo1 (L center)<br>`&mo 1` | mo2<br>`&lt 1 ENTER` | lt1 ENTER<br>`&mo 2` | mo6 (R)<br>`&mo 6` | mo6 (R outer)<br>`&mo 6` |
+| 単発タップ | &mo 6 | &kp LEFT_WIN | &kp LEFT_ALT | &lt 2 SPACE | &lt 2 SPACE | &mo 1 | &lt 1 ENTER | &mo 2 | &mo 6 | &mo 6 |
+| ホールド | 〃 | 〃 | 〃 | &lt 2 SPACE | &lt 2 SPACE | 〃 | &lt 1 ENTER | 〃 | 〃 | 〃 |
 
 ### SYMBOL レイヤー
 
@@ -171,9 +171,9 @@
 | ■ Row 3 (Z row) | Z<br>`&mt LEFT_SHIFT ESCAPE` | X<br>`&none` | C<br>`&none` | V<br>`&none` | B<br>`&none` | N<br>`&none` | M<br>`&kp EQUAL` | ,<br>`&trans` | .<br>`&trans` | /<br>`&trans` |
 | 単発タップ | &mt LEFT_SHIFT ESCAPE |  |  |  |  |  | &kp EQUAL | ▽ | ▽ | ▽ |
 | ホールド | &mt LEFT_SHIFT ESCAPE |  |  |  |  |  | 〃 | 〃 | 〃 | 〃 |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&lt 3 SPACE` | lt2 SPACE<br>`&lt 3 SPACE` | mo1 (L center)<br>`&none` | mo2<br>`&mo 3` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  | ▽ | ▽ | &lt 3 SPACE | &lt 3 SPACE |  | &mo 3 |  | ▽ |  |
-| ホールド |  | 〃 | 〃 | &lt 3 SPACE | &lt 3 SPACE |  | 〃 |  | 〃 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&lt 3 SPACE` | lt2 SPACE<br>`&lt 3 SPACE` | mo1 (L center)<br>`&none` | mo2<br>`&none` | lt1 ENTER<br>`&mo 3` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  | ▽ | ▽ | &lt 3 SPACE | &lt 3 SPACE |  |  | &mo 3 | ▽ |  |
+| ホールド |  | 〃 | 〃 | &lt 3 SPACE | &lt 3 SPACE |  |  | 〃 | 〃 |  |
 
 ### VIM_NORMAL_1 レイヤー
 
@@ -192,9 +192,9 @@
 | ■ Row 3 (Z row) | Z<br>`&kp LEFT_SHIFT` | X<br>`&kp DELETE` | C<br>`&none` | V<br>`&mm_vim_v` | B<br>`&kp LC(LEFT)` | N<br>`&mm_vim_n` | M<br>`&none` | ,<br>`&none` | .<br>`&none` | /<br>`&kp RIGHT_SHIFT` |
 | 単発タップ | &kp LEFT_SHIFT | &kp DELETE |  | mm_vim_v[0] → &to 8 | &kp LC(LEFT) | mm_vim_n[0] → &kp F3 |  |  |  | &kp RIGHT_SHIFT |
 | Shift+ | 〃 | 〃 |  | mm_vim_v[1] → macro_vim_v_line | 〃 | mm_vim_n[1] → &kp LS(F3) |  |  |  | 〃 |
-| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&none` | lt1 ENTER<br>`&lt 3 ENTER` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
-| 単発タップ |  | ▽ | ▽ |  |  | &mo 3 |  | &lt 3 ENTER | ▽ |  |
-| ホールド |  | 〃 | 〃 |  |  | 〃 |  | &lt 3 ENTER | 〃 |  |
+| ■ Row 4 (thumb) | mo6 (L outer)<br>`&none` | LEFT_WIN<br>`&trans` | LEFT_ALT<br>`&trans` | lt2 SPACE<br>`&none` | lt2 SPACE<br>`&none` | mo1 (L center)<br>`&mo 3` | mo2<br>`&lt 3 ENTER` | lt1 ENTER<br>`&none` | mo6 (R)<br>`&trans` | mo6 (R outer)<br>`&none` |
+| 単発タップ |  | ▽ | ▽ |  |  | &mo 3 | &lt 3 ENTER |  | ▽ |  |
+| ホールド |  | 〃 | 〃 |  |  | 〃 | &lt 3 ENTER |  | 〃 |  |
 
 ### VIM_NORMAL_2 レイヤー
 
