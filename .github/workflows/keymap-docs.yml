@@ -27,7 +27,7 @@ jobs:
         run: pip install openpyxl
 
       - name: Regenerate KEYMAP.md
-        run: python tools/keymap_docgen.py config/AroundForty-RB.keymap VIM_NORMAL_1 VIM_NORMAL_2 VIM_VISUAL -o KEYMAP.xlsx
+        run: python tools/keymap_docgen.py config/AroundForty-RB.keymap DEFAULT SYMBOL VIM_NORMAL_1 VIM_NORMAL_2 MOUSE SCROLL FUNCTION BLUETOOTH VIM_VISUAL -o KEYMAP.xlsx
 
       - name: Commit KEYMAP.md if changed
         if: github.event_name != 'pull_request'
