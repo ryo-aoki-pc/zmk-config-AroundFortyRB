@@ -130,8 +130,8 @@
 
 | 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&kp LS(LC(RIGHT))` | E<br>`&kp LS(LC(RIGHT))` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&macro_vim_visual_p` |
-| 単発タップ |  | Shift+Ctrl+→ | Shift+Ctrl+→ |  |  |  |  |  |  | LShift ▸ RShift ▸ Ctrl+V ▸ レイヤー 0 へ |
+| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&kp LS(LC(RIGHT))` | E<br>`&kp LS(LC(RIGHT))` | R<br>`&none` | T<br>`&none` | Y<br>`&macro_vim_visual_y` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&macro_vim_visual_p` |
+| 単発タップ |  | Shift+Ctrl+→ | Shift+Ctrl+→ |  |  | LShift ▸ RShift ▸ Ctrl+C ▸ → ▸ レイヤー 0 へ |  |  |  | LShift ▸ RShift ▸ Ctrl+V ▸ レイヤー 0 へ |
 | ■ Row 2 (home row) | A<br>`&kp LCTRL` | S<br>`&none` | D<br>`&macro_vim_visual_cut` | F<br>`&none` | G<br>`&mm_vim_visual_g` | H<br>`&kp LS(LEFT)` | J<br>`&kp LS(DOWN)` | K<br>`&kp LS(UP)` | L<br>`&kp LS(RIGHT)` | -<br>`&kp RCTRL` |
 | 単発タップ | LCtrl |  | LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー 0 へ |  |  | Shift+← | Shift+↓ | Shift+↑ | Shift+→ | RCtrl |
 | ダブルタップ | 〃 |  | 〃 |  | Shift+Ctrl+HOME | 〃 | 〃 | 〃 | 〃 | 〃 |
@@ -266,8 +266,8 @@
 
 | 操作 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&kp LS(LC(RIGHT))` | E<br>`&kp LS(LC(RIGHT))` | R<br>`&none` | T<br>`&none` | Y<br>`&none` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&macro_vim_visual_p` |
-| 単発タップ |  | &kp LS(LC(RIGHT)) | &kp LS(LC(RIGHT)) |  |  |  |  |  |  | macro_vim_visual_p |
+| ■ Row 1 (QWERTY 上段) | Q<br>`&none` | W<br>`&kp LS(LC(RIGHT))` | E<br>`&kp LS(LC(RIGHT))` | R<br>`&none` | T<br>`&none` | Y<br>`&macro_vim_visual_y` | U<br>`&none` | I<br>`&none` | O<br>`&none` | P<br>`&macro_vim_visual_p` |
+| 単発タップ |  | &kp LS(LC(RIGHT)) | &kp LS(LC(RIGHT)) |  |  | macro_vim_visual_y |  |  |  | macro_vim_visual_p |
 | ■ Row 2 (home row) | A<br>`&kp LCTRL` | S<br>`&none` | D<br>`&macro_vim_visual_cut` | F<br>`&none` | G<br>`&mm_vim_visual_g` | H<br>`&kp LS(LEFT)` | J<br>`&kp LS(DOWN)` | K<br>`&kp LS(UP)` | L<br>`&kp LS(RIGHT)` | -<br>`&kp RCTRL` |
 | 単発タップ | &kp LCTRL |  | macro_vim_visual_cut |  | mm_vim_visual_g[0] → td_vim_visual_g[0] → &none | &kp LS(LEFT) | &kp LS(DOWN) | &kp LS(UP) | &kp LS(RIGHT) | &kp RCTRL |
 | ダブルタップ | 〃 |  | 〃 |  | mm_vim_visual_g[0] → td_vim_visual_g[1] → &kp LS(LC(HOME)) | 〃 | 〃 | 〃 | 〃 | 〃 |

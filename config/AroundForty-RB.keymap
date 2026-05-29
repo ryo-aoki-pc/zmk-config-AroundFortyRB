@@ -422,7 +422,7 @@
 
         VIM_VISUAL {
             bindings = <
-&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                    &none         &none         &none       &none          &macro_vim_visual_p
+&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                    &macro_vim_visual_y  &none         &none       &none          &macro_vim_visual_p
 &kp LCTRL       &none                  &macro_vim_visual_cut  &none                   &mm_vim_visual_g         &kp LS(LEFT)  &kp LS(DOWN)  &kp LS(UP)  &kp LS(RIGHT)  &kp RCTRL
 &kp LEFT_SHIFT  &macro_vim_visual_cut  &none                  &macro_vim_visual_exit  &kp LS(LC(LEFT))  &none  &kp F3        &none         &none       &none          &kp RIGHT_SHIFT
 &none           &none                  &none                  &none                   &none             &none  &none         &none         &none       &none          &none
