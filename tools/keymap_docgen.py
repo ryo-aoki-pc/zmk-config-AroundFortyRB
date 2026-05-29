@@ -32,13 +32,18 @@ Examples:
 """
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
 
-from openpyxl import Workbook
-from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
-from openpyxl.utils import get_column_letter
+try:
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+    from openpyxl.utils import get_column_letter
+    HAVE_OPENPYXL = True
+except ImportError:  # Excel 出力は任意。未インストールでも Markdown は生成できる
+    HAVE_OPENPYXL = False
 
 
 # ============================================================================
@@ -410,27 +415,25 @@ def summarize_macro(bindings: list[str]) -> str:
 
 
 # ============================================================================
-# Visual label (depends on layer dimensions in keymap)
+# Visual label (per physical key index, not per column position)
 # ============================================================================
 
-ROW_LABELS = {
-    # row index -> [labels per position] (AroundForty-RB: 10 / 10 / 11 / 11 = 42)
-    1: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    2: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '-'],
-    3: ['Z', 'X', 'C', 'V', 'B', '(center mo7)', 'N', 'M', ',', '.', '/'],
-    4: ['mo6 (L outer)', 'LEFT_WIN', 'LEFT_ALT', 'lt2 SPACE', 'lt2 SPACE',
-        'mo1 (L center)', 'mo2', 'mo7 (raised)', 'lt1 ENTER',
-        'mo6 (R)', 'mo6 (R outer)'],
+# Label for each binding index 0..41 = the DEFAULT-layer physical key identity.
+# Keyed by index (not by column slot) so reordering columns into physical order
+# can never desync a label from its binding.
+KEY_LABELS = {
+    0: 'Q', 1: 'W', 2: 'E', 3: 'R', 4: 'T', 5: 'Y', 6: 'U', 7: 'I', 8: 'O', 9: 'P',
+    10: 'A', 11: 'S', 12: 'D', 13: 'F', 14: 'G', 15: 'H', 16: 'J', 17: 'K', 18: 'L', 19: '-',
+    20: 'Z', 21: 'X', 22: 'C', 23: 'V', 24: 'B', 25: '(center mo7)',
+    26: 'N', 27: 'M', 28: ',', 29: '.', 30: '/',
+    31: 'mo6 (L outer)', 32: 'LWin', 33: 'LAlt', 34: 'SPACE', 35: 'SPACE',
+    36: 'mo1 (L center)', 37: 'lt1 ENTER', 38: 'mo7 (raised)', 39: 'mo2',
+    40: 'mo6 (R)', 41: 'mo6 (R outer)',
 }
 
-ROW_WIDTHS = {1: 10, 2: 10, 3: 11, 4: 11}
 
-
-def get_visual_label(row: int, pos: int) -> str:
-    labels = ROW_LABELS.get(row, [])
-    if pos < len(labels):
-        return labels[pos]
-    return f'pos {pos}'
+def get_label(idx: int) -> str:
+    return KEY_LABELS.get(idx, f'pos {idx}')
 
 
 # ============================================================================
@@ -452,13 +455,99 @@ def get_row_layout(total: int) -> list[tuple[int, int]]:
     return [(0, total)]  # fallback: linear
 
 
-def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
-                       behaviors: dict, macros: dict, mode: str) -> None:
+# ============================================================================
+# Physical layout grid (drives row/column arrangement from real coordinates)
+# ============================================================================
+
+GAP = 'GAP'  # sentinel marking a blank split-gap display column
+
+
+def load_physical_layout(path: Path) -> list[tuple[float, float]] | None:
+    """Parse a ZMK physical-layout JSON into an ordered (x, y) list per key index.
+
+    The JSON's `layout` array is in the same order as the keymap bindings, so
+    entry i is the physical position of binding i. Returns None when the file is
+    missing or cannot be parsed (caller falls back to keymap-order rendering).
     """
-    Write one sheet in QWERTY layout. mode: 'action' or 'path'.
+    try:
+        data = json.loads(Path(path).read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return None
+    layouts = data.get('layouts') if isinstance(data, dict) else None
+    if not layouts:
+        return None
+    layout = layouts.get('default_layout') or next(iter(layouts.values()))
+    entries = layout.get('layout') if isinstance(layout, dict) else None
+    if not entries:
+        return None
+    coords: list[tuple[float, float]] = []
+    for e in entries:
+        try:
+            coords.append((float(e['x']), float(e['y'])))
+        except (KeyError, TypeError, ValueError):
+            return None
+    return coords or None
+
+
+def build_grid(coords: list[tuple[float, float]]):
+    """Build physical rows + display columns from per-index (x, y) coordinates.
+
+    Rows are grouped by distinct y (top to bottom); columns are the distinct x
+    values (left to right) with a single blank GAP column inserted at the widest
+    horizontal gap (the split between the two halves). Returns
+    (rows, display_cols) where:
+      - display_cols: left-to-right list of x-values (float) and GAP sentinels.
+      - rows: list of {'y': y, 'cells': [idx | None per display column]} where a
+        None cell is an empty position, the split gap, or a missing key.
+    """
+    if not coords:
+        return None, None
+    xs = sorted({x for x, _ in coords})
+    ys = sorted({y for _, y in coords})
+
+    # Insert a gap column at the largest consecutive x-gap, if one clearly exists.
+    diffs = [xs[i + 1] - xs[i] for i in range(len(xs) - 1)]
+    if diffs and max(diffs) > min(diffs):
+        gap_after = diffs.index(max(diffs))
+    else:
+        gap_after = -1
+
+    display_cols: list = []
+    for i, x in enumerate(xs):
+        display_cols.append(x)
+        if i == gap_after:
+            display_cols.append(GAP)
+
+    pos = {(x, y): idx for idx, (x, y) in enumerate(coords)}
+    rows = []
+    for y in ys:
+        cells = [None if col == GAP else pos.get((col, y)) for col in display_cols]
+        rows.append({'y': y, 'cells': cells})
+    return rows, display_cols
+
+
+def legacy_grid(total: int):
+    """Fallback grid (no physical coords): sequential keymap-order chunking."""
+    layout = get_row_layout(total)
+    max_w = max((count for _, count in layout), default=0)
+    rows = []
+    idx = 0
+    for _, count in layout:
+        cells = [idx + p for p in range(count)] + [None] * (max_w - count)
+        rows.append({'y': None, 'cells': cells})
+        idx += count
+    return rows, list(range(max_w))
+
+
+def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
+                       behaviors: dict, macros: dict, mode: str,
+                       grid, display_cols) -> None:
+    """
+    Write one sheet laid out to match the physical keyboard. mode: 'action' / 'path'.
     Each physical keyboard row gets its own block:
       - Header row: 操作 (label) + key columns (key label + binding)
       - 5 data rows (単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+)
+    Columns follow the physical left-to-right order with a blank split-gap column.
     """
     title_font = Font(bold=True, size=14, name='Yu Gothic UI')
     subtitle_font = Font(size=10, italic=True, name='Yu Gothic UI', color='666666')
@@ -474,29 +563,27 @@ def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
     border = Border(left=thin, right=thin, top=thin, bottom=thin)
 
     mode_label = '動作' if mode == 'action' else '経路'
+    n_cols = len(display_cols)
 
     # Title
-    c = ws.cell(1, 1, f'{layer_name} レイヤー - {mode_label} (QWERTY 配列)')
+    c = ws.cell(1, 1, f'{layer_name} レイヤー - {mode_label} (物理配列)')
     c.font = title_font
     c.alignment = Alignment(horizontal='left')
 
-    c = ws.cell(2, 1, f'※ 物理キーボード行ごとに 4 操作 × N キーの表を縦に並べて出力。')
+    c = ws.cell(2, 1, '※ 物理キーボード行ごとに 5 操作 × キー列の表を縦に並べて出力（左右分割は空列で分離）。')
     c.font = subtitle_font
-
-    layout = get_row_layout(len(bindings))
-    max_cols = max(count for _, count in layout) + 1  # +1 for 操作 column
 
     # Column widths
     ws.column_dimensions['A'].width = 14
     col_width = 24 if mode == 'action' else 36
-    for c_idx in range(2, max_cols + 1):
-        ws.column_dimensions[get_column_letter(c_idx)].width = col_width
+    for j in range(n_cols):
+        width = 3 if display_cols[j] == GAP else col_width
+        ws.column_dimensions[get_column_letter(2 + j)].width = width
 
     current_row = 4
-    binding_idx = 0
-    for phys_row, count in layout:
-        labels = ROW_LABELS.get(phys_row, [])
-        desc = ROW_DESCRIPTIONS.get(phys_row, f'Row {phys_row}')
+    for i, row in enumerate(grid):
+        cells_idx = row['cells']
+        desc = ROW_DESCRIPTIONS.get(i + 1, f'Row {i + 1}')
 
         # Section title bar (spans operation column + all key columns)
         c = ws.cell(current_row, 1, f'■ {desc}')
@@ -504,7 +591,7 @@ def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
         c.fill = section_fill
         c.alignment = Alignment(horizontal='left', vertical='center', indent=1)
         ws.merge_cells(start_row=current_row, start_column=1,
-                       end_row=current_row, end_column=count + 1)
+                       end_row=current_row, end_column=n_cols + 1)
         ws.row_dimensions[current_row].height = 22
         current_row += 1
 
@@ -515,10 +602,10 @@ def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
         c.alignment = Alignment(horizontal='center', vertical='center')
         c.border = border
 
-        for p in range(count):
-            label = labels[p] if p < len(labels) else f'pos {p}'
-            binding = bindings[binding_idx + p]
-            c = ws.cell(current_row, 2 + p, f'{label}\n{binding}')
+        for j in range(n_cols):
+            idx = cells_idx[j]
+            value = '' if idx is None else f'{get_label(idx)}\n{bindings[idx]}'
+            c = ws.cell(current_row, 2 + j, value)
             c.font = header_font
             c.fill = header_fill
             c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
@@ -526,7 +613,7 @@ def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
         ws.row_dimensions[current_row].height = 42
         current_row += 1
 
-        # 4 data rows (one per operation)
+        # 5 data rows (one per operation)
         for op_idx, op in enumerate(OPS):
             r = current_row + op_idx
 
@@ -538,22 +625,25 @@ def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
             c.border = border
 
             # Key cells
-            for p in range(count):
-                binding = bindings[binding_idx + p]
-                action, path = resolve(binding, behaviors, macros, op)
-                value = action if mode == 'action' else path
-                c = ws.cell(r, 2 + p, value)
+            for j in range(n_cols):
+                idx = cells_idx[j]
+                if idx is None:
+                    value = ''
+                else:
+                    action, path = resolve(bindings[idx], behaviors, macros, op)
+                    value = action if mode == 'action' else path
+                c = ws.cell(r, 2 + j, value)
                 c.font = body_font
                 c.alignment = Alignment(wrap_text=True, vertical='center')
                 c.border = border
             ws.row_dimensions[r].height = 38
 
-        current_row += len(OPS) + 1  # 4 data rows + 1 blank
-        binding_idx += count
+        current_row += len(OPS) + 1  # 5 data rows + 1 blank
 
 
 def write_excel(layers_data: list[tuple[str, list[str]]],
-                behaviors: dict, macros: dict, output_path: Path) -> None:
+                behaviors: dict, macros: dict, output_path: Path,
+                grid, display_cols) -> None:
     """Generate one Excel file. Single layer => sheets '動作'/'経路'.
     Multiple layers => sheets '<layer> 動作'/'<layer> 経路' per layer."""
     wb = Workbook()
@@ -569,7 +659,8 @@ def write_excel(layers_data: list[tuple[str, list[str]]],
                 first = False
             else:
                 ws = wb.create_sheet(sheet_name)
-            write_qwerty_sheet(ws, layer_name, bindings, behaviors, macros, mode)
+            write_qwerty_sheet(ws, layer_name, bindings, behaviors, macros, mode,
+                               grid, display_cols)
     wb.save(output_path)
 
 
@@ -619,88 +710,97 @@ def _normalize_cell(value: str) -> str:
     return value
 
 
-def _markdown_layer_mode_rows(layer_name: str, bindings: list[str],
+def _markdown_layer_mode_rows(bindings: list[str],
                               behaviors: dict, macros: dict,
                               mode: str,
+                              grid, display_cols,
                               active_indices: set[int] | None = None) -> list[str]:
-    """Return one consolidated table for a (layer, mode) pair.
+    """Return one consolidated table for a (layer, mode) pair, laid out to match
+    the physical keyboard.
 
-    Format: a single table per layer/mode where each physical row appears
-    as a section data row (`■ Row N` + key labels/bindings) followed by
-    op data rows. Non-tap op rows are dropped per physical row when every
-    cell matches the auto-derived form computed from the tap value.
+    Each physical row appears as a section data row (`■ Row N` + key labels/
+    bindings) followed by op data rows. Columns follow display_cols (physical
+    left-to-right, with a blank split-gap column). Non-tap op rows are dropped
+    per physical row when every cell matches the auto-derived form from the tap
+    value.
 
-    If active_indices is given, only those binding indices (relative to the
-    flat 66-position list) are rendered as columns; rows that end up with
-    zero active positions are skipped entirely.
+    A column renders blank when its cell is empty / the split gap, or (when
+    active_indices is given) when that binding index is hidden. Physical rows
+    that end up with no visible cells are skipped entirely.
     """
-    layout = get_row_layout(len(bindings))
     lines: list[str] = []
-
-    binding_idx = 0
-    per_row_active: list[tuple[int, int, int, list[int]]] = []
-    for phys_row, count in layout:
-        if active_indices is None:
-            pos_list = list(range(count))
-        else:
-            pos_list = [p for p in range(count) if (binding_idx + p) in active_indices]
-        per_row_active.append((phys_row, count, binding_idx, pos_list))
-        binding_idx += count
-
-    max_cols = max((len(pl) for _, _, _, pl in per_row_active), default=0)
-    if max_cols == 0:
+    if not grid or not display_cols:
         return lines
+    n_cols = len(display_cols)
 
-    header_cells = ['操作'] + [str(i + 1) for i in range(max_cols)]
+    def visible_idx(cell):
+        """Binding index to render for a cell, or None for a blank cell."""
+        if cell is None:
+            return None
+        if active_indices is not None and cell not in active_indices:
+            return None
+        return cell
+
+    # Header: number the key columns, leave gap columns blank.
+    header_cells = ['操作']
+    num = 0
+    for col in display_cols:
+        if col == GAP:
+            header_cells.append('')
+        else:
+            num += 1
+            header_cells.append(str(num))
     lines.append('| ' + ' | '.join(header_cells) + ' |')
-    lines.append('|' + '|'.join(['---'] * (max_cols + 1)) + '|')
+    lines.append('|' + '|'.join(['---'] * (n_cols + 1)) + '|')
 
     non_tap_ops = ('ホールド', 'ダブルタップ', 'Shift+', 'Ctrl+')
 
-    for phys_row, count, base_idx, pos_list in per_row_active:
-        if not pos_list:
+    for i, row in enumerate(grid):
+        idx_cells = [visible_idx(c) for c in row['cells']]
+        if not any(c is not None for c in idx_cells):
             continue
-        desc = ROW_DESCRIPTIONS.get(phys_row, f'Row {phys_row}')
-        labels = ROW_LABELS.get(phys_row, [])
+        desc = ROW_DESCRIPTIONS.get(i + 1, f'Row {i + 1}')
 
         section_cells = [f'■ {_escape_md_cell(desc)}']
-        for p in pos_list:
-            label = labels[p] if p < len(labels) else f'pos {p}'
-            binding = bindings[base_idx + p]
-            section_cells.append(
-                f'{_escape_md_cell(label)}<br>`{_escape_md_cell(binding)}`'
-            )
-        section_cells.extend([''] * (max_cols - len(pos_list)))
+        for idx in idx_cells:
+            if idx is None:
+                section_cells.append('')
+            else:
+                section_cells.append(
+                    f'{_escape_md_cell(get_label(idx))}<br>`{_escape_md_cell(bindings[idx])}`'
+                )
         lines.append('| ' + ' | '.join(section_cells) + ' |')
 
-        action_by_op: dict[str, list[str]] = {}
+        # Resolve each op for the visible cells, keyed by column position.
+        action_by_op: dict[str, dict[int, str]] = {}
         for op in OPS:
-            action_by_op[op] = [
-                _normalize_cell(resolve(bindings[base_idx + p], behaviors, macros, op)[0])
-                for p in pos_list
-            ]
-
+            action_by_op[op] = {
+                j: _normalize_cell(resolve(bindings[idx], behaviors, macros, op)[0])
+                for j, idx in enumerate(idx_cells) if idx is not None
+            }
         tap_actions = action_by_op['単発タップ']
+
         visible_ops = ['単発タップ']
         for op in non_tap_ops:
             cells = action_by_op[op]
-            if any(cells[i] not in _auto_forms(tap_actions[i], op) for i in range(len(cells))):
+            if any(cells[j] not in _auto_forms(tap_actions[j], op) for j in cells):
                 visible_ops.append(op)
 
         for op in visible_ops:
             row_cells = [_escape_md_cell(op)]
-            for idx, p in enumerate(pos_list):
-                if op != '単発タップ' and action_by_op[op][idx] in _auto_forms(tap_actions[idx], op):
+            for j, idx in enumerate(idx_cells):
+                if idx is None:
+                    row_cells.append('')
+                    continue
+                if op != '単発タップ' and action_by_op[op][j] in _auto_forms(tap_actions[j], op):
                     # Derivable from the single-tap value: abbreviate (or leave
                     # blank when the tap itself is empty / does nothing).
-                    row_cells.append('' if tap_actions[idx] == '' else '〃')
+                    row_cells.append('' if tap_actions[j] == '' else '〃')
                     continue
-                binding = bindings[base_idx + p]
-                action, path = resolve(binding, behaviors, macros, op)
+                action, path = resolve(bindings[idx], behaviors, macros, op)
                 value = action if mode == 'action' else path
                 cell = _normalize_cell(value)
                 row_cells.append(cell if cell in ('', '▽') else _escape_md_cell(cell))
-            row_cells.extend([''] * (max_cols - len(pos_list)))
             lines.append('| ' + ' | '.join(row_cells) + ' |')
 
     lines.append('')
@@ -708,7 +808,8 @@ def _markdown_layer_mode_rows(layer_name: str, bindings: list[str],
 
 
 def write_markdown(layers_data: list[tuple[str, list[str]]],
-                   behaviors: dict, macros: dict, output_path: Path) -> None:
+                   behaviors: dict, macros: dict, output_path: Path,
+                   grid, display_cols) -> None:
     """Generate one Markdown file.
     Single layer  => H1 layer title, then H2 動作 / H2 経路.
     Multi layers  => H1 top title, H2 動作 (each layer at H3), then H2 経路 (each layer at H3)."""
@@ -720,7 +821,7 @@ def write_markdown(layers_data: list[tuple[str, list[str]]],
         lines.append('')
         lines.append(
             f'※ {len(bindings)} 個のバインディング位置を 1 表に集約。'
-            f'物理キーボード行ごとに「■ Row N」セクション行 + 4 操作行を縦に並べる（QWERTY 配列）。'
+            f'実機の物理配列に合わせて「■ Row N」セクション行 + 操作行を縦に並べる（左右分割は中央の空列で分離）。'
         )
         lines.append('')
         lines.append('- 各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。')
@@ -729,17 +830,18 @@ def write_markdown(layers_data: list[tuple[str, list[str]]],
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
             lines.append(f'## {mode_label}')
             lines.append('')
-            lines.extend(_markdown_layer_mode_rows(layer_name, bindings,
-                                                   behaviors, macros, mode))
+            lines.extend(_markdown_layer_mode_rows(bindings, behaviors, macros, mode,
+                                                   grid, display_cols))
     else:
         lines.append('# キー割り当て一覧')
         lines.append('')
         lines.append(
             f'※ {len(layers_data)} 個のレイヤーのキー割り当てを 1 ファイルに集約。'
-            f'各レイヤー 42 バインディング位置を「動作」セクションでまとめてから「経路」セクションに進む。'
+            f'各レイヤーを実機の物理配列に合わせて「動作」セクションでまとめてから「経路」セクションに進む。'
         )
         lines.append('')
         lines.append('- 各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。')
+        lines.append('- 列は物理配列の左→右順。左右分割は中央の空列で分離する。')
         lines.append('- 各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。')
         lines.append('')
 
@@ -767,8 +869,8 @@ def write_markdown(layers_data: list[tuple[str, list[str]]],
             for layer_name, bindings in layers_data:
                 lines.append(f'### {layer_name} レイヤー')
                 lines.append('')
-                lines.extend(_markdown_layer_mode_rows(layer_name, bindings,
-                                                       behaviors, macros, mode,
+                lines.extend(_markdown_layer_mode_rows(bindings, behaviors, macros, mode,
+                                                       grid, display_cols,
                                                        active_indices=active_indices))
 
     output_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
@@ -786,6 +888,8 @@ def main() -> int:
     p.add_argument('layers', nargs='+',
                    help='One or more layer names (e.g., VIM_NORMAL_1 VIM_NORMAL_2 VIM_VISUAL)')
     p.add_argument('-o', '--output', help='Output .xlsx path (default: <layer>_keymap.xlsx or keymap.xlsx)')
+    p.add_argument('-l', '--layout',
+                   help='Path to the physical-layout JSON (default: keymap path with .json suffix)')
     args = p.parse_args()
 
     keymap_path = Path(args.keymap)
@@ -810,6 +914,22 @@ def main() -> int:
 
     print(f'parsed: {len(macros)} macros, {len(behaviors)} behaviors')
 
+    # Physical layout drives the row/column arrangement to match the real board.
+    total = len(layers_data[0][1]) if layers_data else 0
+    layout_path = Path(args.layout) if args.layout else keymap_path.with_suffix('.json')
+    coords = load_physical_layout(layout_path)
+    if coords and len(coords) == total:
+        grid, display_cols = build_grid(coords)
+        print(f'physical layout: {layout_path} ({len(coords)} keys)')
+    else:
+        grid, display_cols = legacy_grid(total)
+        if coords is None:
+            print(f'note: physical layout not found at {layout_path}; using keymap order',
+                  file=sys.stderr)
+        else:
+            print(f'warning: layout key count ({len(coords)}) != bindings ({total}); '
+                  'using keymap order', file=sys.stderr)
+
     if args.output:
         output_path = Path(args.output)
     elif len(args.layers) == 1:
@@ -817,11 +937,15 @@ def main() -> int:
     else:
         output_path = Path('keymap.xlsx')
 
-    write_excel(layers_data, behaviors, macros, output_path)
-    print(f'saved: {output_path}')
+    if HAVE_OPENPYXL:
+        write_excel(layers_data, behaviors, macros, output_path, grid, display_cols)
+        print(f'saved: {output_path}')
+    else:
+        print('warning: openpyxl not installed; skipping .xlsx (Markdown still generated)',
+              file=sys.stderr)
 
     md_path = output_path.with_suffix('.md')
-    write_markdown(layers_data, behaviors, macros, md_path)
+    write_markdown(layers_data, behaviors, macros, md_path, grid, display_cols)
     print(f'saved: {md_path}')
     return 0
 
