@@ -350,10 +350,10 @@
 
         DEFAULT {
             bindings = <
-&kp Q               &kp W         &kp E         &kp R        &kp T               &kp Y        &kp U  &kp I      &kp O       &kp P
-&mt LEFT_CONTROL A  &kp S         &kp D         &kp F        &kp G               &kp H        &kp J  &kp K      &kp L       &mt RCTRL MINUS
-&mt LEFT_SHIFT Z    &kp X         &kp C         &kp V        &kp B        &mo 7  &kp N        &kp M  &kp COMMA  &kp PERIOD  &mt RIGHT_SHIFT SLASH
-&mo 6               &kp LEFT_WIN  &kp LEFT_ALT  &lt 2 SPACE  &lt 2 SPACE  &mo 1  &mo 2        &mo 7  &lt 1 ENTER  &mo 6     &mo 6
+&kp Q               &kp W         &kp E         &kp R        &kp T               &kp Y  &kp U  &kp I        &kp O       &kp P
+&mt LEFT_CONTROL A  &kp S         &kp D         &kp F        &kp G               &kp H  &kp J  &kp K        &kp L       &mt RCTRL MINUS
+&mt LEFT_SHIFT Z    &kp X         &kp C         &kp V        &kp B        &mo 7  &kp N  &kp M  &kp COMMA    &kp PERIOD  &mt RIGHT_SHIFT SLASH
+&mo 6               &kp LEFT_WIN  &kp LEFT_ALT  &lt 2 SPACE  &lt 2 SPACE  &mo 1  &mo 2  &mo 7  &lt 1 ENTER  &mo 6       &mo 6
             >;
         };
 
@@ -368,10 +368,10 @@
 
         VIM_NORMAL_1 {
             bindings = <
-&none           &mm_vim_w      &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
-&kp LCTRL       &none          &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT     &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
-&kp LEFT_SHIFT  &kp DELETE     &none                      &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n    &none           &none            &none         &kp RIGHT_SHIFT
-&none           &trans         &trans                     &none           &none         &mo 3  &none        &none           &lt 3 ENTER      &trans        &none
+&none           &mm_vim_w   &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
+&kp LCTRL       &none       &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT         &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
+&kp LEFT_SHIFT  &kp DELETE  &none                      &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n        &none           &none         &none            &kp RIGHT_SHIFT
+&none           &trans      &trans                     &none           &none         &mo 3  &none            &none           &lt 3 ENTER   &trans           &none
             >;
         };
 
@@ -387,8 +387,8 @@
         MOUSE {
             bindings = <
 &none  &none  &none  &none  &none         &none  &none  &none  &none  &none
-&none  &none  &none  &none  &none         &none  &none  &none  &none  &none
-&none  &none  &none  &none  &none  &none  &none  &none  &mo 5  &none  &none
+&none  &none  &none  &none  &none         &none  &none  &mo 5  &none  &none
+&none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
 &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
             >;
         };
@@ -396,9 +396,9 @@
         SCROLL {
             bindings = <
 &none  &none  &none  &none  &none         &none  &none     &none  &none     &none
-&none  &none  &none  &none  &none         &none  &none     &none  &none     &none
-&none  &none  &none  &none  &none  &none  &none  &mkp MB1  &none  &mkp MB2  &none
-&none  &none  &none  &none  &none  &none  &none  &none     &none  &mkp MB5  &none
+&none  &none  &none  &none  &none         &none  &mkp MB1  &none  &mkp MB2  &none
+&none  &none  &none  &none  &none  &none  &none  &mkp MB4  &none  &mkp MB5  &none
+&none  &none  &none  &none  &none  &none  &none  &none     &none  &none     &none
             >;
         };
 
@@ -415,17 +415,17 @@
             bindings = <
 &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4         &none  &out OUT_USB  &none  &none  &none
 &bt BT_CLR_ALL  &none         &none         &none         &none                &none  &none         &none  &none  &none
-&none           &none         &bt BT_CLR    &none         &out OUT_BLE  &none  &none         &none  &none  &none  &none
-&none           &none         &none         &none         &none         &none  &none         &none  &none  &none  &none
+&none           &none         &bt BT_CLR    &none         &out OUT_BLE  &none  &none  &none         &none  &none  &none
+&none           &none         &none         &none         &none         &none  &none  &none         &none  &none  &none
             >;
         };
 
         VIM_VISUAL {
             bindings = <
-&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                              &none                &none         &none       &none          &macro_vim_visual_p
-&kp LCTRL       &none                  &macro_vim_visual_cut  &none                   &mm_vim_visual_g                   &kp LS(LEFT)         &kp LS(DOWN)  &kp LS(UP)  &kp LS(RIGHT)  &kp RCTRL
-&kp LEFT_SHIFT  &macro_vim_visual_cut  &none                  &macro_vim_visual_exit  &kp LS(LC(LEFT))            &none  &kp F3               &none         &none       &none          &kp RIGHT_SHIFT
-&none           &none                  &none                  &none                   &none                       &none                   &none                   &none  &none                   &none  &none
+&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                    &none         &none         &none       &none          &macro_vim_visual_p
+&kp LCTRL       &none                  &macro_vim_visual_cut  &none                   &mm_vim_visual_g         &kp LS(LEFT)  &kp LS(DOWN)  &kp LS(UP)  &kp LS(RIGHT)  &kp RCTRL
+&kp LEFT_SHIFT  &macro_vim_visual_cut  &none                  &macro_vim_visual_exit  &kp LS(LC(LEFT))  &none  &kp F3        &none         &none       &none          &kp RIGHT_SHIFT
+&none           &none                  &none                  &none                   &none             &none  &none         &none         &none       &none          &none
             >;
         };
     };
