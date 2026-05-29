@@ -113,9 +113,9 @@
             #binding-cells = <0>;
             bindings =
                 <&macro_release>,
-                <&kp LSHIFT>,
-                <&macro_release>,
-                <&kp RSHIFT &kp LC(C)>,
+                <&kp LSHIFT &kp RSHIFT>,
+                <&macro_tap>,
+                <&kp LC(C)>,
                 <&macro_wait_time 50>,
                 <&kp RIGHT>,
                 <&macro_wait_time 50>,
@@ -129,9 +129,9 @@
             #binding-cells = <0>;
             bindings =
                 <&macro_release>,
-                <&kp LSHIFT>,
-                <&macro_release>,
-                <&kp RSHIFT &kp LC(X)>,
+                <&kp LSHIFT &kp RSHIFT>,
+                <&macro_tap>,
+                <&kp LC(X)>,
                 <&macro_wait_time 50>,
                 <&to 0>;
 
@@ -143,9 +143,9 @@
             #binding-cells = <0>;
             bindings =
                 <&macro_release>,
-                <&kp LSHIFT>,
-                <&macro_release>,
-                <&kp RSHIFT &kp LC(V)>,
+                <&kp LSHIFT &kp RSHIFT>,
+                <&macro_tap>,
+                <&kp LC(V)>,
                 <&macro_wait_time 50>,
                 <&to 0>;
 
@@ -170,9 +170,9 @@
             #binding-cells = <0>;
             bindings =
                 <&macro_release>,
-                <&kp LSHIFT>,
-                <&macro_release>,
-                <&kp RSHIFT &kp RIGHT>,
+                <&kp LSHIFT &kp RSHIFT>,
+                <&macro_tap>,
+                <&kp RIGHT>,
                 <&macro_wait_time 50>,
                 <&to 0>;
 
@@ -368,10 +368,10 @@
 
         VIM_NORMAL_1 {
             bindings = <
-&none           &mm_vim_w   &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
-&kp LCTRL       &none       &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT         &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
-&kp LEFT_SHIFT  &kp DELETE  &none                      &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n        &none           &none         &none            &kp RIGHT_SHIFT
-&none           &trans      &trans                     &none           &none         &mo 3  &lt 3 ENTER      &none           &none         &trans           &none
+&none           &mm_vim_w      &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
+&kp LCTRL       &none          &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT     &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
+&kp LEFT_SHIFT  &kp DELETE     &none                      &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n    &none           &none            &none         &kp RIGHT_SHIFT
+&none           &trans         &trans                     &none           &none         &mo 3  &none        &none           &lt 3 ENTER      &trans        &none
             >;
         };
 
@@ -422,10 +422,10 @@
 
         VIM_VISUAL {
             bindings = <
-&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                    &none         &none         &none       &none          &macro_vim_visual_p
-&kp LCTRL       &none                  &macro_vim_visual_cut  &none                   &mm_vim_visual_g         &kp LS(LEFT)  &kp LS(DOWN)  &kp LS(UP)  &kp LS(RIGHT)  &kp RCTRL
-&kp LEFT_SHIFT  &macro_vim_visual_cut  &none                  &macro_vim_visual_exit  &kp LS(LC(LEFT))  &none  &kp F3        &none         &none       &none          &kp RIGHT_SHIFT
-&none           &none                  &none                  &none                   &none             &none  &none         &none         &none       &none          &none
+&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                              &none                &none         &none       &none          &macro_vim_visual_p
+&kp LCTRL       &none                  &macro_vim_visual_cut  &none                   &mm_vim_visual_g                   &kp LS(LEFT)         &kp LS(DOWN)  &kp LS(UP)  &kp LS(RIGHT)  &kp RCTRL
+&kp LEFT_SHIFT  &macro_vim_visual_cut  &none                  &macro_vim_visual_exit  &kp LS(LC(LEFT))            &none  &kp F3               &none         &none       &none          &kp RIGHT_SHIFT
+&none           &none                  &none                  &none                   &none                       &none                   &none                   &none  &none                   &none  &none
             >;
         };
     };
