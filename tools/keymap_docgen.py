@@ -747,9 +747,13 @@ def write_markdown(layers_data: list[tuple[str, list[str]]],
             (b for n, b in layers_data if n == 'DEFAULT'),
             None,
         )
-        # AroundForty-RB has no duplicated center thumb keys to hide; the
-        # DEFAULT &none filter alone determines the active columns.
-        always_hidden = set()
+        # Positions assigned `&mo 7` in the DEFAULT layer (the center-column
+        # and raised thumb mo7 keys) are hidden in every layer's table.
+        always_hidden = (
+            {i for i, b in enumerate(default_bindings) if b.strip() == '&mo 7'}
+            if default_bindings is not None
+            else set()
+        )
         active_indices = (
             {i for i, b in enumerate(default_bindings)
              if b.strip() != '&none' and i not in always_hidden}

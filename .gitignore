@@ -8,3 +8,5 @@ modules/
 *.hex
 *.xls
 *.xlsx
+__pycache__/
+*.pyc
