@@ -112,9 +112,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
-                <&macro_release &kp LSHIFT>,
-                <&macro_release &kp RSHIFT>,
-                <&kp LC(C)>,
+                <&macro_release>,
+                <&kp LSHIFT>,
+                <&macro_release>,
+                <&kp RSHIFT &kp LC(C)>,
                 <&macro_wait_time 50>,
                 <&kp RIGHT>,
                 <&macro_wait_time 50>,
@@ -127,9 +128,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
-                <&macro_release &kp LSHIFT>,
-                <&macro_release &kp RSHIFT>,
-                <&kp LC(X)>,
+                <&macro_release>,
+                <&kp LSHIFT>,
+                <&macro_release>,
+                <&kp RSHIFT &kp LC(X)>,
                 <&macro_wait_time 50>,
                 <&to 0>;
 
@@ -140,9 +142,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
-                <&macro_release &kp LSHIFT>,
-                <&macro_release &kp RSHIFT>,
-                <&kp LC(V)>,
+                <&macro_release>,
+                <&kp LSHIFT>,
+                <&macro_release>,
+                <&kp RSHIFT &kp LC(V)>,
                 <&macro_wait_time 50>,
                 <&to 0>;
 
@@ -166,9 +169,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
-                <&macro_release &kp LSHIFT>,
-                <&macro_release &kp RSHIFT>,
-                <&kp RIGHT>,
+                <&macro_release>,
+                <&kp LSHIFT>,
+                <&macro_release>,
+                <&kp RSHIFT &kp RIGHT>,
                 <&macro_wait_time 50>,
                 <&to 0>;
 
@@ -197,7 +201,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "TD_VIM_Y";
             #binding-cells = <0>;
-            bindings = <&kp LC(C)>, <&macro_vim_yy>;
+            bindings = <&none>, <&macro_vim_yy>;
         };
 
         mm_vim_shift_y: mm_vim_shift_y {
@@ -312,6 +316,33 @@
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+
+        mm_vim_n: mm_vim_n {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_VIM_N";
+            bindings = <&kp F3>, <&kp LS(F3)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        mm_vim_q: mm_vim_q {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_VIM_Q";
+            bindings = <&kp ESCAPE>, <&kp LC(Q)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        mm_vim_w: mm_vim_w {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_VIM_W";
+            bindings = <&kp LC(RIGHT)>, <&kp LC(BACKSPACE)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
     };
 
     keymap {
@@ -337,9 +368,9 @@
 
         VIM_NORMAL_1 {
             bindings = <
-&none           &kp LC(RIGHT)  &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
+&none           &mm_vim_w      &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
 &kp LCTRL       &none          &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT     &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
-&kp LEFT_SHIFT  &kp DELETE     &none                      &mm_vim_v       &kp LC(LEFT)  &none  &none        &none           &none            &none         &kp RIGHT_SHIFT
+&kp LEFT_SHIFT  &kp DELETE     &none                      &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n    &none           &none            &none         &kp RIGHT_SHIFT
 &none           &trans         &trans                     &none           &none         &mo 3  &none        &none           &lt 3 ENTER      &trans        &none
             >;
         };
@@ -347,9 +378,9 @@
         VIM_NORMAL_2 {
             bindings = <
 &none           &none   &none   &mm_vim_shift_4  &none         &mm_vim_shift_6  &none  &none  &none   &kp HOME
-&kp LCTRL       &none   &none   &none            &none         &none            &none  &none  &none   &kp RCTRL
+&kp LCTRL       &none   &none   &none            &none         &kp LEFT         &none  &none  &none   &kp RCTRL
 &kp LEFT_SHIFT  &none   &none   &none            &none  &none  &none            &none  &none  &none   &kp RIGHT_SHIFT
-&none           &trans  &trans  &trans           &none  &none  &none            &none  &none  &trans  &none
+&none           &trans  &trans  &none            &none  &none  &none            &none  &none  &trans  &none
             >;
         };
 
@@ -391,10 +422,10 @@
 
         VIM_VISUAL {
             bindings = <
-&none           &kp LS(LC(RIGHT))      &none                  &none                   &none                              &macro_vim_visual_y  &none         &none       &none          &macro_vim_visual_p
+&none           &kp LS(LC(RIGHT))      &kp LS(LC(RIGHT))      &none                   &none                              &none                &none         &none       &none          &macro_vim_visual_p
 &kp LCTRL       &none                  &macro_vim_visual_cut  &none                   &mm_vim_visual_g                   &kp LS(LEFT)         &kp LS(DOWN)  &kp LS(UP)  &kp LS(RIGHT)  &kp RCTRL
-&kp LEFT_SHIFT  &macro_vim_visual_cut  &macro_vim_visual_cut  &macro_vim_visual_exit  &kp LS(LC(LEFT))            &none  &none                &none         &none       &none          &kp RIGHT_SHIFT
-&none           &none                  &none                  &none                   &none                       &macro_vim_visual_exit  &macro_vim_visual_exit  &none  &macro_vim_visual_exit  &none  &none
+&kp LEFT_SHIFT  &macro_vim_visual_cut  &none                  &macro_vim_visual_exit  &kp LS(LC(LEFT))            &none  &kp F3               &none         &none       &none          &kp RIGHT_SHIFT
+&none           &none                  &none                  &none                   &none                       &none                   &none                   &none  &none                   &none  &none
             >;
         };
     };
