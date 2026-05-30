@@ -28,6 +28,8 @@
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
   /* 複数行セルは各行を左揃え、ブロック自体はセル内で中央に配置する。 */
@@ -48,12 +50,6 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   tr[style] code { background: rgba(0,0,0,.06); }
-  /* 経路テーブルのセルは等幅・左寄せ。自動折り返しはせず、▸ ごとの明示改行のみ。 */
-  table.route td {
-    text-align: left;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 12px;
-  }
 </style>
 </head>
 <body>
@@ -1521,7 +1517,7 @@
 </tbody>
 </table>
 <h2>経路</h2>
-<table class="route">
+<table>
 <thead>
 <tr>
 <th>操作</th>

@@ -927,6 +927,8 @@ HTML_STYLE = """\
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
   /* 複数行セルは各行を左揃え、ブロック自体はセル内で中央に配置する。 */
@@ -947,12 +949,6 @@ HTML_STYLE = """\
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   tr[style] code { background: rgba(0,0,0,.06); }
-  /* 経路テーブルのセルは等幅・左寄せ。自動折り返しはせず、▸ ごとの明示改行のみ。 */
-  table.route td {
-    text-align: left;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 12px;
-  }
 """
 
 
@@ -1057,7 +1053,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
             header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
                                                    grid, display_cols)
             if header is not None:
-                body += _html_table_lines(header, rows, 'route' if mode == 'path' else None)
+                body += _html_table_lines(header, rows)
     else:
         body.append(f'<h1>{_html_inline("キー割り当て一覧")}</h1>')
         body.append('<p>' + _html_inline(
@@ -1090,7 +1086,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
                 layer_blocks.append((layer_name, rows))
             if shared_header is None:
                 continue
-            body += _html_table_open(shared_header, 'route' if mode == 'path' else None)
+            body += _html_table_open(shared_header)
             for layer_name, rows in layer_blocks:
                 body.append(_html_layer_row(layer_name, len(shared_header)))
                 body += _html_body_rows(rows)
