@@ -381,7 +381,7 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
     m = re.match(r'&to\s+(\d+)$', b)
     if m:
         layer = m.group(1)
-        return (f'⇒L{layer}', f'&to {layer_display(layer)}')
+        return (f'⇒{layer_display(layer)}', f'&to {layer_display(layer)}')
 
     # Custom behavior / macro reference like &mm_vim_g, &td_vim_d, &macro_vim_dd
     if b.startswith('&'):
@@ -477,7 +477,7 @@ def summarize_macro(bindings: list[str]) -> str:
             if inner:
                 parts.append(format_keycode(inner.group(1)))
         elif b.startswith('&to '):
-            parts.append(f'レイヤー {layer_display(b[4:].strip())} へ')
+            parts.append(f'⇒{layer_display(b[4:].strip())}')
         else:
             parts.append(b)
     return ' ▸ '.join(parts)
