@@ -16,7 +16,6 @@
   }
   h1 { border-bottom: 2px solid #d0d7de; padding-bottom: .3em; }
   h2 { border-bottom: 1px solid #d0d7de; padding-bottom: .3em; margin-top: 2em; }
-  h3 { margin-top: 1.6em; }
   table {
     border-collapse: collapse;
     width: 100%;
@@ -30,7 +29,14 @@
     vertical-align: middle;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
-  /* "■ Row N" heading rows are highlighted via inline background-color. */
+  /* Layer separator row inside the merged per-mode table. */
+  tr.layer-row th {
+    background: #e1ecf4;
+    text-align: left;
+    font-size: 14px;
+    padding: 8px;
+  }
+  /* "Row N" heading rows are highlighted via inline background-color. */
   code {
     background: rgba(175,184,193,.2);
     padding: .1em .3em;
@@ -47,10 +53,9 @@
 <ul>
 <li>各 row セクション行に「キーラベル」と「バインディング (<code>&amp;...</code>)」の 2 段表示でキー位置を示す。</li>
 <li>列は物理配列の左→右順。左右分割は中央の空列で分離する。</li>
-<li>各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。</li>
+<li>各表の左端 1 列が「操作」（タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。</li>
 </ul>
 <h2>動作</h2>
-<h3>DEFAULT レイヤー</h3>
 <table>
 <thead>
 <tr>
@@ -71,8 +76,9 @@
 </tr>
 </thead>
 <tbody>
+<tr class="layer-row"><th colspan="14">DEFAULT レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;kp Q</code></td>
 <td>W<br><code>&amp;kp W</code></td>
 <td>E<br><code>&amp;kp E</code></td>
@@ -88,7 +94,7 @@
 <td>P<br><code>&amp;kp P</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>Q</td>
 <td>W</td>
 <td>E</td>
@@ -104,7 +110,7 @@
 <td>P</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;mt LEFT_CONTROL A</code></td>
 <td>S<br><code>&amp;kp S</code></td>
 <td>D<br><code>&amp;kp D</code></td>
@@ -120,7 +126,7 @@
 <td>-<br><code>&amp;mt RCTRL MINUS</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>A</td>
 <td>S</td>
 <td>D</td>
@@ -152,7 +158,7 @@
 <td>RCtrl</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;mt LEFT_SHIFT Z</code></td>
 <td>X<br><code>&amp;kp X</code></td>
 <td>C<br><code>&amp;kp C</code></td>
@@ -168,7 +174,7 @@
 <td>/<br><code>&amp;mt RIGHT_SHIFT SLASH</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>Z</td>
 <td>X</td>
 <td>C</td>
@@ -200,7 +206,7 @@
 <td>RShift</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;mo 6</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
@@ -216,7 +222,7 @@
 <td>mo6 (R outer)<br><code>&amp;mo 6</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>L6</td>
 <td>LWin</td>
 <td>LAlt</td>
@@ -247,31 +253,9 @@
 <td>〃</td>
 <td>〃</td>
 </tr>
-</tbody>
-</table>
-<h3>SYMBOL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;kp N1</code></td>
 <td>W<br><code>&amp;kp N2</code></td>
 <td>E<br><code>&amp;kp N3</code></td>
@@ -287,7 +271,7 @@
 <td>P<br><code>&amp;kp N0</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>1</td>
 <td>2</td>
 <td>3</td>
@@ -303,7 +287,7 @@
 <td>0</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;mt LCTRL TAB</code></td>
 <td>S<br><code>&amp;kp GRAVE</code></td>
 <td>D<br><code>&amp;kp LEFT_BRACKET</code></td>
@@ -319,7 +303,7 @@
 <td>-<br><code>&amp;trans</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>TAB</td>
 <td>&#96;</td>
 <td>[</td>
@@ -351,7 +335,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;mt LEFT_SHIFT ESCAPE</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -367,7 +351,7 @@
 <td>/<br><code>&amp;trans</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>ESC</td>
 <td></td>
 <td></td>
@@ -399,7 +383,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
@@ -415,7 +399,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>▽</td>
 <td>▽</td>
@@ -446,31 +430,9 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_1 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;mm_vim_w</code></td>
 <td>E<br><code>&amp;kp LC(RIGHT)</code></td>
@@ -486,7 +448,7 @@
 <td>P<br><code>&amp;kp LC(V)</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>Ctrl+→</td>
 <td>Ctrl+→</td>
@@ -550,7 +512,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;mm_vim_ctrl_then_shift_d</code></td>
@@ -566,7 +528,7 @@
 <td>-<br><code>&amp;kp RCTRL</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>LCtrl</td>
 <td></td>
 <td></td>
@@ -630,7 +592,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;kp LEFT_SHIFT</code></td>
 <td>X<br><code>&amp;kp DELETE</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -646,7 +608,7 @@
 <td>/<br><code>&amp;kp RIGHT_SHIFT</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>LShift</td>
 <td>DEL</td>
 <td></td>
@@ -678,7 +640,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
@@ -694,7 +656,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>▽</td>
 <td>▽</td>
@@ -725,31 +687,9 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_2 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;none</code></td>
 <td>E<br><code>&amp;none</code></td>
@@ -765,7 +705,7 @@
 <td>P<br><code>&amp;kp HOME</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -797,7 +737,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -813,7 +753,7 @@
 <td>-<br><code>&amp;kp RCTRL</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>LCtrl</td>
 <td></td>
 <td></td>
@@ -829,7 +769,7 @@
 <td>RCtrl</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;kp LEFT_SHIFT</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -845,7 +785,7 @@
 <td>/<br><code>&amp;kp RIGHT_SHIFT</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>LShift</td>
 <td></td>
 <td></td>
@@ -861,7 +801,7 @@
 <td>RShift</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
@@ -877,7 +817,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>▽</td>
 <td>▽</td>
@@ -892,31 +832,9 @@
 <td>▽</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>MOUSE レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">MOUSE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;none</code></td>
 <td>E<br><code>&amp;none</code></td>
@@ -932,7 +850,7 @@
 <td>P<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -948,7 +866,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;none</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -964,7 +882,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -980,7 +898,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -996,7 +914,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1012,7 +930,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -1028,7 +946,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1043,31 +961,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>SCROLL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;none</code></td>
 <td>E<br><code>&amp;none</code></td>
@@ -1083,7 +979,7 @@
 <td>P<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1099,7 +995,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;none</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -1115,7 +1011,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1131,7 +1027,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -1147,7 +1043,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1163,7 +1059,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -1179,7 +1075,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1194,31 +1090,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>FUNCTION レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">FUNCTION レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;kp F1</code></td>
 <td>W<br><code>&amp;kp F2</code></td>
 <td>E<br><code>&amp;kp F3</code></td>
@@ -1234,7 +1108,7 @@
 <td>P<br><code>&amp;kp F10</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>F1</td>
 <td>F2</td>
 <td>F3</td>
@@ -1250,7 +1124,7 @@
 <td>F10</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;none</code></td>
 <td>S<br><code>&amp;sys_reset</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -1266,7 +1140,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1282,7 +1156,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -1298,7 +1172,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1314,7 +1188,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -1330,7 +1204,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1345,31 +1219,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>BLUETOOTH レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">BLUETOOTH レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;bt BT_SEL 0</code></td>
 <td>W<br><code>&amp;bt BT_SEL 1</code></td>
 <td>E<br><code>&amp;bt BT_SEL 2</code></td>
@@ -1385,7 +1237,7 @@
 <td>P<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1401,7 +1253,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;bt BT_CLR_ALL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -1417,7 +1269,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1433,7 +1285,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;bt BT_CLR</code></td>
@@ -1449,7 +1301,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1465,7 +1317,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -1481,7 +1333,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1496,31 +1348,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_VISUAL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_VISUAL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;kp LS(LC(RIGHT))</code></td>
 <td>E<br><code>&amp;kp LS(LC(RIGHT))</code></td>
@@ -1536,7 +1366,7 @@
 <td>P<br><code>&amp;macro_vim_visual_p</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>Shift+Ctrl+→</td>
 <td>Shift+Ctrl+→</td>
@@ -1552,7 +1382,7 @@
 <td>LShift ▸ RShift ▸ Ctrl+V ▸ レイヤー 0 へ</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;macro_vim_visual_cut</code></td>
@@ -1568,7 +1398,7 @@
 <td>-<br><code>&amp;kp RCTRL</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>LCtrl</td>
 <td></td>
 <td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー 0 へ</td>
@@ -1616,7 +1446,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;kp LEFT_SHIFT</code></td>
 <td>X<br><code>&amp;macro_vim_visual_cut</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -1632,7 +1462,7 @@
 <td>/<br><code>&amp;kp RIGHT_SHIFT</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>LShift</td>
 <td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー 0 へ</td>
 <td></td>
@@ -1648,7 +1478,7 @@
 <td>RShift</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -1664,7 +1494,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1682,7 +1512,6 @@
 </tbody>
 </table>
 <h2>経路</h2>
-<h3>DEFAULT レイヤー</h3>
 <table>
 <thead>
 <tr>
@@ -1703,8 +1532,9 @@
 </tr>
 </thead>
 <tbody>
+<tr class="layer-row"><th colspan="14">DEFAULT レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;kp Q</code></td>
 <td>W<br><code>&amp;kp W</code></td>
 <td>E<br><code>&amp;kp E</code></td>
@@ -1720,7 +1550,7 @@
 <td>P<br><code>&amp;kp P</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp Q</td>
 <td>&amp;kp W</td>
 <td>&amp;kp E</td>
@@ -1736,7 +1566,7 @@
 <td>&amp;kp P</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;mt LEFT_CONTROL A</code></td>
 <td>S<br><code>&amp;kp S</code></td>
 <td>D<br><code>&amp;kp D</code></td>
@@ -1752,7 +1582,7 @@
 <td>-<br><code>&amp;mt RCTRL MINUS</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;mt LEFT_CONTROL A</td>
 <td>&amp;kp S</td>
 <td>&amp;kp D</td>
@@ -1784,7 +1614,7 @@
 <td>&amp;mt RCTRL MINUS</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;mt LEFT_SHIFT Z</code></td>
 <td>X<br><code>&amp;kp X</code></td>
 <td>C<br><code>&amp;kp C</code></td>
@@ -1800,7 +1630,7 @@
 <td>/<br><code>&amp;mt RIGHT_SHIFT SLASH</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;mt LEFT_SHIFT Z</td>
 <td>&amp;kp X</td>
 <td>&amp;kp C</td>
@@ -1832,7 +1662,7 @@
 <td>&amp;mt RIGHT_SHIFT SLASH</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;mo 6</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
@@ -1848,7 +1678,7 @@
 <td>mo6 (R outer)<br><code>&amp;mo 6</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;mo 6</td>
 <td>&amp;kp LEFT_WIN</td>
 <td>&amp;kp LEFT_ALT</td>
@@ -1879,31 +1709,9 @@
 <td>〃</td>
 <td>〃</td>
 </tr>
-</tbody>
-</table>
-<h3>SYMBOL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;kp N1</code></td>
 <td>W<br><code>&amp;kp N2</code></td>
 <td>E<br><code>&amp;kp N3</code></td>
@@ -1919,7 +1727,7 @@
 <td>P<br><code>&amp;kp N0</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp N1</td>
 <td>&amp;kp N2</td>
 <td>&amp;kp N3</td>
@@ -1935,7 +1743,7 @@
 <td>&amp;kp N0</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;mt LCTRL TAB</code></td>
 <td>S<br><code>&amp;kp GRAVE</code></td>
 <td>D<br><code>&amp;kp LEFT_BRACKET</code></td>
@@ -1951,7 +1759,7 @@
 <td>-<br><code>&amp;trans</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;mt LCTRL TAB</td>
 <td>&amp;kp GRAVE</td>
 <td>&amp;kp LEFT_BRACKET</td>
@@ -1983,7 +1791,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;mt LEFT_SHIFT ESCAPE</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -1999,7 +1807,7 @@
 <td>/<br><code>&amp;trans</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;mt LEFT_SHIFT ESCAPE</td>
 <td></td>
 <td></td>
@@ -2031,7 +1839,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
@@ -2047,7 +1855,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>▽</td>
 <td>▽</td>
@@ -2078,31 +1886,9 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_1 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;mm_vim_w</code></td>
 <td>E<br><code>&amp;kp LC(RIGHT)</code></td>
@@ -2118,7 +1904,7 @@
 <td>P<br><code>&amp;kp LC(V)</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>mm_vim_w[0] → &amp;kp LC(RIGHT)</td>
 <td>&amp;kp LC(RIGHT)</td>
@@ -2182,7 +1968,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;mm_vim_ctrl_then_shift_d</code></td>
@@ -2198,7 +1984,7 @@
 <td>-<br><code>&amp;kp RCTRL</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp LCTRL</td>
 <td></td>
 <td>mm_vim_ctrl_then_shift_d[0] → mm_vim_shift_d[0] → td_vim_d[0] → &amp;none</td>
@@ -2262,7 +2048,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;kp LEFT_SHIFT</code></td>
 <td>X<br><code>&amp;kp DELETE</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -2278,7 +2064,7 @@
 <td>/<br><code>&amp;kp RIGHT_SHIFT</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp LEFT_SHIFT</td>
 <td>&amp;kp DELETE</td>
 <td></td>
@@ -2310,7 +2096,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
@@ -2326,7 +2112,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>▽</td>
 <td>▽</td>
@@ -2357,31 +2143,9 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_2 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;none</code></td>
 <td>E<br><code>&amp;none</code></td>
@@ -2397,7 +2161,7 @@
 <td>P<br><code>&amp;kp HOME</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2429,7 +2193,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -2445,7 +2209,7 @@
 <td>-<br><code>&amp;kp RCTRL</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp LCTRL</td>
 <td></td>
 <td></td>
@@ -2461,7 +2225,7 @@
 <td>&amp;kp RCTRL</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;kp LEFT_SHIFT</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -2477,7 +2241,7 @@
 <td>/<br><code>&amp;kp RIGHT_SHIFT</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp LEFT_SHIFT</td>
 <td></td>
 <td></td>
@@ -2493,7 +2257,7 @@
 <td>&amp;kp RIGHT_SHIFT</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
@@ -2509,7 +2273,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>▽</td>
 <td>▽</td>
@@ -2524,31 +2288,9 @@
 <td>▽</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>MOUSE レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">MOUSE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;none</code></td>
 <td>E<br><code>&amp;none</code></td>
@@ -2564,7 +2306,7 @@
 <td>P<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2580,7 +2322,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;none</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -2596,7 +2338,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2612,7 +2354,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -2628,7 +2370,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2644,7 +2386,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -2660,7 +2402,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2675,31 +2417,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>SCROLL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;none</code></td>
 <td>E<br><code>&amp;none</code></td>
@@ -2715,7 +2435,7 @@
 <td>P<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2731,7 +2451,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;none</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -2747,7 +2467,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2763,7 +2483,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -2779,7 +2499,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2795,7 +2515,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -2811,7 +2531,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2826,31 +2546,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>FUNCTION レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">FUNCTION レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;kp F1</code></td>
 <td>W<br><code>&amp;kp F2</code></td>
 <td>E<br><code>&amp;kp F3</code></td>
@@ -2866,7 +2564,7 @@
 <td>P<br><code>&amp;kp F10</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp F1</td>
 <td>&amp;kp F2</td>
 <td>&amp;kp F3</td>
@@ -2882,7 +2580,7 @@
 <td>&amp;kp F10</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;none</code></td>
 <td>S<br><code>&amp;sys_reset</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -2898,7 +2596,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>&amp;sys_reset</td>
 <td></td>
@@ -2914,7 +2612,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -2930,7 +2628,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2946,7 +2644,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -2962,7 +2660,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2977,31 +2675,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>BLUETOOTH レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">BLUETOOTH レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;bt BT_SEL 0</code></td>
 <td>W<br><code>&amp;bt BT_SEL 1</code></td>
 <td>E<br><code>&amp;bt BT_SEL 2</code></td>
@@ -3017,7 +2693,7 @@
 <td>P<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;bt BT_SEL 0</td>
 <td>&amp;bt BT_SEL 1</td>
 <td>&amp;bt BT_SEL 2</td>
@@ -3033,7 +2709,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;bt BT_CLR_ALL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;none</code></td>
@@ -3049,7 +2725,7 @@
 <td>-<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;bt BT_CLR_ALL</td>
 <td></td>
 <td></td>
@@ -3065,7 +2741,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;none</code></td>
 <td>X<br><code>&amp;none</code></td>
 <td>C<br><code>&amp;bt BT_CLR</code></td>
@@ -3081,7 +2757,7 @@
 <td>/<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td>&amp;bt BT_CLR</td>
@@ -3097,7 +2773,7 @@
 <td></td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -3113,7 +2789,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -3128,31 +2804,9 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_VISUAL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_VISUAL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 1 (QWERTY 上段)</td>
+<td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
 <td>W<br><code>&amp;kp LS(LC(RIGHT))</code></td>
 <td>E<br><code>&amp;kp LS(LC(RIGHT))</code></td>
@@ -3168,7 +2822,7 @@
 <td>P<br><code>&amp;macro_vim_visual_p</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td>&amp;kp LS(LC(RIGHT))</td>
 <td>&amp;kp LS(LC(RIGHT))</td>
@@ -3184,7 +2838,7 @@
 <td>macro_vim_visual_p</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 2 (home row)</td>
+<td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
 <td>D<br><code>&amp;macro_vim_visual_cut</code></td>
@@ -3200,7 +2854,7 @@
 <td>-<br><code>&amp;kp RCTRL</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp LCTRL</td>
 <td></td>
 <td>macro_vim_visual_cut</td>
@@ -3248,7 +2902,7 @@
 <td>〃</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 3 (Z row)</td>
+<td>Row 3</td>
 <td>Z<br><code>&amp;kp LEFT_SHIFT</code></td>
 <td>X<br><code>&amp;macro_vim_visual_cut</code></td>
 <td>C<br><code>&amp;none</code></td>
@@ -3264,7 +2918,7 @@
 <td>/<br><code>&amp;kp RIGHT_SHIFT</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td>&amp;kp LEFT_SHIFT</td>
 <td>macro_vim_visual_cut</td>
 <td></td>
@@ -3280,7 +2934,7 @@
 <td>&amp;kp RIGHT_SHIFT</td>
 </tr>
 <tr style="background-color:#fff3cd">
-<td>■ Row 4 (thumb)</td>
+<td>Row 4</td>
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;none</code></td>
 <td>LAlt<br><code>&amp;none</code></td>
@@ -3296,7 +2950,7 @@
 <td>mo6 (R outer)<br><code>&amp;none</code></td>
 </tr>
 <tr>
-<td>単発タップ</td>
+<td>タップ</td>
 <td></td>
 <td></td>
 <td></td>
