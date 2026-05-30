@@ -1,8 +1,8 @@
 """
 keymap_docgen.py
 
-ZMK keymap (.keymap) の指定した 1 つ以上のレイヤーの全キー割り当てを以下 2 形式で出力する
-ドキュメンテーション生成ツール：
+ZMK keymap (.keymap) のレイヤー（指定がなければ全レイヤー）の全キー割り当てを以下 2 形式で
+出力するドキュメンテーション生成ツール：
 
   1. Excel ファイル (.xlsx)
        - "動作" シートと "経路" シートを生成し、各シートに全レイヤーの表を縦に並べる
@@ -19,13 +19,18 @@ mod-morph (LSHIFT/RSHIFT, LCTL/RCTL), tap-dance, layer-tap, momentary-layer
 など標準的な ZMK behavior を解析し、再帰的に動作を解決する。
 
 Usage:
-    python keymap_docgen.py <keymap_file> <layer_name> [<layer_name> ...] [-o output.xlsx]
+    python keymap_docgen.py <keymap_file> [<layer_name> ...] [-o output.xlsx]
+
+    レイヤー名を省略すると、keymap 内の全レイヤーを定義順で出力する。
 
 出力先：
     -o で指定した .xlsx と同じディレクトリ／同じベース名で .html も生成される
-    （-o を省略するとレイヤー単独時は <layer>_keymap.xlsx、複数時は keymap.xlsx）
+    （-o を省略するとレイヤー単独時は <layer>_keymap.xlsx、それ以外は keymap.xlsx）
 
 Examples:
+    # 全レイヤーを定義順で出力（レイヤー名の指定を省略）
+    python tools/keymap_docgen.py config/AroundForty-RB.keymap -o KEYMAP.xlsx
+    # 特定のレイヤーだけ出力
     python tools/keymap_docgen.py config/AroundForty-RB.keymap VIM_NORMAL_1 -o KEYMAP.xlsx
     python tools/keymap_docgen.py config/AroundForty-RB.keymap VIM_NORMAL_1 VIM_NORMAL_2 VIM_VISUAL -o KEYMAP.xlsx
 """
@@ -171,6 +176,29 @@ def parse_layer(content: str, layer_name: str) -> str | None:
                 return m2.group(1)
         i = range_[1] + 1
     return None
+
+
+def parse_all_layer_names(content: str) -> list[str]:
+    """Return all layer names defined in the keymap block, in definition order."""
+    keymap_block = extract_named_block(content, 'keymap')
+    if not keymap_block:
+        return []
+    names = []
+    i = 0
+    while i < len(keymap_block):
+        m = re.search(r'(\w+)\s*\{', keymap_block[i:])
+        if not m:
+            break
+        brace_pos = i + m.end() - 1
+        range_ = find_balanced_block(keymap_block, brace_pos)
+        if not range_:
+            break
+        body = keymap_block[range_[0]:range_[1]]
+        # Only treat blocks that actually have bindings as layers.
+        if re.search(r'bindings\s*=\s*<', body):
+            names.append(m.group(1))
+        i = range_[1] + 1
+    return names
 
 
 def split_layer_bindings(text: str) -> list[str]:
@@ -996,11 +1024,13 @@ def write_html(layers_data: list[tuple[str, list[str]]],
 
 def main() -> int:
     p = argparse.ArgumentParser(
-        description='Generate Excel (.xlsx) and standalone HTML (.html) docs for one or more ZMK keymap layers'
+        description='Generate Excel (.xlsx) and standalone HTML (.html) docs for ZMK keymap layers '
+                    '(all layers by default, or only the layer names given)'
     )
     p.add_argument('keymap', help='Path to .keymap file')
-    p.add_argument('layers', nargs='+',
-                   help='One or more layer names (e.g., VIM_NORMAL_1 VIM_NORMAL_2 VIM_VISUAL)')
+    p.add_argument('layers', nargs='*',
+                   help='Zero or more layer names (e.g., VIM_NORMAL_1 VIM_NORMAL_2 VIM_VISUAL). '
+                        'If omitted, all layers in the keymap are output in definition order.')
     p.add_argument('-o', '--output', help='Output .xlsx path (default: <layer>_keymap.xlsx or keymap.xlsx)')
     p.add_argument('-l', '--layout',
                    help='Path to the physical-layout JSON (default: keymap path with .json suffix)')
@@ -1013,11 +1043,17 @@ def main() -> int:
 
     content = strip_comments(keymap_path.read_text(encoding='utf-8'))
 
+    # Default to every layer (in definition order) when none are specified.
+    layer_names = args.layers if args.layers else parse_all_layer_names(content)
+    if not layer_names:
+        print('error: no layers found in keymap.', file=sys.stderr)
+        return 1
+
     macros = parse_macros(content)
     behaviors = parse_behaviors(content)
 
     layers_data: list[tuple[str, list[str]]] = []
-    for layer_name in args.layers:
+    for layer_name in layer_names:
         layer_text = parse_layer(content, layer_name)
         if layer_text is None:
             print(f'error: layer "{layer_name}" not found.', file=sys.stderr)
@@ -1046,8 +1082,8 @@ def main() -> int:
 
     if args.output:
         output_path = Path(args.output)
-    elif len(args.layers) == 1:
-        output_path = Path(f'{args.layers[0]}_keymap.xlsx')
+    elif len(layer_names) == 1:
+        output_path = Path(f'{layer_names[0]}_keymap.xlsx')
     else:
         output_path = Path('keymap.xlsx')
 
