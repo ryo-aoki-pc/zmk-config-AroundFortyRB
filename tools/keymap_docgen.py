@@ -929,7 +929,8 @@ HTML_STYLE = """\
     white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
-  td.ml { text-align: left; }   /* 複数行にわたるセルは左寄せにする */
+  /* 複数行セルは各行を左揃え、ブロック自体はセル内で中央に配置する。 */
+  span.ml { display: inline-block; text-align: left; }
   /* Layer separator row inside the merged per-mode table. */
   tr.layer-row th {
     background: #e1ecf4;
@@ -1019,9 +1020,10 @@ def _html_body_rows(rows: list[dict]) -> list[str]:
             for value in row['values']:
                 lines = _split_cell_lines(value)
                 cell = '<br>'.join(_html_text(line) for line in lines)
-                # 複数行にわたるセルは左寄せにして読みやすくする。
-                td = '<td class="ml">' if len(lines) > 1 else '<td>'
-                out.append(f'{td}{cell}</td>')
+                # 複数行セルは各行を左揃えしつつ、ブロックをセル内で中央に置く。
+                if len(lines) > 1:
+                    cell = f'<span class="ml">{cell}</span>'
+                out.append(f'<td>{cell}</td>')
             out.append('</tr>')
     return out
 
