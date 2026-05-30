@@ -8,5 +8,6 @@ modules/
 *.hex
 *.xls
 *.xlsx
+!KEYMAP.xlsx
 __pycache__/
 *.pyc
