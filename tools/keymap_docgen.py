@@ -285,10 +285,10 @@ KEYCODE_LABELS = {
 }
 
 MOD_PREFIX = {
-    'LC': 'Ctrl', 'RC': 'Ctrl',
-    'LS': 'Shift', 'RS': 'Shift',
-    'LA': 'Alt', 'RA': 'Alt',
-    'LG': 'Win', 'RG': 'Win',
+    'LC': '⌃', 'RC': '⌃',
+    'LS': '⇧', 'RS': '⇧',
+    'LA': '⌥', 'RA': '⌥',
+    'LG': '⌘', 'RG': '⌘',
 }
 
 
@@ -296,7 +296,7 @@ def format_keycode(kc: str) -> str:
     kc = kc.strip()
     m = re.match(r'(LC|LS|LA|LG|RC|RS|RA|RG)\((.+)\)$', kc)
     if m:
-        return f"{MOD_PREFIX[m.group(1)]}+{format_keycode(m.group(2))}"
+        return f"{MOD_PREFIX[m.group(1)]}{format_keycode(m.group(2))}"
     return KEYCODE_LABELS.get(kc, kc)
 
 
