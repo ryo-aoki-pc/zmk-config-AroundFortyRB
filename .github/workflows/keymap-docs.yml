@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: pip install openpyxl
 
-      - name: Regenerate KEYMAP.md
+      - name: Regenerate KEYMAP docs
         run: python tools/keymap_docgen.py config/AroundForty-RB.keymap DEFAULT SYMBOL VIM_NORMAL_1 VIM_NORMAL_2 MOUSE SCROLL FUNCTION BLUETOOTH VIM_VISUAL -o KEYMAP.xlsx
 
       - name: Commit KEYMAP docs if changed
@@ -34,10 +34,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add KEYMAP.md KEYMAP.xlsx
+          git add KEYMAP.html KEYMAP.xlsx
           if git diff --cached --quiet; then
             echo "KEYMAP docs are up to date."
           else
-            git commit -m "docs: regenerate KEYMAP.md and KEYMAP.xlsx from keymap"
+            git commit -m "docs: regenerate KEYMAP.html and KEYMAP.xlsx from keymap"
             git push origin HEAD:${GITHUB_REF#refs/heads/}
           fi

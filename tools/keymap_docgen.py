@@ -5,12 +5,11 @@ ZMK keymap (.keymap) の指定した 1 つ以上のレイヤーの全キー割�
 ドキュメンテーション生成ツール：
 
   1. Excel ファイル (.xlsx)
-       - 単一レイヤー指定時: "動作" シートと "経路" シートを生成（QWERTY 物理配列）
-       - 複数レイヤー指定時: 各レイヤーごとに "<layer> 動作"/"<layer> 経路" シートを生成
-  2. Markdown ファイル (.md)
-       - 同じ内容を Markdown の表で出力（セル内改行に <br> を使用）
-       - 複数レイヤー指定時は 1 ファイル内で「## 動作」セクションに全レイヤーを並べた後、
-         「## 経路」セクションに全レイヤーを再度並べる構成
+       - "動作" シートと "経路" シートを生成し、各シートに全レイヤーの表を縦に並べる
+  2. 自己完結型 HTML ファイル (.html)
+       - 同じ内容を HTML の表で出力（「■ Row N」見出し行を背景色でハイライト）
+       - 複数レイヤー指定時は「動作」セクションに全レイヤーを並べた後、
+         「経路」セクションに全レイヤーを再度並べる構成
 
 それぞれの表は、キーボード物理行ごとに以下の構造を持つ：
   - 左端 1 列: 「操作」 = 単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+
@@ -23,7 +22,7 @@ Usage:
     python keymap_docgen.py <keymap_file> <layer_name> [<layer_name> ...] [-o output.xlsx]
 
 出力先：
-    -o で指定した .xlsx と同じディレクトリ／同じベース名で .md も生成される
+    -o で指定した .xlsx と同じディレクトリ／同じベース名で .html も生成される
     （-o を省略するとレイヤー単独時は <layer>_keymap.xlsx、複数時は keymap.xlsx）
 
 Examples:
@@ -653,19 +652,8 @@ def write_excel(layers_data: list[tuple[str, list[str]]],
 
 
 # ============================================================================
-# Markdown output
+# Shared table data + HTML output
 # ============================================================================
-
-def _escape_md_cell(s) -> str:
-    """Escape a value so it can safely appear inside a Markdown table cell."""
-    if s is None:
-        return ''
-    return (str(s)
-            .replace('\\', '&#92;')
-            .replace('|', '\\|')
-            .replace('`', '&#96;')
-            .replace('\n', '<br>'))
-
 
 def _auto_forms(tap_value: str, op: str) -> set[str]:
     """Values considered 'auto-derived' from tap for the given non-tap op.
@@ -799,95 +787,159 @@ def _build_layer_mode_table(bindings: list[str],
     return header, rows
 
 
-def _markdown_layer_mode_rows(bindings: list[str],
-                              behaviors: dict, macros: dict,
-                              mode: str,
-                              grid, display_cols,
-                              active_indices: set[int] | None = None) -> list[str]:
-    """Render the shared (layer, mode) table (see `_build_layer_mode_table`) as
-    Markdown table lines, with a trailing blank line."""
-    header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
-                                           grid, display_cols, active_indices)
-    if header is None:
-        return []
+HTML_ROW_BG = '#fff3cd'  # '■ Row N' heading-row highlight (matches the Excel fill)
 
-    lines: list[str] = []
-    lines.append('| ' + ' | '.join(header) + ' |')
-    lines.append('|' + '|'.join(['---'] * len(header)) + '|')
+HTML_STYLE = """\
+  body {
+    font-family: -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN",
+                 "Noto Sans JP", Meiryo, sans-serif;
+    line-height: 1.6;
+    color: #1f2328;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+  }
+  h1 { border-bottom: 2px solid #d0d7de; padding-bottom: .3em; }
+  h2 { border-bottom: 1px solid #d0d7de; padding-bottom: .3em; margin-top: 2em; }
+  h3 { margin-top: 1.6em; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0 2em;
+    font-size: 13px;
+  }
+  th, td {
+    border: 1px solid #d0d7de;
+    padding: 4px 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  thead th { background: #f6f8fa; position: sticky; top: 0; }
+  /* "■ Row N" heading rows are highlighted via inline background-color. */
+  code {
+    background: rgba(175,184,193,.2);
+    padding: .1em .3em;
+    border-radius: 4px;
+    font-size: 85%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  tr[style] code { background: rgba(0,0,0,.06); }
+"""
 
+
+def _html_esc(s: str) -> str:
+    """Escape HTML special characters."""
+    return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def _html_text(s: str) -> str:
+    """Escape a table-cell text value. Backtick and backslash are rendered as
+    numeric references (kept from the original Markdown-table escaping) so the
+    output is stable; the leading &amp; substitution runs first so it is safe."""
+    return _html_esc(s).replace('`', '&#96;').replace('\\', '&#92;')
+
+
+def _html_inline(text: str) -> str:
+    """Convert inline `code` spans in prose to <code>…</code>, escaping the rest."""
+    holds: list[str] = []
+
+    def code_repl(m):
+        holds.append('<code>' + _html_esc(m.group(1)) + '</code>')
+        return f'\x00{len(holds) - 1}\x00'
+
+    text = re.sub(r'`([^`]*)`', code_repl, text)
+    text = _html_esc(text)
+    return re.sub(r'\x00(\d+)\x00', lambda m: holds[int(m.group(1))], text)
+
+
+def _html_table_lines(header: list[str], rows: list[dict]) -> list[str]:
+    """Render the shared (layer, mode) table as HTML, one tag per line. The
+    '■ Row N' heading rows carry the key label + binding and are highlighted."""
+    out = ['<table>', '<thead>', '<tr>']
+    for col in header:
+        out.append(f'<th>{_html_text(col)}</th>')
+    out += ['</tr>', '</thead>', '<tbody>']
     for row in rows:
         if row['kind'] == 'heading':
-            cells = [f'■ {_escape_md_cell(row["desc"])}']
+            out.append(f'<tr style="background-color:{HTML_ROW_BG}">')
+            out.append(f'<td>■ {_html_text(row["desc"])}</td>')
             for key in row['keys']:
                 if key is None:
-                    cells.append('')
+                    out.append('<td></td>')
                 else:
                     label, binding = key
-                    cells.append(f'{_escape_md_cell(label)}<br>`{_escape_md_cell(binding)}`')
-            lines.append('| ' + ' | '.join(cells) + ' |')
+                    out.append(f'<td>{_html_text(label)}<br><code>{_html_esc(binding)}</code></td>')
+            out.append('</tr>')
         else:
-            cells = [_escape_md_cell(row['op'])]
+            out.append('<tr>')
+            out.append(f'<td>{_html_text(row["op"])}</td>')
             for value in row['values']:
-                cells.append(value if value in ('', '▽', '〃') else _escape_md_cell(value))
-            lines.append('| ' + ' | '.join(cells) + ' |')
+                out.append(f'<td>{_html_text(value)}</td>')
+            out.append('</tr>')
+    out += ['</tbody>', '</table>']
+    return out
 
-    lines.append('')
-    return lines
 
-
-def write_markdown(layers_data: list[tuple[str, list[str]]],
-                   behaviors: dict, macros: dict, output_path: Path,
-                   grid, display_cols) -> None:
-    """Generate one Markdown file.
+def write_html(layers_data: list[tuple[str, list[str]]],
+               behaviors: dict, macros: dict, output_path: Path,
+               grid, display_cols) -> None:
+    """Generate one standalone HTML file.
     Single layer  => H1 layer title, then H2 動作 / H2 経路.
-    Multi layers  => H1 top title, H2 動作 (each layer at H3), then H2 経路 (each layer at H3)."""
-    lines: list[str] = []
+    Multi layers  => H1 top title, H2 動作 (each layer at H3), then H2 経路."""
+    body: list[str] = []
 
     if len(layers_data) == 1:
         layer_name, bindings = layers_data[0]
-        lines.append(f'# {layer_name} レイヤー キー割り当て一覧')
-        lines.append('')
-        lines.append(
+        body.append(f'<h1>{_html_inline(f"{layer_name} レイヤー キー割り当て一覧")}</h1>')
+        body.append('<p>' + _html_inline(
             f'※ {len(bindings)} 個のバインディング位置を 1 表に集約。'
             f'実機の物理配列に合わせて「■ Row N」セクション行 + 操作行を縦に並べる（左右分割は中央の空列で分離）。'
-        )
-        lines.append('')
-        lines.append('- 各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。')
-        lines.append('- 各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。')
-        lines.append('')
+        ) + '</p>')
+        body.append('<ul>')
+        body.append('<li>' + _html_inline('各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。') + '</li>')
+        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。') + '</li>')
+        body.append('</ul>')
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
-            lines.append(f'## {mode_label}')
-            lines.append('')
-            lines.extend(_markdown_layer_mode_rows(bindings, behaviors, macros, mode,
-                                                   grid, display_cols))
+            body.append(f'<h2>{_html_inline(mode_label)}</h2>')
+            header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
+                                                   grid, display_cols)
+            if header is not None:
+                body += _html_table_lines(header, rows)
     else:
-        lines.append('# キー割り当て一覧')
-        lines.append('')
-        lines.append(
+        body.append(f'<h1>{_html_inline("キー割り当て一覧")}</h1>')
+        body.append('<p>' + _html_inline(
             f'※ {len(layers_data)} 個のレイヤーのキー割り当てを 1 ファイルに集約。'
             f'各レイヤーを実機の物理配列に合わせて「動作」セクションでまとめてから「経路」セクションに進む。'
-        )
-        lines.append('')
-        lines.append('- 各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。')
-        lines.append('- 列は物理配列の左→右順。左右分割は中央の空列で分離する。')
-        lines.append('- 各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。')
-        lines.append('')
+        ) + '</p>')
+        body.append('<ul>')
+        body.append('<li>' + _html_inline('各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。') + '</li>')
+        body.append('<li>' + _html_inline('列は物理配列の左→右順。左右分割は中央の空列で分離する。') + '</li>')
+        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。') + '</li>')
+        body.append('</ul>')
 
         # Positions that are `&none` in DEFAULT, plus the `&mo 7` center-column
         # and raised thumb keys, are hidden in every layer's table.
         active_indices = _compute_active_indices(layers_data)
 
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
-            lines.append(f'## {mode_label}')
-            lines.append('')
+            body.append(f'<h2>{_html_inline(mode_label)}</h2>')
             for layer_name, bindings in layers_data:
-                lines.append(f'### {layer_name} レイヤー')
-                lines.append('')
-                lines.extend(_markdown_layer_mode_rows(bindings, behaviors, macros, mode,
+                body.append(f'<h3>{_html_inline(f"{layer_name} レイヤー")}</h3>')
+                header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
                                                        grid, display_cols,
-                                                       active_indices=active_indices))
+                                                       active_indices=active_indices)
+                if header is not None:
+                    body += _html_table_lines(header, rows)
 
-    output_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    html = (
+        '<!DOCTYPE html>\n<html lang="ja">\n<head>\n'
+        '<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        '<title>キー割り当て一覧</title>\n<style>\n' + HTML_STYLE + '</style>\n</head>\n<body>\n'
+        + '\n'.join(body)
+        + '\n</body>\n</html>\n'
+    )
+    output_path.write_text(html, encoding='utf-8')
 
 
 # ============================================================================
@@ -896,7 +948,7 @@ def write_markdown(layers_data: list[tuple[str, list[str]]],
 
 def main() -> int:
     p = argparse.ArgumentParser(
-        description='Generate Excel (.xlsx) and Markdown (.md) docs for one or more ZMK keymap layers'
+        description='Generate Excel (.xlsx) and standalone HTML (.html) docs for one or more ZMK keymap layers'
     )
     p.add_argument('keymap', help='Path to .keymap file')
     p.add_argument('layers', nargs='+',
@@ -955,12 +1007,12 @@ def main() -> int:
         write_excel(layers_data, behaviors, macros, output_path, grid, display_cols)
         print(f'saved: {output_path}')
     else:
-        print('warning: openpyxl not installed; skipping .xlsx (Markdown still generated)',
+        print('warning: openpyxl not installed; skipping .xlsx (HTML still generated)',
               file=sys.stderr)
 
-    md_path = output_path.with_suffix('.md')
-    write_markdown(layers_data, behaviors, macros, md_path, grid, display_cols)
-    print(f'saved: {md_path}')
+    html_path = output_path.with_suffix('.html')
+    write_html(layers_data, behaviors, macros, html_path, grid, display_cols)
+    print(f'saved: {html_path}')
     return 0
 
 
