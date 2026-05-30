@@ -45,6 +45,16 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   tr[style] code { background: rgba(0,0,0,.06); }
+  /* 経路テーブルのセルは等幅・左寄せ・折り返しで読みやすくする。 */
+  table.route td {
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+  }
+  table.route td:first-child { white-space: nowrap; }   /* 「操作」「Row N」列は折り返さない */
 </style>
 </head>
 <body>
@@ -164,9 +174,9 @@
 <td>C<br><code>&amp;kp C</code></td>
 <td>V<br><code>&amp;kp V</code></td>
 <td>B<br><code>&amp;kp B</code></td>
-<td>(center mo7)<br><code>&amp;mo BT</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;mo BT</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;kp N</code></td>
 <td>M<br><code>&amp;kp M</code></td>
 <td>,<br><code>&amp;kp COMMA</code></td>
@@ -207,35 +217,51 @@
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 4</td>
-<td>mo6 (L outer)<br><code>&amp;mo FUNC</code></td>
+<td>mo6 (L outer)<br><code>&amp;mo FUNCTION</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N1 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N1 SPACE</code></td>
-<td>mo1 (L center)<br><code>&amp;mo SYM</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>mo1 (L center)<br><code>&amp;mo SYMBOL</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_N1</code></td>
-<td>lt1 ENTER<br><code>&amp;lt SYM ENTER</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_1</code></td>
+<td>lt1 ENTER<br><code>&amp;lt SYMBOL ENTER</code></td>
 <td></td>
 <td></td>
-<td>mo6 (R)<br><code>&amp;mo FUNC</code></td>
-<td>mo6 (R outer)<br><code>&amp;mo FUNC</code></td>
+<td>mo6 (R)<br><code>&amp;mo FUNCTION</code></td>
+<td>mo6 (R outer)<br><code>&amp;mo FUNCTION</code></td>
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
+<td>L6</td>
 <td>LWin</td>
 <td>LAlt</td>
+<td>SPACE</td>
+<td>SPACE</td>
+<td>L1</td>
+<td></td>
+<td>L2</td>
+<td>ENTER</td>
 <td></td>
 <td></td>
+<td>L6</td>
+<td>L6</td>
+</tr>
+<tr>
+<td>ホールド</td>
+<td>〃</td>
+<td>〃</td>
+<td>〃</td>
+<td>L2</td>
+<td>L2</td>
+<td>〃</td>
+<td></td>
+<td>〃</td>
+<td>L1</td>
 <td></td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>〃</td>
+<td>〃</td>
 </tr>
 <tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
@@ -325,9 +351,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;kp EQUAL</code></td>
 <td>,<br><code>&amp;trans</code></td>
@@ -371,11 +397,11 @@
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N2 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
 <td>mo1 (L center)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_N2</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td>lt1 ENTER<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
@@ -387,15 +413,31 @@
 <td></td>
 <td>▽</td>
 <td>▽</td>
+<td>SPACE</td>
+<td>SPACE</td>
 <td></td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>L3</td>
 <td></td>
 <td></td>
 <td></td>
 <td>▽</td>
+<td></td>
+</tr>
+<tr>
+<td>ホールド</td>
+<td></td>
+<td>〃</td>
+<td>〃</td>
+<td>L3</td>
+<td>L3</td>
+<td></td>
+<td></td>
+<td>〃</td>
+<td></td>
+<td></td>
+<td></td>
+<td>〃</td>
 <td></td>
 </tr>
 <tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
@@ -566,9 +608,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;mm_vim_v</code></td>
 <td>B<br><code>&amp;kp LC(LEFT)</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;mm_vim_n</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -580,7 +622,7 @@
 <td>LShift</td>
 <td>DEL</td>
 <td></td>
-<td></td>
+<td>⇒L8</td>
 <td>Ctrl+←</td>
 <td></td>
 <td></td>
@@ -596,7 +638,7 @@
 <td>〃</td>
 <td>〃</td>
 <td></td>
-<td>HOME ▸ Shift+↓ ▸ レイヤー VISUAL へ</td>
+<td>HOME ▸ Shift+↓ ▸ レイヤー VIM_VISUAL へ</td>
 <td>〃</td>
 <td></td>
 <td></td>
@@ -614,10 +656,10 @@
 <td>LAlt<br><code>&amp;trans</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
-<td>mo1 (L center)<br><code>&amp;mo VIM_N2</code></td>
+<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td></td>
 <td>mo2<br><code>&amp;none</code></td>
-<td>lt1 ENTER<br><code>&amp;lt VIM_N2 ENTER</code></td>
+<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_2 ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;trans</code></td>
@@ -630,13 +672,29 @@
 <td>▽</td>
 <td></td>
 <td></td>
+<td>L3</td>
 <td></td>
 <td></td>
-<td></td>
-<td></td>
+<td>ENTER</td>
 <td></td>
 <td></td>
 <td>▽</td>
+<td></td>
+</tr>
+<tr>
+<td>ホールド</td>
+<td></td>
+<td>〃</td>
+<td>〃</td>
+<td></td>
+<td></td>
+<td>〃</td>
+<td></td>
+<td></td>
+<td>L3</td>
+<td></td>
+<td></td>
+<td>〃</td>
 <td></td>
 </tr>
 <tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
@@ -727,9 +785,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -829,7 +887,7 @@
 <td></td>
 <td>H<br><code>&amp;none</code></td>
 <td>J<br><code>&amp;none</code></td>
-<td>K<br><code>&amp;mo SCRL</code></td>
+<td>K<br><code>&amp;mo SCROLL</code></td>
 <td>L<br><code>&amp;none</code></td>
 <td>-<br><code>&amp;none</code></td>
 </tr>
@@ -845,7 +903,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
+<td>L5</td>
 <td></td>
 <td></td>
 </tr>
@@ -856,9 +914,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -985,9 +1043,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;mkp MB4</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1114,9 +1172,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;bootloader</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;bootloader</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1243,9 +1301,9 @@
 <td>C<br><code>&amp;bt BT_CLR</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;out OUT_BLE</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1327,11 +1385,11 @@
 <td></td>
 <td></td>
 <td></td>
-<td>LShift ▸ RShift ▸ Ctrl+C ▸ → ▸ レイヤー BASE へ</td>
+<td>LShift ▸ RShift ▸ Ctrl+C ▸ → ▸ レイヤー DEFAULT へ</td>
 <td></td>
 <td></td>
 <td></td>
-<td>LShift ▸ RShift ▸ Ctrl+V ▸ レイヤー BASE へ</td>
+<td>LShift ▸ RShift ▸ Ctrl+V ▸ レイヤー DEFAULT へ</td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -1353,7 +1411,7 @@
 <td>タップ</td>
 <td>LCtrl</td>
 <td></td>
-<td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー BASE へ</td>
+<td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー DEFAULT へ</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1404,9 +1462,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;macro_vim_visual_exit</code></td>
 <td>B<br><code>&amp;kp LS(LC(LEFT))</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;kp F3</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1416,9 +1474,9 @@
 <tr>
 <td>タップ</td>
 <td>LShift</td>
-<td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー BASE へ</td>
+<td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー DEFAULT へ</td>
 <td></td>
-<td>LShift ▸ RShift ▸ → ▸ レイヤー BASE へ</td>
+<td>LShift ▸ RShift ▸ → ▸ レイヤー DEFAULT へ</td>
 <td>Shift+Ctrl+←</td>
 <td></td>
 <td></td>
@@ -1464,7 +1522,7 @@
 </tbody>
 </table>
 <h2>経路</h2>
-<table>
+<table class="route">
 <thead>
 <tr>
 <th>操作</th>
@@ -1572,9 +1630,9 @@
 <td>C<br><code>&amp;kp C</code></td>
 <td>V<br><code>&amp;kp V</code></td>
 <td>B<br><code>&amp;kp B</code></td>
-<td>(center mo7)<br><code>&amp;mo BT</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;mo BT</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;kp N</code></td>
 <td>M<br><code>&amp;kp M</code></td>
 <td>,<br><code>&amp;kp COMMA</code></td>
@@ -1588,9 +1646,9 @@
 <td>&amp;kp C</td>
 <td>&amp;kp V</td>
 <td>&amp;kp B</td>
-<td>&amp;mo BT</td>
 <td></td>
-<td>&amp;mo BT</td>
+<td></td>
+<td></td>
 <td>&amp;kp N</td>
 <td>&amp;kp M</td>
 <td>&amp;kp COMMA</td>
@@ -1615,35 +1673,51 @@
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 4</td>
-<td>mo6 (L outer)<br><code>&amp;mo FUNC</code></td>
+<td>mo6 (L outer)<br><code>&amp;mo FUNCTION</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N1 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N1 SPACE</code></td>
-<td>mo1 (L center)<br><code>&amp;mo SYM</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>mo1 (L center)<br><code>&amp;mo SYMBOL</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_N1</code></td>
-<td>lt1 ENTER<br><code>&amp;lt SYM ENTER</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_1</code></td>
+<td>lt1 ENTER<br><code>&amp;lt SYMBOL ENTER</code></td>
 <td></td>
 <td></td>
-<td>mo6 (R)<br><code>&amp;mo FUNC</code></td>
-<td>mo6 (R outer)<br><code>&amp;mo FUNC</code></td>
+<td>mo6 (R)<br><code>&amp;mo FUNCTION</code></td>
+<td>mo6 (R outer)<br><code>&amp;mo FUNCTION</code></td>
 </tr>
 <tr>
 <td>タップ</td>
-<td>&amp;mo FUNC</td>
+<td>&amp;mo FUNCTION</td>
 <td>&amp;kp LEFT_WIN</td>
 <td>&amp;kp LEFT_ALT</td>
-<td>&amp;lt VIM_N1 SPACE</td>
-<td>&amp;lt VIM_N1 SPACE</td>
-<td>&amp;mo SYM</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;mo SYMBOL</td>
 <td></td>
-<td>&amp;mo VIM_N1</td>
-<td>&amp;lt SYM ENTER</td>
+<td>&amp;mo VIM_NORMAL_1</td>
+<td>&amp;lt SYMBOL ENTER</td>
 <td></td>
 <td></td>
-<td>&amp;mo FUNC</td>
-<td>&amp;mo FUNC</td>
+<td>&amp;mo FUNCTION</td>
+<td>&amp;mo FUNCTION</td>
+</tr>
+<tr>
+<td>ホールド</td>
+<td>〃</td>
+<td>〃</td>
+<td>〃</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>〃</td>
+<td></td>
+<td>〃</td>
+<td>&amp;lt SYMBOL ENTER</td>
+<td></td>
+<td></td>
+<td>〃</td>
+<td>〃</td>
 </tr>
 <tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
@@ -1733,9 +1807,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;kp EQUAL</code></td>
 <td>,<br><code>&amp;trans</code></td>
@@ -1779,11 +1853,11 @@
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N2 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_N2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
 <td>mo1 (L center)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_N2</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td>lt1 ENTER<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
@@ -1795,15 +1869,31 @@
 <td></td>
 <td>▽</td>
 <td>▽</td>
-<td>&amp;lt VIM_N2 SPACE</td>
-<td>&amp;lt VIM_N2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
 <td></td>
 <td></td>
-<td>&amp;mo VIM_N2</td>
+<td>&amp;mo VIM_NORMAL_2</td>
 <td></td>
 <td></td>
 <td></td>
 <td>▽</td>
+<td></td>
+</tr>
+<tr>
+<td>ホールド</td>
+<td></td>
+<td>〃</td>
+<td>〃</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td></td>
+<td></td>
+<td>〃</td>
+<td></td>
+<td></td>
+<td></td>
+<td>〃</td>
 <td></td>
 </tr>
 <tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
@@ -1974,9 +2064,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;mm_vim_v</code></td>
 <td>B<br><code>&amp;kp LC(LEFT)</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;mm_vim_n</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1988,7 +2078,7 @@
 <td>&amp;kp LEFT_SHIFT</td>
 <td>&amp;kp DELETE</td>
 <td></td>
-<td>mm_vim_v[0] → &amp;to VISUAL</td>
+<td>mm_vim_v[0] → &amp;to VIM_VISUAL</td>
 <td>&amp;kp LC(LEFT)</td>
 <td></td>
 <td></td>
@@ -2022,10 +2112,10 @@
 <td>LAlt<br><code>&amp;trans</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
-<td>mo1 (L center)<br><code>&amp;mo VIM_N2</code></td>
+<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td></td>
 <td>mo2<br><code>&amp;none</code></td>
-<td>lt1 ENTER<br><code>&amp;lt VIM_N2 ENTER</code></td>
+<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_2 ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;trans</code></td>
@@ -2038,13 +2128,29 @@
 <td>▽</td>
 <td></td>
 <td></td>
-<td>&amp;mo VIM_N2</td>
+<td>&amp;mo VIM_NORMAL_2</td>
 <td></td>
 <td></td>
-<td>&amp;lt VIM_N2 ENTER</td>
+<td>&amp;lt VIM_NORMAL_2 ENTER</td>
 <td></td>
 <td></td>
 <td>▽</td>
+<td></td>
+</tr>
+<tr>
+<td>ホールド</td>
+<td></td>
+<td>〃</td>
+<td>〃</td>
+<td></td>
+<td></td>
+<td>〃</td>
+<td></td>
+<td></td>
+<td>&amp;lt VIM_NORMAL_2 ENTER</td>
+<td></td>
+<td></td>
+<td>〃</td>
 <td></td>
 </tr>
 <tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
@@ -2135,9 +2241,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2237,7 +2343,7 @@
 <td></td>
 <td>H<br><code>&amp;none</code></td>
 <td>J<br><code>&amp;none</code></td>
-<td>K<br><code>&amp;mo SCRL</code></td>
+<td>K<br><code>&amp;mo SCROLL</code></td>
 <td>L<br><code>&amp;none</code></td>
 <td>-<br><code>&amp;none</code></td>
 </tr>
@@ -2253,7 +2359,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>&amp;mo SCRL</td>
+<td>&amp;mo SCROLL</td>
 <td></td>
 <td></td>
 </tr>
@@ -2264,9 +2370,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2393,9 +2499,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;mkp MB4</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2522,9 +2628,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;bootloader</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;bootloader</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2651,9 +2757,9 @@
 <td>C<br><code>&amp;bt BT_CLR</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;out OUT_BLE</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2812,9 +2918,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;macro_vim_visual_exit</code></td>
 <td>B<br><code>&amp;kp LS(LC(LEFT))</code></td>
-<td>(center mo7)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo7 (raised)<br><code>&amp;none</code></td>
+<td></td>
+<td></td>
 <td>N<br><code>&amp;kp F3</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>

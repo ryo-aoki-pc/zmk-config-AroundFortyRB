@@ -60,6 +60,47 @@ def strip_comments(text: str) -> str:
     return text
 
 
+# ============================================================================
+# #define expansion + readable layer-name display
+# ============================================================================
+
+# Index -> layer node name (e.g. 2 -> 'VIM_NORMAL_1'). Populated in main() from
+# the keymap's definition order. Used to render &lt/&mo/&to routes with the
+# formal layer name instead of a bare number.
+LAYER_NAMES_BY_INDEX: dict[int, str] = {}
+
+
+def parse_defines(text: str) -> dict[str, int]:
+    """Collect integer `#define NAME N` macros (layer aliases) from the keymap."""
+    return {m.group(1): int(m.group(2))
+            for m in re.finditer(r'(?m)^\s*#define\s+(\w+)\s+(\d+)\s*$', text)}
+
+
+def expand_defines(text: str, defines: dict[str, int]) -> str:
+    """Drop `#define` lines and substitute each defined name (whole word) with its
+    numeric value, so the rest of the tool can keep assuming numeric layer ids."""
+    text = re.sub(r'(?m)^[ \t]*#define[ \t]+\w+[ \t]+\d+[ \t]*\n?', '', text)
+    for name in sorted(defines, key=len, reverse=True):
+        text = re.sub(rf'\b{re.escape(name)}\b', str(defines[name]), text)
+    return text
+
+
+def layer_display(n) -> str:
+    """Render a layer index as its formal layer name (fallback: L<n>)."""
+    try:
+        i = int(n)
+    except (TypeError, ValueError):
+        return str(n)
+    return LAYER_NAMES_BY_INDEX.get(i, f'L{n}')
+
+
+def format_binding_for_display(b: str) -> str:
+    """Rewrite numeric layer ids in a raw binding to formal layer names for display
+    (e.g. '&lt 2 SPACE' -> '&lt VIM_NORMAL_1 SPACE', '&mo 7' -> '&mo BLUETOOTH')."""
+    return re.sub(r'(&(?:lt|mo|to))\s+(\d+)',
+                  lambda m: f'{m.group(1)} {layer_display(m.group(2))}', b)
+
+
 def find_balanced_block(content: str, start_pos: int) -> tuple[int, int] | None:
     """Find the position of the matching close brace for an open brace at start_pos."""
     if start_pos >= len(content) or content[start_pos] != '{':
@@ -317,7 +358,7 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
     if m:
         layer, key = m.group(1), m.group(2).strip()
         key_label = format_keycode(key)
-        path = f'&lt {layer} {key}'
+        path = f'&lt {layer_display(layer)} {key}'
         if op == 'タップ':
             return (key_label, path)
         if op == 'ホールド':
@@ -333,13 +374,13 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
     m = re.match(r'&mo\s+(\d+)$', b)
     if m:
         layer = m.group(1)
-        return (f'L{layer}', f'&mo {layer}')
+        return (f'L{layer}', f'&mo {layer_display(layer)}')
 
     # &to X
     m = re.match(r'&to\s+(\d+)$', b)
     if m:
         layer = m.group(1)
-        return (f'⇒L{layer}', f'&to {layer}')
+        return (f'⇒L{layer}', f'&to {layer_display(layer)}')
 
     # Custom behavior / macro reference like &mm_vim_g, &td_vim_d, &macro_vim_dd
     if b.startswith('&'):
@@ -435,7 +476,7 @@ def summarize_macro(bindings: list[str]) -> str:
             if inner:
                 parts.append(format_keycode(inner.group(1)))
         elif b.startswith('&to '):
-            parts.append(f'レイヤー {b[4:].strip()} へ')
+            parts.append(f'レイヤー {layer_display(b[4:].strip())} へ')
         else:
             parts.append(b)
     return ' ▸ '.join(parts)
@@ -869,6 +910,16 @@ HTML_STYLE = """\
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   tr[style] code { background: rgba(0,0,0,.06); }
+  /* 経路テーブルのセルは等幅・左寄せ・折り返しで読みやすくする。 */
+  table.route td {
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+  }
+  table.route td:first-child { white-space: nowrap; }   /* 「操作」「Row N」列は折り返さない */
 """
 
 
@@ -897,8 +948,8 @@ def _html_inline(text: str) -> str:
     return re.sub(r'\x00(\d+)\x00', lambda m: holds[int(m.group(1))], text)
 
 
-def _html_table_open(header: list[str]) -> list[str]:
-    out = ['<table>', '<thead>', '<tr>']
+def _html_table_open(header: list[str], css_class: str | None = None) -> list[str]:
+    out = [f'<table class="{css_class}">' if css_class else '<table>', '<thead>', '<tr>']
     for col in header:
         out.append(f'<th>{_html_text(col)}</th>')
     out += ['</tr>', '</thead>', '<tbody>']
@@ -928,7 +979,7 @@ def _html_body_rows(rows: list[dict]) -> list[str]:
                     out.append('<td></td>')
                 else:
                     label, binding = key
-                    out.append(f'<td>{_html_text(label)}<br><code>{_html_esc(binding)}</code></td>')
+                    out.append(f'<td>{_html_text(label)}<br><code>{_html_esc(format_binding_for_display(binding))}</code></td>')
             out.append('</tr>')
         else:
             out.append('<tr>')
@@ -939,9 +990,9 @@ def _html_body_rows(rows: list[dict]) -> list[str]:
     return out
 
 
-def _html_table_lines(header: list[str], rows: list[dict]) -> list[str]:
+def _html_table_lines(header: list[str], rows: list[dict], css_class: str | None = None) -> list[str]:
     """Render a single-layer (header + body + close) HTML table."""
-    return _html_table_open(header) + _html_body_rows(rows) + _html_table_close()
+    return _html_table_open(header, css_class) + _html_body_rows(rows) + _html_table_close()
 
 
 def write_html(layers_data: list[tuple[str, list[str]]],
@@ -968,7 +1019,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
             header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
                                                    grid, display_cols)
             if header is not None:
-                body += _html_table_lines(header, rows)
+                body += _html_table_lines(header, rows, 'route' if mode == 'path' else None)
     else:
         body.append(f'<h1>{_html_inline("キー割り当て一覧")}</h1>')
         body.append('<p>' + _html_inline(
@@ -1001,7 +1052,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
                 layer_blocks.append((layer_name, rows))
             if shared_header is None:
                 continue
-            body += _html_table_open(shared_header)
+            body += _html_table_open(shared_header, 'route' if mode == 'path' else None)
             for layer_name, rows in layer_blocks:
                 body.append(_html_layer_row(layer_name, len(shared_header)))
                 body += _html_body_rows(rows)
@@ -1041,10 +1092,18 @@ def main() -> int:
         print(f'error: keymap file not found: {keymap_path}', file=sys.stderr)
         return 1
 
-    content = strip_comments(keymap_path.read_text(encoding='utf-8'))
+    raw = keymap_path.read_text(encoding='utf-8')
+    defines = parse_defines(raw)
+    content = expand_defines(strip_comments(raw), defines)
+
+    # Map every layer's definition-order index to its name so &lt/&mo/&to routes
+    # can be rendered with the formal layer name instead of a bare number.
+    all_layer_names = parse_all_layer_names(content)
+    LAYER_NAMES_BY_INDEX.clear()
+    LAYER_NAMES_BY_INDEX.update(dict(enumerate(all_layer_names)))
 
     # Default to every layer (in definition order) when none are specified.
-    layer_names = args.layers if args.layers else parse_all_layer_names(content)
+    layer_names = args.layers if args.layers else all_layer_names
     if not layer_names:
         print('error: no layers found in keymap.', file=sys.stderr)
         return 1
