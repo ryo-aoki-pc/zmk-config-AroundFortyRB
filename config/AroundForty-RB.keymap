@@ -336,15 +336,6 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        mm_vim_q: mm_vim_q {
-            compatible = "zmk,behavior-mod-morph";
-            label = "MM_VIM_Q";
-            bindings = <&kp ESCAPE>, <&kp LC(Q)>;
-
-            #binding-cells = <0>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
         mm_vim_w: mm_vim_w {
             compatible = "zmk,behavior-mod-morph";
             label = "MM_VIM_W";
