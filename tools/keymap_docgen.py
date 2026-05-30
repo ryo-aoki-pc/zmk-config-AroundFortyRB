@@ -541,13 +541,15 @@ def legacy_grid(total: int):
 def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                       behaviors: dict, macros: dict, mode: str,
                       grid, display_cols, active_indices, is_single: bool) -> None:
-    """Write one mode sheet ('動作' or '経路') laid out to match the HTML/Markdown
-    tables: a single column header per table, '■ Row N' heading rows (highlighted)
-    that carry the key label + binding, then only the relevant operation rows.
-    Multiple layers are stacked vertically with a layer-name heading before each.
+    """Write one mode sheet ('動作' or '経路') laid out to match the HTML output:
+    a single column header at the top of the sheet, then every layer stacked
+    below it sharing those columns. Each layer starts with a highlighted
+    layer-name row, followed by '■ Row N' heading rows (carrying the key label
+    + binding) and the operation rows that differ from the auto-derived tap.
     """
     title_font = Font(bold=True, size=14, name='Yu Gothic UI')
     layer_font = Font(bold=True, size=12, name='Yu Gothic UI')
+    layer_fill = PatternFill('solid', start_color='E1ECF4', end_color='E1ECF4', fill_type='solid')
     header_font = Font(bold=True, size=10, name='Yu Gothic UI')
     header_fill = PatternFill('solid', start_color='F6F8FA', end_color='F6F8FA', fill_type='solid')
     row_font = Font(bold=True, size=10, name='Yu Gothic UI')
@@ -576,28 +578,47 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
         title = f'キー割り当て一覧 - {mode_label}'
     c = ws.cell(1, 1, title)
     c.font = title_font
-    r = 3
 
+    # Pre-compute each layer's rows; capture the shared column header from
+    # whichever layer first produced one (display_cols-driven, so identical
+    # for every layer).
+    shared_header: list[str] | None = None
+    layer_blocks: list[tuple[str, list[dict]]] = []
     for layer_name, bindings in layers_data:
-        if not is_single:
-            c = ws.cell(r, 1, f'{layer_name} レイヤー')
-            c.font = layer_font
-            r += 1
-
         header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
                                                grid, display_cols, active_indices)
         if header is None:
-            r += 1
             continue
+        shared_header = header
+        layer_blocks.append((layer_name, rows))
 
-        # Column header row (操作 | 1 | 2 | ...).
-        for col, text in enumerate(header, start=1):
-            c = ws.cell(r, col, text)
-            c.font = header_font
-            c.fill = header_fill
-            c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    if shared_header is None:
+        return
+
+    r = 3
+    # Single column header row (操作 | 1 | 2 | ...) at the top of the sheet.
+    for col, text in enumerate(shared_header, start=1):
+        c = ws.cell(r, col, text)
+        c.font = header_font
+        c.fill = header_fill
+        c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+        c.border = border
+    r += 1
+
+    for layer_name, rows in layer_blocks:
+        if not is_single:
+            # Layer separator row spanning the whole table width.
+            c = ws.cell(r, 1, f'{layer_name} レイヤー')
+            c.font = layer_font
+            c.fill = layer_fill
+            c.alignment = Alignment(horizontal='left', vertical='center')
             c.border = border
-        r += 1
+            for j in range(n_cols):
+                cc = ws.cell(r, 2 + j, '')
+                cc.fill = layer_fill
+                cc.border = border
+            ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=1 + n_cols)
+            r += 1
 
         for row in rows:
             if row['kind'] == 'heading':
@@ -625,8 +646,6 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                     cc.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
                     cc.border = border
             r += 1
-
-        r += 1  # blank row between stacked tables
 
 
 def write_excel(layers_data: list[tuple[str, list[str]]],
@@ -801,7 +820,6 @@ HTML_STYLE = """\
   }
   h1 { border-bottom: 2px solid #d0d7de; padding-bottom: .3em; }
   h2 { border-bottom: 1px solid #d0d7de; padding-bottom: .3em; margin-top: 2em; }
-  h3 { margin-top: 1.6em; }
   table {
     border-collapse: collapse;
     width: 100%;
@@ -815,6 +833,13 @@ HTML_STYLE = """\
     vertical-align: middle;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
+  /* Layer separator row inside the merged per-mode table. */
+  tr.layer-row th {
+    background: #e1ecf4;
+    text-align: left;
+    font-size: 14px;
+    padding: 8px;
+  }
   /* "■ Row N" heading rows are highlighted via inline background-color. */
   code {
     background: rgba(175,184,193,.2);
@@ -852,13 +877,28 @@ def _html_inline(text: str) -> str:
     return re.sub(r'\x00(\d+)\x00', lambda m: holds[int(m.group(1))], text)
 
 
-def _html_table_lines(header: list[str], rows: list[dict]) -> list[str]:
-    """Render the shared (layer, mode) table as HTML, one tag per line. The
-    '■ Row N' heading rows carry the key label + binding and are highlighted."""
+def _html_table_open(header: list[str]) -> list[str]:
     out = ['<table>', '<thead>', '<tr>']
     for col in header:
         out.append(f'<th>{_html_text(col)}</th>')
     out += ['</tr>', '</thead>', '<tbody>']
+    return out
+
+
+def _html_table_close() -> list[str]:
+    return ['</tbody>', '</table>']
+
+
+def _html_layer_row(layer_name: str, n_cols: int) -> str:
+    return (f'<tr class="layer-row">'
+            f'<th colspan="{n_cols}">{_html_text(f"{layer_name} レイヤー")}</th>'
+            f'</tr>')
+
+
+def _html_body_rows(rows: list[dict]) -> list[str]:
+    """Render the body of a (layer, mode) table. The '■ Row N' heading rows
+    carry the key label + binding and are highlighted."""
+    out: list[str] = []
     for row in rows:
         if row['kind'] == 'heading':
             out.append(f'<tr style="background-color:{HTML_ROW_BG}">')
@@ -876,8 +916,12 @@ def _html_table_lines(header: list[str], rows: list[dict]) -> list[str]:
             for value in row['values']:
                 out.append(f'<td>{_html_text(value)}</td>')
             out.append('</tr>')
-    out += ['</tbody>', '</table>']
     return out
+
+
+def _html_table_lines(header: list[str], rows: list[dict]) -> list[str]:
+    """Render a single-layer (header + body + close) HTML table."""
+    return _html_table_open(header) + _html_body_rows(rows) + _html_table_close()
 
 
 def write_html(layers_data: list[tuple[str, list[str]]],
@@ -923,13 +967,25 @@ def write_html(layers_data: list[tuple[str, list[str]]],
 
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
             body.append(f'<h2>{_html_inline(mode_label)}</h2>')
+            # Merge every layer's rows into a single table so the column widths
+            # (which the browser auto-sizes per-table) line up across layers.
+            shared_header: list[str] | None = None
+            layer_blocks: list[tuple[str, list[dict]]] = []
             for layer_name, bindings in layers_data:
-                body.append(f'<h3>{_html_inline(f"{layer_name} レイヤー")}</h3>')
                 header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
                                                        grid, display_cols,
                                                        active_indices=active_indices)
-                if header is not None:
-                    body += _html_table_lines(header, rows)
+                if header is None:
+                    continue
+                shared_header = header
+                layer_blocks.append((layer_name, rows))
+            if shared_header is None:
+                continue
+            body += _html_table_open(shared_header)
+            for layer_name, rows in layer_blocks:
+                body.append(_html_layer_row(layer_name, len(shared_header)))
+                body += _html_body_rows(rows)
+            body += _html_table_close()
 
     html = (
         '<!DOCTYPE html>\n<html lang="ja">\n<head>\n'

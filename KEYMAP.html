@@ -16,7 +16,6 @@
   }
   h1 { border-bottom: 2px solid #d0d7de; padding-bottom: .3em; }
   h2 { border-bottom: 1px solid #d0d7de; padding-bottom: .3em; margin-top: 2em; }
-  h3 { margin-top: 1.6em; }
   table {
     border-collapse: collapse;
     width: 100%;
@@ -30,6 +29,13 @@
     vertical-align: middle;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
+  /* Layer separator row inside the merged per-mode table. */
+  tr.layer-row th {
+    background: #e1ecf4;
+    text-align: left;
+    font-size: 14px;
+    padding: 8px;
+  }
   /* "■ Row N" heading rows are highlighted via inline background-color. */
   code {
     background: rgba(175,184,193,.2);
@@ -50,7 +56,6 @@
 <li>各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。</li>
 </ul>
 <h2>動作</h2>
-<h3>DEFAULT レイヤー</h3>
 <table>
 <thead>
 <tr>
@@ -71,6 +76,7 @@
 </tr>
 </thead>
 <tbody>
+<tr class="layer-row"><th colspan="14">DEFAULT レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;kp Q</code></td>
@@ -247,29 +253,7 @@
 <td>〃</td>
 <td>〃</td>
 </tr>
-</tbody>
-</table>
-<h3>SYMBOL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;kp N1</code></td>
@@ -446,29 +430,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_1 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -725,29 +687,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_2 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -892,29 +832,7 @@
 <td>▽</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>MOUSE レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">MOUSE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -1043,29 +961,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>SCROLL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -1194,29 +1090,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>FUNCTION レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">FUNCTION レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;kp F1</code></td>
@@ -1345,29 +1219,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>BLUETOOTH レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">BLUETOOTH レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;bt BT_SEL 0</code></td>
@@ -1496,29 +1348,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_VISUAL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_VISUAL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -1682,7 +1512,6 @@
 </tbody>
 </table>
 <h2>経路</h2>
-<h3>DEFAULT レイヤー</h3>
 <table>
 <thead>
 <tr>
@@ -1703,6 +1532,7 @@
 </tr>
 </thead>
 <tbody>
+<tr class="layer-row"><th colspan="14">DEFAULT レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;kp Q</code></td>
@@ -1879,29 +1709,7 @@
 <td>〃</td>
 <td>〃</td>
 </tr>
-</tbody>
-</table>
-<h3>SYMBOL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;kp N1</code></td>
@@ -2078,29 +1886,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_1 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2357,29 +2143,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_NORMAL_2 レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2524,29 +2288,7 @@
 <td>▽</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>MOUSE レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">MOUSE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2675,29 +2417,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>SCROLL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2826,29 +2546,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>FUNCTION レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">FUNCTION レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;kp F1</code></td>
@@ -2977,29 +2675,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>BLUETOOTH レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">BLUETOOTH レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;bt BT_SEL 0</code></td>
@@ -3128,29 +2804,7 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3>VIM_VISUAL レイヤー</h3>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th></th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody>
+<tr class="layer-row"><th colspan="14">VIM_VISUAL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>■ Row 1 (QWERTY 上段)</td>
 <td>Q<br><code>&amp;none</code></td>
