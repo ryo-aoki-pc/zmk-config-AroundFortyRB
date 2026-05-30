@@ -719,7 +719,9 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                     max_lines = max(max_lines, len(lines))
                     cc = ws.cell(r, 2 + j, '\n'.join(lines))
                     cc.font = body_font
-                    cc.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+                    # 複数行にわたるセルは左寄せにして読みやすくする。
+                    horiz = 'left' if len(lines) > 1 else 'center'
+                    cc.alignment = Alignment(horizontal=horiz, vertical='center', wrap_text=True)
                     cc.border = border
                 # Give multi-line route cells enough height to show every step.
                 if max_lines > 1:
@@ -927,6 +929,7 @@ HTML_STYLE = """\
     white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
+  td.ml { text-align: left; }   /* 複数行にわたるセルは左寄せにする */
   /* Layer separator row inside the merged per-mode table. */
   tr.layer-row th {
     background: #e1ecf4;
@@ -1014,8 +1017,11 @@ def _html_body_rows(rows: list[dict]) -> list[str]:
             out.append('<tr>')
             out.append(f'<td>{_html_text(row["op"])}</td>')
             for value in row['values']:
-                cell = '<br>'.join(_html_text(line) for line in _split_cell_lines(value))
-                out.append(f'<td>{cell}</td>')
+                lines = _split_cell_lines(value)
+                cell = '<br>'.join(_html_text(line) for line in lines)
+                # 複数行にわたるセルは左寄せにして読みやすくする。
+                td = '<td class="ml">' if len(lines) > 1 else '<td>'
+                out.append(f'{td}{cell}</td>')
             out.append('</tr>')
     return out
 
