@@ -39,6 +39,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 try:
@@ -58,6 +59,47 @@ def strip_comments(text: str) -> str:
     text = re.sub(r'//[^\n]*', '', text)
     text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
     return text
+
+
+# ============================================================================
+# #define expansion + readable layer-name display
+# ============================================================================
+
+# Index -> layer node name (e.g. 2 -> 'VIM_NORMAL_1'). Populated in main() from
+# the keymap's definition order. Used to render &lt/&mo/&to routes with the
+# formal layer name instead of a bare number.
+LAYER_NAMES_BY_INDEX: dict[int, str] = {}
+
+
+def parse_defines(text: str) -> dict[str, int]:
+    """Collect integer `#define NAME N` macros (layer aliases) from the keymap."""
+    return {m.group(1): int(m.group(2))
+            for m in re.finditer(r'(?m)^\s*#define\s+(\w+)\s+(\d+)\s*$', text)}
+
+
+def expand_defines(text: str, defines: dict[str, int]) -> str:
+    """Drop `#define` lines and substitute each defined name (whole word) with its
+    numeric value, so the rest of the tool can keep assuming numeric layer ids."""
+    text = re.sub(r'(?m)^[ \t]*#define[ \t]+\w+[ \t]+\d+[ \t]*\n?', '', text)
+    for name in sorted(defines, key=len, reverse=True):
+        text = re.sub(rf'\b{re.escape(name)}\b', str(defines[name]), text)
+    return text
+
+
+def layer_display(n) -> str:
+    """Render a layer index as its formal layer name (fallback: L<n>)."""
+    try:
+        i = int(n)
+    except (TypeError, ValueError):
+        return str(n)
+    return LAYER_NAMES_BY_INDEX.get(i, f'L{n}')
+
+
+def format_binding_for_display(b: str) -> str:
+    """Rewrite numeric layer ids in a raw binding to formal layer names for display
+    (e.g. '&lt 2 SPACE' -> '&lt VIM_NORMAL_1 SPACE', '&mo 7' -> '&mo BLUETOOTH')."""
+    return re.sub(r'(&(?:lt|mo|to))\s+(\d+)',
+                  lambda m: f'{m.group(1)} {layer_display(m.group(2))}', b)
 
 
 def find_balanced_block(content: str, start_pos: int) -> tuple[int, int] | None:
@@ -243,10 +285,10 @@ KEYCODE_LABELS = {
 }
 
 MOD_PREFIX = {
-    'LC': 'Ctrl', 'RC': 'Ctrl',
-    'LS': 'Shift', 'RS': 'Shift',
-    'LA': 'Alt', 'RA': 'Alt',
-    'LG': 'Win', 'RG': 'Win',
+    'LC': '⌃', 'RC': '⌃',
+    'LS': '⇧', 'RS': '⇧',
+    'LA': '⌥', 'RA': '⌥',
+    'LG': '⌘', 'RG': '⌘',
 }
 
 
@@ -254,7 +296,7 @@ def format_keycode(kc: str) -> str:
     kc = kc.strip()
     m = re.match(r'(LC|LS|LA|LG|RC|RS|RA|RG)\((.+)\)$', kc)
     if m:
-        return f"{MOD_PREFIX[m.group(1)]}+{format_keycode(m.group(2))}"
+        return f"{MOD_PREFIX[m.group(1)]}{format_keycode(m.group(2))}"
     return KEYCODE_LABELS.get(kc, kc)
 
 
@@ -317,7 +359,7 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
     if m:
         layer, key = m.group(1), m.group(2).strip()
         key_label = format_keycode(key)
-        path = f'&lt {layer} {key}'
+        path = f'&lt {layer_display(layer)} {key}'
         if op == 'タップ':
             return (key_label, path)
         if op == 'ホールド':
@@ -333,13 +375,13 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
     m = re.match(r'&mo\s+(\d+)$', b)
     if m:
         layer = m.group(1)
-        return (f'L{layer}', f'&mo {layer}')
+        return (f'L{layer}', f'&mo {layer_display(layer)}')
 
     # &to X
     m = re.match(r'&to\s+(\d+)$', b)
     if m:
         layer = m.group(1)
-        return (f'⇒L{layer}', f'&to {layer}')
+        return (f'⇒{layer_display(layer)}', f'&to {layer_display(layer)}')
 
     # Custom behavior / macro reference like &mm_vim_g, &td_vim_d, &macro_vim_dd
     if b.startswith('&'):
@@ -364,40 +406,40 @@ def resolve_behavior(name: str, behaviors: dict, macros: dict, op: str, depth: i
 
         if op in ('タップ', 'ダブルタップ', 'ホールド'):
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, op, depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
 
         if op == 'Shift+':
             if is_shift:
                 sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
-                return (sub_a, f'{name}[1] → {sub_p}')
+                return (sub_a, f'{name}[1] ▸ {sub_p}')
             else:
                 sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Shift+', depth)
-                return (sub_a, f'{name}[0] → {sub_p}')
+                return (sub_a, f'{name}[0] ▸ {sub_p}')
 
         if op == 'Ctrl+':
             if is_ctrl:
                 sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
-                return (sub_a, f'{name}[1] → {sub_p}')
+                return (sub_a, f'{name}[1] ▸ {sub_p}')
             else:
                 sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Ctrl+', depth)
-                return (sub_a, f'{name}[0] → {sub_p}')
+                return (sub_a, f'{name}[0] ▸ {sub_p}')
 
     if compat == 'zmk,behavior-tap-dance':
         if op == 'タップ':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'タップ', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
         if op == 'ホールド':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'ホールド', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
         if op == 'ダブルタップ':
             sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
-            return (sub_a, f'{name}[1] → {sub_p}')
+            return (sub_a, f'{name}[1] ▸ {sub_p}')
         if op == 'Shift+':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Shift+', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
         if op == 'Ctrl+':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Ctrl+', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
 
     return (f'未対応 behavior: {compat}', name)
 
@@ -435,7 +477,7 @@ def summarize_macro(bindings: list[str]) -> str:
             if inner:
                 parts.append(format_keycode(inner.group(1)))
         elif b.startswith('&to '):
-            parts.append(f'レイヤー {b[4:].strip()} へ')
+            parts.append(f'⇒{layer_display(b[4:].strip())}')
         else:
             parts.append(b)
     return ' ▸ '.join(parts)
@@ -451,10 +493,10 @@ def summarize_macro(bindings: list[str]) -> str:
 KEY_LABELS = {
     0: 'Q', 1: 'W', 2: 'E', 3: 'R', 4: 'T', 5: 'Y', 6: 'U', 7: 'I', 8: 'O', 9: 'P',
     10: 'A', 11: 'S', 12: 'D', 13: 'F', 14: 'G', 15: 'H', 16: 'J', 17: 'K', 18: 'L', 19: '-',
-    20: 'Z', 21: 'X', 22: 'C', 23: 'V', 24: 'B', 25: '(center mo7)',
+    20: 'Z', 21: 'X', 22: 'C', 23: 'V', 24: 'B', 25: 'mo中央',
     26: 'N', 27: 'M', 28: ',', 29: '.', 30: '/',
     31: 'mo6 (L outer)', 32: 'LWin', 33: 'LAlt', 34: 'SPACE', 35: 'SPACE',
-    36: 'mo1 (L center)', 37: 'lt1 ENTER', 38: 'mo7 (raised)', 39: 'mo2',
+    36: 'mo1 (L center)', 37: 'lt1 ENTER', 38: 'mo上段', 39: 'mo2',
     40: 'mo6 (R)', 41: 'mo6 (R outer)',
 }
 
@@ -583,13 +625,6 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
     mode_label = '動作' if mode == 'action' else '経路'
     n_cols = len(display_cols)
 
-    # Column widths
-    ws.column_dimensions['A'].width = 22
-    col_width = 18 if mode == 'action' else 30
-    for j in range(n_cols):
-        width = 3 if display_cols[j] == GAP else col_width
-        ws.column_dimensions[get_column_letter(2 + j)].width = width
-
     # Sheet title
     if is_single:
         layer_name = layers_data[0][0]
@@ -614,6 +649,25 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
 
     if shared_header is None:
         return
+
+    # Column widths: size each key column to its widest single line so cells never
+    # auto-wrap (only the explicit ▸ / heading line breaks split a cell).
+    ws.column_dimensions['A'].width = 22
+    col_max = [0] * n_cols
+    for _, rows in layer_blocks:
+        for row in rows:
+            if row['kind'] == 'heading':
+                for j, key in enumerate(row['keys']):
+                    if key is not None:
+                        col_max[j] = max(col_max[j], _disp_width(key[0]),
+                                         _disp_width(format_binding_for_display(key[1])))
+            else:
+                for j, value in enumerate(row['values']):
+                    for line in _split_cell_lines(value):
+                        col_max[j] = max(col_max[j], _disp_width(line))
+    for j in range(n_cols):
+        width = 3 if display_cols[j] == GAP else max(8, col_max[j] + 2)
+        ws.column_dimensions[get_column_letter(2 + j)].width = width
 
     r = 3
     # Single column header row (操作 | 1 | 2 | ...) at the top of the sheet.
@@ -648,7 +702,7 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                 c.alignment = Alignment(horizontal='left', vertical='center')
                 c.border = border
                 for j, key in enumerate(row['keys']):
-                    value = '' if key is None else f'{key[0]}\n{key[1]}'
+                    value = '' if key is None else f'{key[0]}\n{format_binding_for_display(key[1])}'
                     cc = ws.cell(r, 2 + j, value)
                     cc.font = body_font
                     cc.fill = row_fill
@@ -660,11 +714,19 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                 c.font = op_font
                 c.alignment = Alignment(horizontal='center', vertical='center')
                 c.border = border
+                max_lines = 1
                 for j, value in enumerate(row['values']):
-                    cc = ws.cell(r, 2 + j, value)
+                    lines = _split_cell_lines(value)
+                    max_lines = max(max_lines, len(lines))
+                    cc = ws.cell(r, 2 + j, '\n'.join(lines))
                     cc.font = body_font
-                    cc.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+                    # 複数行にわたるセルは左寄せにして読みやすくする。
+                    horiz = 'left' if len(lines) > 1 else 'center'
+                    cc.alignment = Alignment(horizontal=horiz, vertical='center', wrap_text=True)
                     cc.border = border
+                # Give multi-line route cells enough height to show every step.
+                if max_lines > 1:
+                    ws.row_dimensions[r].height = 15 * max_lines
             r += 1
 
 
@@ -725,16 +787,28 @@ def _normalize_cell(value: str) -> str:
     return value
 
 
+def _split_cell_lines(value: str) -> list[str]:
+    """Split a cell value into display lines at each ' ▸ ' separator, keeping the
+    '▸' marker at the start of the continuation line. Values without a separator
+    (single bindings, '▽', empty, key labels that may contain '→') are returned
+    unchanged as a single-element list."""
+    return value.replace(' ▸ ', '\n▸ ').split('\n')
+
+
+def _disp_width(s: str) -> int:
+    """Approximate display width in Excel character units, counting wide (CJK and
+    other fullwidth) characters as 2 so column widths fit without auto-wrapping."""
+    return sum(2 if unicodedata.east_asian_width(ch) in ('W', 'F') else 1 for ch in s)
+
+
 def _compute_active_indices(layers_data: list[tuple[str, list[str]]]) -> set[int] | None:
     """Binding indices visible across the multi-layer tables: positions that are
-    not `&none` in the DEFAULT layer and not the `&mo 7` center/raised thumb keys.
+    not `&none` in the DEFAULT layer.
     Returns None when there is no DEFAULT layer (=> show everything)."""
     default_bindings = next((b for n, b in layers_data if n == 'DEFAULT'), None)
     if default_bindings is None:
         return None
-    always_hidden = {i for i, b in enumerate(default_bindings) if b.strip() == '&mo 7'}
-    return {i for i, b in enumerate(default_bindings)
-            if b.strip() != '&none' and i not in always_hidden}
+    return {i for i, b in enumerate(default_bindings) if b.strip() != '&none'}
 
 
 def _build_layer_mode_table(bindings: list[str],
@@ -851,8 +925,13 @@ HTML_STYLE = """\
     padding: 4px 8px;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
+  /* 複数行セルは各行を左揃え、ブロック自体はセル内で中央に配置する。 */
+  span.ml { display: inline-block; text-align: left; }
   /* Layer separator row inside the merged per-mode table. */
   tr.layer-row th {
     background: #e1ecf4;
@@ -897,8 +976,8 @@ def _html_inline(text: str) -> str:
     return re.sub(r'\x00(\d+)\x00', lambda m: holds[int(m.group(1))], text)
 
 
-def _html_table_open(header: list[str]) -> list[str]:
-    out = ['<table>', '<thead>', '<tr>']
+def _html_table_open(header: list[str], css_class: str | None = None) -> list[str]:
+    out = [f'<table class="{css_class}">' if css_class else '<table>', '<thead>', '<tr>']
     for col in header:
         out.append(f'<th>{_html_text(col)}</th>')
     out += ['</tr>', '</thead>', '<tbody>']
@@ -928,20 +1007,25 @@ def _html_body_rows(rows: list[dict]) -> list[str]:
                     out.append('<td></td>')
                 else:
                     label, binding = key
-                    out.append(f'<td>{_html_text(label)}<br><code>{_html_esc(binding)}</code></td>')
+                    out.append(f'<td>{_html_text(label)}<br><code>{_html_esc(format_binding_for_display(binding))}</code></td>')
             out.append('</tr>')
         else:
             out.append('<tr>')
             out.append(f'<td>{_html_text(row["op"])}</td>')
             for value in row['values']:
-                out.append(f'<td>{_html_text(value)}</td>')
+                lines = _split_cell_lines(value)
+                cell = '<br>'.join(_html_text(line) for line in lines)
+                # 複数行セルは各行を左揃えしつつ、ブロックをセル内で中央に置く。
+                if len(lines) > 1:
+                    cell = f'<span class="ml">{cell}</span>'
+                out.append(f'<td>{cell}</td>')
             out.append('</tr>')
     return out
 
 
-def _html_table_lines(header: list[str], rows: list[dict]) -> list[str]:
+def _html_table_lines(header: list[str], rows: list[dict], css_class: str | None = None) -> list[str]:
     """Render a single-layer (header + body + close) HTML table."""
-    return _html_table_open(header) + _html_body_rows(rows) + _html_table_close()
+    return _html_table_open(header, css_class) + _html_body_rows(rows) + _html_table_close()
 
 
 def write_html(layers_data: list[tuple[str, list[str]]],
@@ -1041,10 +1125,18 @@ def main() -> int:
         print(f'error: keymap file not found: {keymap_path}', file=sys.stderr)
         return 1
 
-    content = strip_comments(keymap_path.read_text(encoding='utf-8'))
+    raw = keymap_path.read_text(encoding='utf-8')
+    defines = parse_defines(raw)
+    content = expand_defines(strip_comments(raw), defines)
+
+    # Map every layer's definition-order index to its name so &lt/&mo/&to routes
+    # can be rendered with the formal layer name instead of a bare number.
+    all_layer_names = parse_all_layer_names(content)
+    LAYER_NAMES_BY_INDEX.clear()
+    LAYER_NAMES_BY_INDEX.update(dict(enumerate(all_layer_names)))
 
     # Default to every layer (in definition order) when none are specified.
-    layer_names = args.layers if args.layers else parse_all_layer_names(content)
+    layer_names = args.layers if args.layers else all_layer_names
     if not layer_names:
         print('error: no layers found in keymap.', file=sys.stderr)
         return 1

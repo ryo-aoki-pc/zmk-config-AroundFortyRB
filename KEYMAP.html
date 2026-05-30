@@ -27,8 +27,13 @@
     padding: 4px 8px;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
+  /* 複数行セルは各行を左揃え、ブロック自体はセル内で中央に配置する。 */
+  span.ml { display: inline-block; text-align: left; }
   /* Layer separator row inside the merged per-mode table. */
   tr.layer-row th {
     background: #e1ecf4;
@@ -164,9 +169,9 @@
 <td>C<br><code>&amp;kp C</code></td>
 <td>V<br><code>&amp;kp V</code></td>
 <td>B<br><code>&amp;kp B</code></td>
+<td>mo中央<br><code>&amp;mo BLUETOOTH</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;mo BLUETOOTH</code></td>
 <td>N<br><code>&amp;kp N</code></td>
 <td>M<br><code>&amp;kp M</code></td>
 <td>,<br><code>&amp;kp COMMA</code></td>
@@ -180,9 +185,9 @@
 <td>C</td>
 <td>V</td>
 <td>B</td>
+<td>L7</td>
 <td></td>
-<td></td>
-<td></td>
+<td>L7</td>
 <td>N</td>
 <td>M</td>
 <td>,</td>
@@ -196,9 +201,9 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
+<td>〃</td>
 <td></td>
-<td></td>
-<td></td>
+<td>〃</td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -207,19 +212,19 @@
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 4</td>
-<td>mo6 (L outer)<br><code>&amp;mo 6</code></td>
+<td>mo6 (L outer)<br><code>&amp;mo FUNCTION</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
-<td>SPACE<br><code>&amp;lt 2 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt 2 SPACE</code></td>
-<td>mo1 (L center)<br><code>&amp;mo 1</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>mo1 (L center)<br><code>&amp;mo SYMBOL</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo 2</code></td>
-<td>lt1 ENTER<br><code>&amp;lt 1 ENTER</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_1</code></td>
+<td>lt1 ENTER<br><code>&amp;lt SYMBOL ENTER</code></td>
 <td></td>
 <td></td>
-<td>mo6 (R)<br><code>&amp;mo 6</code></td>
-<td>mo6 (R outer)<br><code>&amp;mo 6</code></td>
+<td>mo6 (R)<br><code>&amp;mo FUNCTION</code></td>
+<td>mo6 (R outer)<br><code>&amp;mo FUNCTION</code></td>
 </tr>
 <tr>
 <td>タップ</td>
@@ -341,9 +346,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;kp EQUAL</code></td>
 <td>,<br><code>&amp;trans</code></td>
@@ -387,11 +392,11 @@
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
-<td>SPACE<br><code>&amp;lt 3 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt 3 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
 <td>mo1 (L center)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo 3</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td>lt1 ENTER<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
@@ -450,18 +455,18 @@
 <tr>
 <td>タップ</td>
 <td></td>
-<td>Ctrl+→</td>
-<td>Ctrl+→</td>
+<td>⌃→</td>
+<td>⌃→</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>Ctrl+Z</td>
+<td>⌃Z</td>
 <td></td>
-<td>END ▸ ENTER</td>
-<td>Ctrl+V</td>
+<td><span class="ml">END<br>▸ ENTER</span></td>
+<td>⌃V</td>
 </tr>
 <tr>
 <td>ダブルタップ</td>
@@ -473,7 +478,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>HOME ▸ Shift+END ▸ Ctrl+C</td>
+<td><span class="ml">HOME<br>▸ ⇧END<br>▸ ⌃C</span></td>
 <td>〃</td>
 <td></td>
 <td>〃</td>
@@ -489,18 +494,18 @@
 <td></td>
 <td></td>
 <td></td>
-<td>Shift+END ▸ Ctrl+C</td>
+<td><span class="ml">⇧END<br>▸ ⌃C</span></td>
 <td>〃</td>
 <td></td>
-<td>HOME ▸ ENTER ▸ ↑</td>
+<td><span class="ml">HOME<br>▸ ENTER<br>▸ ↑</span></td>
 <td>〃</td>
 </tr>
 <tr>
 <td>Ctrl+</td>
 <td></td>
-<td>Ctrl+BS</td>
+<td>⌃BS</td>
 <td>〃</td>
-<td>Ctrl+Y</td>
+<td>⌃Y</td>
 <td></td>
 <td></td>
 <td></td>
@@ -547,9 +552,9 @@
 <td>ダブルタップ</td>
 <td>〃</td>
 <td></td>
-<td>HOME ▸ Shift+END ▸ Ctrl+X</td>
+<td><span class="ml">HOME<br>▸ ⇧END<br>▸ ⌃X</span></td>
 <td></td>
-<td>Ctrl+HOME</td>
+<td>⌃HOME</td>
 <td></td>
 <td></td>
 <td></td>
@@ -563,14 +568,14 @@
 <td>Shift+</td>
 <td>〃</td>
 <td></td>
-<td>Shift+END ▸ Ctrl+X</td>
+<td><span class="ml">⇧END<br>▸ ⌃X</span></td>
 <td></td>
-<td>Ctrl+END</td>
+<td>⌃END</td>
 <td></td>
 <td></td>
 <td></td>
 <td>〃</td>
-<td>END ▸ DEL ▸ SPACE</td>
+<td><span class="ml">END<br>▸ DEL<br>▸ SPACE</span></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -598,9 +603,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;mm_vim_v</code></td>
 <td>B<br><code>&amp;kp LC(LEFT)</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;mm_vim_n</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -612,8 +617,8 @@
 <td>LShift</td>
 <td>DEL</td>
 <td></td>
-<td>⇒L8</td>
-<td>Ctrl+←</td>
+<td>⇒VIM_VISUAL</td>
+<td>⌃←</td>
 <td></td>
 <td></td>
 <td></td>
@@ -628,12 +633,12 @@
 <td>〃</td>
 <td>〃</td>
 <td></td>
-<td>HOME ▸ Shift+↓ ▸ レイヤー 8 へ</td>
+<td><span class="ml">HOME<br>▸ ⇧↓<br>▸ ⇒VIM_VISUAL</span></td>
 <td>〃</td>
 <td></td>
 <td></td>
 <td></td>
-<td>Shift+F3</td>
+<td>〃</td>
 <td></td>
 <td></td>
 <td></td>
@@ -646,10 +651,10 @@
 <td>LAlt<br><code>&amp;trans</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
-<td>mo1 (L center)<br><code>&amp;mo 3</code></td>
+<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td></td>
 <td>mo2<br><code>&amp;none</code></td>
-<td>lt1 ENTER<br><code>&amp;lt 3 ENTER</code></td>
+<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_2 ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;trans</code></td>
@@ -775,9 +780,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -877,7 +882,7 @@
 <td></td>
 <td>H<br><code>&amp;none</code></td>
 <td>J<br><code>&amp;none</code></td>
-<td>K<br><code>&amp;mo 5</code></td>
+<td>K<br><code>&amp;mo SCROLL</code></td>
 <td>L<br><code>&amp;none</code></td>
 <td>-<br><code>&amp;none</code></td>
 </tr>
@@ -904,9 +909,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1033,9 +1038,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;mkp MB4</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1162,9 +1167,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;bootloader</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;bootloader</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1291,9 +1296,9 @@
 <td>C<br><code>&amp;bt BT_CLR</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;out OUT_BLE</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1368,18 +1373,18 @@
 <tr>
 <td>タップ</td>
 <td></td>
-<td>Shift+Ctrl+→</td>
-<td>Shift+Ctrl+→</td>
+<td>⇧⌃→</td>
+<td>⇧⌃→</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>LShift ▸ RShift ▸ Ctrl+C ▸ → ▸ レイヤー 0 へ</td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃C<br>▸ →<br>▸ ⇒DEFAULT</span></td>
 <td></td>
 <td></td>
 <td></td>
-<td>LShift ▸ RShift ▸ Ctrl+V ▸ レイヤー 0 へ</td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃V<br>▸ ⇒DEFAULT</span></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -1401,16 +1406,16 @@
 <td>タップ</td>
 <td>LCtrl</td>
 <td></td>
-<td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー 0 へ</td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒DEFAULT</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>Shift+←</td>
-<td>Shift+↓</td>
-<td>Shift+↑</td>
-<td>Shift+→</td>
+<td>⇧←</td>
+<td>⇧↓</td>
+<td>⇧↑</td>
+<td>⇧→</td>
 <td>RCtrl</td>
 </tr>
 <tr>
@@ -1419,7 +1424,7 @@
 <td></td>
 <td>〃</td>
 <td></td>
-<td>Shift+Ctrl+HOME</td>
+<td>⇧⌃HOME</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1435,7 +1440,7 @@
 <td></td>
 <td>〃</td>
 <td></td>
-<td>Shift+Ctrl+END</td>
+<td>⇧⌃END</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1452,9 +1457,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;macro_vim_visual_exit</code></td>
 <td>B<br><code>&amp;kp LS(LC(LEFT))</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;kp F3</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -1464,10 +1469,10 @@
 <tr>
 <td>タップ</td>
 <td>LShift</td>
-<td>LShift ▸ RShift ▸ Ctrl+X ▸ レイヤー 0 へ</td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒DEFAULT</span></td>
 <td></td>
-<td>LShift ▸ RShift ▸ → ▸ レイヤー 0 へ</td>
-<td>Shift+Ctrl+←</td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ →<br>▸ ⇒DEFAULT</span></td>
+<td>⇧⌃←</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1620,9 +1625,9 @@
 <td>C<br><code>&amp;kp C</code></td>
 <td>V<br><code>&amp;kp V</code></td>
 <td>B<br><code>&amp;kp B</code></td>
+<td>mo中央<br><code>&amp;mo BLUETOOTH</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;mo BLUETOOTH</code></td>
 <td>N<br><code>&amp;kp N</code></td>
 <td>M<br><code>&amp;kp M</code></td>
 <td>,<br><code>&amp;kp COMMA</code></td>
@@ -1636,9 +1641,9 @@
 <td>&amp;kp C</td>
 <td>&amp;kp V</td>
 <td>&amp;kp B</td>
+<td>&amp;mo BLUETOOTH</td>
 <td></td>
-<td></td>
-<td></td>
+<td>&amp;mo BLUETOOTH</td>
 <td>&amp;kp N</td>
 <td>&amp;kp M</td>
 <td>&amp;kp COMMA</td>
@@ -1652,9 +1657,9 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
+<td>〃</td>
 <td></td>
-<td></td>
-<td></td>
+<td>〃</td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -1663,47 +1668,47 @@
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 4</td>
-<td>mo6 (L outer)<br><code>&amp;mo 6</code></td>
+<td>mo6 (L outer)<br><code>&amp;mo FUNCTION</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
-<td>SPACE<br><code>&amp;lt 2 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt 2 SPACE</code></td>
-<td>mo1 (L center)<br><code>&amp;mo 1</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
+<td>mo1 (L center)<br><code>&amp;mo SYMBOL</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo 2</code></td>
-<td>lt1 ENTER<br><code>&amp;lt 1 ENTER</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_1</code></td>
+<td>lt1 ENTER<br><code>&amp;lt SYMBOL ENTER</code></td>
 <td></td>
 <td></td>
-<td>mo6 (R)<br><code>&amp;mo 6</code></td>
-<td>mo6 (R outer)<br><code>&amp;mo 6</code></td>
+<td>mo6 (R)<br><code>&amp;mo FUNCTION</code></td>
+<td>mo6 (R outer)<br><code>&amp;mo FUNCTION</code></td>
 </tr>
 <tr>
 <td>タップ</td>
-<td>&amp;mo 6</td>
+<td>&amp;mo FUNCTION</td>
 <td>&amp;kp LEFT_WIN</td>
 <td>&amp;kp LEFT_ALT</td>
-<td>&amp;lt 2 SPACE</td>
-<td>&amp;lt 2 SPACE</td>
-<td>&amp;mo 1</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;mo SYMBOL</td>
 <td></td>
-<td>&amp;mo 2</td>
-<td>&amp;lt 1 ENTER</td>
+<td>&amp;mo VIM_NORMAL_1</td>
+<td>&amp;lt SYMBOL ENTER</td>
 <td></td>
 <td></td>
-<td>&amp;mo 6</td>
-<td>&amp;mo 6</td>
+<td>&amp;mo FUNCTION</td>
+<td>&amp;mo FUNCTION</td>
 </tr>
 <tr>
 <td>ホールド</td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td>&amp;lt 2 SPACE</td>
-<td>&amp;lt 2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;lt VIM_NORMAL_1 SPACE</td>
 <td>〃</td>
 <td></td>
 <td>〃</td>
-<td>&amp;lt 1 ENTER</td>
+<td>&amp;lt SYMBOL ENTER</td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -1797,9 +1802,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;kp EQUAL</code></td>
 <td>,<br><code>&amp;trans</code></td>
@@ -1843,11 +1848,11 @@
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
-<td>SPACE<br><code>&amp;lt 3 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt 3 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
 <td>mo1 (L center)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo 3</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td>lt1 ENTER<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
@@ -1859,11 +1864,11 @@
 <td></td>
 <td>▽</td>
 <td>▽</td>
-<td>&amp;lt 3 SPACE</td>
-<td>&amp;lt 3 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
 <td></td>
 <td></td>
-<td>&amp;mo 3</td>
+<td>&amp;mo VIM_NORMAL_2</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1875,8 +1880,8 @@
 <td></td>
 <td>〃</td>
 <td>〃</td>
-<td>&amp;lt 3 SPACE</td>
-<td>&amp;lt 3 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_2 SPACE</td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -1906,17 +1911,17 @@
 <tr>
 <td>タップ</td>
 <td></td>
-<td>mm_vim_w[0] → &amp;kp LC(RIGHT)</td>
+<td><span class="ml">mm_vim_w[0]<br>▸ &amp;kp LC(RIGHT)</span></td>
 <td>&amp;kp LC(RIGHT)</td>
-<td>mm_vim_ctrl_r[0] → &amp;none</td>
+<td><span class="ml">mm_vim_ctrl_r[0]<br>▸ &amp;none</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_y[0] → td_vim_y[0] → &amp;none</td>
-<td>mm_vim_u[0] → &amp;kp LC(Z)</td>
+<td><span class="ml">mm_vim_y[0]<br>▸ td_vim_y[0]<br>▸ &amp;none</span></td>
+<td><span class="ml">mm_vim_u[0]<br>▸ &amp;kp LC(Z)</span></td>
 <td></td>
-<td>mm_vim_o[0] → macro_vim_o</td>
+<td><span class="ml">mm_vim_o[0]<br>▸ macro_vim_o</span></td>
 <td>&amp;kp LC(V)</td>
 </tr>
 <tr>
@@ -1929,7 +1934,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_y[0] → td_vim_y[1] → macro_vim_yy</td>
+<td><span class="ml">mm_vim_y[0]<br>▸ td_vim_y[1]<br>▸ macro_vim_yy</span></td>
 <td>〃</td>
 <td></td>
 <td>〃</td>
@@ -1945,24 +1950,24 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_y[1] → macro_vim_shift_y</td>
+<td><span class="ml">mm_vim_y[1]<br>▸ macro_vim_shift_y</span></td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_o[1] → macro_vim_shift_o</td>
+<td><span class="ml">mm_vim_o[1]<br>▸ macro_vim_shift_o</span></td>
 <td>〃</td>
 </tr>
 <tr>
 <td>Ctrl+</td>
 <td></td>
-<td>mm_vim_w[1] → &amp;kp LC(BACKSPACE)</td>
+<td><span class="ml">mm_vim_w[1]<br>▸ &amp;kp LC(BACKSPACE)</span></td>
 <td>〃</td>
-<td>mm_vim_ctrl_r[1] → &amp;kp LC(Y)</td>
+<td><span class="ml">mm_vim_ctrl_r[1]<br>▸ &amp;kp LC(Y)</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_u[1] → &amp;kp PAGE_UP</td>
+<td><span class="ml">mm_vim_u[1]<br>▸ &amp;kp PAGE_UP</span></td>
 <td></td>
 <td>〃</td>
 <td>〃</td>
@@ -1987,14 +1992,14 @@
 <td>タップ</td>
 <td>&amp;kp LCTRL</td>
 <td></td>
-<td>mm_vim_d[0] → mm_vim_shift_d[0] → td_vim_d[0] → &amp;none</td>
+<td><span class="ml">mm_vim_d[0]<br>▸ mm_vim_shift_d[0]<br>▸ td_vim_d[0]<br>▸ &amp;none</span></td>
 <td></td>
-<td>mm_vim_g[0] → td_vim_g[0] → &amp;none</td>
+<td><span class="ml">mm_vim_g[0]<br>▸ td_vim_g[0]<br>▸ &amp;none</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td>&amp;kp LEFT</td>
-<td>mm_vim_j[0] → &amp;kp DOWN</td>
+<td><span class="ml">mm_vim_j[0]<br>▸ &amp;kp DOWN</span></td>
 <td>&amp;kp UP_ARROW</td>
 <td>&amp;kp RIGHT</td>
 <td>&amp;kp RCTRL</td>
@@ -2003,9 +2008,9 @@
 <td>ダブルタップ</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_d[0] → mm_vim_shift_d[0] → td_vim_d[1] → macro_vim_dd</td>
+<td><span class="ml">mm_vim_d[0]<br>▸ mm_vim_shift_d[0]<br>▸ td_vim_d[1]<br>▸ macro_vim_dd</span></td>
 <td></td>
-<td>mm_vim_g[0] → td_vim_g[1] → &amp;kp LC(HOME)</td>
+<td><span class="ml">mm_vim_g[0]<br>▸ td_vim_g[1]<br>▸ &amp;kp LC(HOME)</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2019,14 +2024,14 @@
 <td>Shift+</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_d[0] → mm_vim_shift_d[1] → macro_vim_shift_d</td>
+<td><span class="ml">mm_vim_d[0]<br>▸ mm_vim_shift_d[1]<br>▸ macro_vim_shift_d</span></td>
 <td></td>
-<td>mm_vim_g[1] → &amp;kp LC(END)</td>
+<td><span class="ml">mm_vim_g[1]<br>▸ &amp;kp LC(END)</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td>〃</td>
-<td>mm_vim_j[1] → macro_vim_join</td>
+<td><span class="ml">mm_vim_j[1]<br>▸ macro_vim_join</span></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -2035,7 +2040,7 @@
 <td>Ctrl+</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_d[1] → &amp;kp PAGE_DOWN</td>
+<td><span class="ml">mm_vim_d[1]<br>▸ &amp;kp PAGE_DOWN</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2054,9 +2059,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;mm_vim_v</code></td>
 <td>B<br><code>&amp;kp LC(LEFT)</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;mm_vim_n</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2068,12 +2073,12 @@
 <td>&amp;kp LEFT_SHIFT</td>
 <td>&amp;kp DELETE</td>
 <td></td>
-<td>mm_vim_v[0] → &amp;to 8</td>
+<td><span class="ml">mm_vim_v[0]<br>▸ &amp;to VIM_VISUAL</span></td>
 <td>&amp;kp LC(LEFT)</td>
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_n[0] → &amp;kp F3</td>
+<td><span class="ml">mm_vim_n[0]<br>▸ &amp;kp F3</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2084,12 +2089,12 @@
 <td>〃</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_v[1] → macro_vim_v_line</td>
+<td><span class="ml">mm_vim_v[1]<br>▸ macro_vim_v_line</span></td>
 <td>〃</td>
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_n[1] → &amp;kp LS(F3)</td>
+<td>〃</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2102,10 +2107,10 @@
 <td>LAlt<br><code>&amp;trans</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
-<td>mo1 (L center)<br><code>&amp;mo 3</code></td>
+<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_2</code></td>
 <td></td>
 <td>mo2<br><code>&amp;none</code></td>
-<td>lt1 ENTER<br><code>&amp;lt 3 ENTER</code></td>
+<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_2 ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;trans</code></td>
@@ -2118,10 +2123,10 @@
 <td>▽</td>
 <td></td>
 <td></td>
-<td>&amp;mo 3</td>
+<td>&amp;mo VIM_NORMAL_2</td>
 <td></td>
 <td></td>
-<td>&amp;lt 3 ENTER</td>
+<td>&amp;lt VIM_NORMAL_2 ENTER</td>
 <td></td>
 <td></td>
 <td>▽</td>
@@ -2137,7 +2142,7 @@
 <td>〃</td>
 <td></td>
 <td></td>
-<td>&amp;lt 3 ENTER</td>
+<td>&amp;lt VIM_NORMAL_2 ENTER</td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -2165,12 +2170,12 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_4[0] → &amp;none</td>
+<td><span class="ml">mm_vim_shift_4[0]<br>▸ &amp;none</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_6[0] → &amp;none</td>
+<td><span class="ml">mm_vim_shift_6[0]<br>▸ &amp;none</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2181,12 +2186,12 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_4[1] → &amp;kp END</td>
+<td><span class="ml">mm_vim_shift_4[1]<br>▸ &amp;kp END</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_6[1] → &amp;kp HOME</td>
+<td><span class="ml">mm_vim_shift_6[1]<br>▸ &amp;kp HOME</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2231,9 +2236,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2333,7 +2338,7 @@
 <td></td>
 <td>H<br><code>&amp;none</code></td>
 <td>J<br><code>&amp;none</code></td>
-<td>K<br><code>&amp;mo 5</code></td>
+<td>K<br><code>&amp;mo SCROLL</code></td>
 <td>L<br><code>&amp;none</code></td>
 <td>-<br><code>&amp;none</code></td>
 </tr>
@@ -2349,7 +2354,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>&amp;mo 5</td>
+<td>&amp;mo SCROLL</td>
 <td></td>
 <td></td>
 </tr>
@@ -2360,9 +2365,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2489,9 +2494,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;none</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;mkp MB4</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2618,9 +2623,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;bootloader</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;bootloader</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2747,9 +2752,9 @@
 <td>C<br><code>&amp;bt BT_CLR</code></td>
 <td>V<br><code>&amp;none</code></td>
 <td>B<br><code>&amp;out OUT_BLE</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;none</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
@@ -2859,7 +2864,7 @@
 <td></td>
 <td>macro_vim_visual_cut</td>
 <td></td>
-<td>mm_vim_visual_g[0] → td_vim_visual_g[0] → &amp;none</td>
+<td><span class="ml">mm_vim_visual_g[0]<br>▸ td_vim_visual_g[0]<br>▸ &amp;none</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2875,7 +2880,7 @@
 <td></td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_visual_g[0] → td_vim_visual_g[1] → &amp;kp LS(LC(HOME))</td>
+<td><span class="ml">mm_vim_visual_g[0]<br>▸ td_vim_visual_g[1]<br>▸ &amp;kp LS(LC(HOME))</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2891,7 +2896,7 @@
 <td></td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_visual_g[1] → &amp;kp LS(LC(END))</td>
+<td><span class="ml">mm_vim_visual_g[1]<br>▸ &amp;kp LS(LC(END))</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2908,9 +2913,9 @@
 <td>C<br><code>&amp;none</code></td>
 <td>V<br><code>&amp;macro_vim_visual_exit</code></td>
 <td>B<br><code>&amp;kp LS(LC(LEFT))</code></td>
+<td>mo中央<br><code>&amp;none</code></td>
 <td></td>
-<td></td>
-<td></td>
+<td>mo上段<br><code>&amp;none</code></td>
 <td>N<br><code>&amp;kp F3</code></td>
 <td>M<br><code>&amp;none</code></td>
 <td>,<br><code>&amp;none</code></td>
