@@ -39,6 +39,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 try:
@@ -624,13 +625,6 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
     mode_label = '動作' if mode == 'action' else '経路'
     n_cols = len(display_cols)
 
-    # Column widths
-    ws.column_dimensions['A'].width = 22
-    col_width = 18 if mode == 'action' else 30
-    for j in range(n_cols):
-        width = 3 if display_cols[j] == GAP else col_width
-        ws.column_dimensions[get_column_letter(2 + j)].width = width
-
     # Sheet title
     if is_single:
         layer_name = layers_data[0][0]
@@ -655,6 +649,24 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
 
     if shared_header is None:
         return
+
+    # Column widths: size each key column to its widest single line so cells never
+    # auto-wrap (only the explicit ▸ / heading line breaks split a cell).
+    ws.column_dimensions['A'].width = 22
+    col_max = [0] * n_cols
+    for _, rows in layer_blocks:
+        for row in rows:
+            if row['kind'] == 'heading':
+                for j, key in enumerate(row['keys']):
+                    if key is not None:
+                        col_max[j] = max(col_max[j], _disp_width(key[0]), _disp_width(key[1]))
+            else:
+                for j, value in enumerate(row['values']):
+                    for line in _split_cell_lines(value):
+                        col_max[j] = max(col_max[j], _disp_width(line))
+    for j in range(n_cols):
+        width = 3 if display_cols[j] == GAP else max(8, col_max[j] + 2)
+        ws.column_dimensions[get_column_letter(2 + j)].width = width
 
     r = 3
     # Single column header row (操作 | 1 | 2 | ...) at the top of the sheet.
@@ -778,6 +790,12 @@ def _split_cell_lines(value: str) -> list[str]:
     (single bindings, '▽', empty, key labels that may contain '→') are returned
     unchanged as a single-element list."""
     return value.replace(' ▸ ', '\n▸ ').split('\n')
+
+
+def _disp_width(s: str) -> int:
+    """Approximate display width in Excel character units, counting wide (CJK and
+    other fullwidth) characters as 2 so column widths fit without auto-wrapping."""
+    return sum(2 if unicodedata.east_asian_width(ch) in ('W', 'F') else 1 for ch in s)
 
 
 def _compute_active_indices(layers_data: list[tuple[str, list[str]]]) -> set[int] | None:
@@ -906,6 +924,7 @@ HTML_STYLE = """\
     padding: 4px 8px;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
   /* Layer separator row inside the merged per-mode table. */
@@ -924,16 +943,12 @@ HTML_STYLE = """\
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   tr[style] code { background: rgba(0,0,0,.06); }
-  /* 経路テーブルのセルは等幅・左寄せ・折り返しで読みやすくする。 */
+  /* 経路テーブルのセルは等幅・左寄せ。自動折り返しはせず、▸ ごとの明示改行のみ。 */
   table.route td {
     text-align: left;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12px;
   }
-  table.route td:first-child { white-space: nowrap; }   /* 「操作」「Row N」列は折り返さない */
 """
 
 

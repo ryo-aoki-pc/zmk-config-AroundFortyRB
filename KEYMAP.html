@@ -27,6 +27,7 @@
     padding: 4px 8px;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;   /* セル内は自動折り返しせず、明示的な改行(<br>)のみで改行する */
   }
   thead th { background: #f6f8fa; position: sticky; top: 0; }
   /* Layer separator row inside the merged per-mode table. */
@@ -45,16 +46,12 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   tr[style] code { background: rgba(0,0,0,.06); }
-  /* 経路テーブルのセルは等幅・左寄せ・折り返しで読みやすくする。 */
+  /* 経路テーブルのセルは等幅・左寄せ。自動折り返しはせず、▸ ごとの明示改行のみ。 */
   table.route td {
     text-align: left;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12px;
   }
-  table.route td:first-child { white-space: nowrap; }   /* 「操作」「Row N」列は折り返さない */
 </style>
 </head>
 <body>
