@@ -7,7 +7,7 @@ ZMK keymap (.keymap) の指定した 1 つ以上のレイヤーの全キー割�
   1. Excel ファイル (.xlsx)
        - "動作" シートと "経路" シートを生成し、各シートに全レイヤーの表を縦に並べる
   2. 自己完結型 HTML ファイル (.html)
-       - 同じ内容を HTML の表で出力（「■ Row N」見出し行を背景色でハイライト）
+       - 同じ内容を HTML の表で出力（「Row N」見出し行を背景色でハイライト）
        - 複数レイヤー指定時は「動作」セクションに全レイヤーを並べた後、
          「経路」セクションに全レイヤーを再度並べる構成
 
@@ -439,14 +439,6 @@ def get_label(idx: int) -> str:
 # Excel output
 # ============================================================================
 
-ROW_DESCRIPTIONS = {
-    1: 'Row 1 (QWERTY 上段)',
-    2: 'Row 2 (home row)',
-    3: 'Row 3 (Z row)',
-    4: 'Row 4 (thumb)',
-}
-
-
 def get_row_layout(total: int) -> list[tuple[int, int]]:
     """Determine the physical row layout based on total binding count."""
     if total == 42:
@@ -544,7 +536,7 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
     """Write one mode sheet ('動作' or '経路') laid out to match the HTML output:
     a single column header at the top of the sheet, then every layer stacked
     below it sharing those columns. Each layer starts with a highlighted
-    layer-name row, followed by '■ Row N' heading rows (carrying the key label
+    layer-name row, followed by 'Row N' heading rows (carrying the key label
     + binding) and the operation rows that differ from the auto-derived tap.
     """
     title_font = Font(bold=True, size=14, name='Yu Gothic UI')
@@ -622,7 +614,7 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
 
         for row in rows:
             if row['kind'] == 'heading':
-                c = ws.cell(r, 1, f'■ {row["desc"]}')
+                c = ws.cell(r, 1, row['desc'])
                 c.font = row_font
                 c.fill = row_fill
                 c.alignment = Alignment(horizontal='left', vertical='center')
@@ -767,7 +759,7 @@ def _build_layer_mode_table(bindings: list[str],
         idx_cells = [visible_idx(c) for c in row['cells']]
         if not any(c is not None for c in idx_cells):
             continue
-        desc = ROW_DESCRIPTIONS.get(i + 1, f'Row {i + 1}')
+        desc = f'Row {i + 1}'
 
         keys = [None if idx is None else (get_label(idx), bindings[idx])
                 for idx in idx_cells]
@@ -806,7 +798,7 @@ def _build_layer_mode_table(bindings: list[str],
     return header, rows
 
 
-HTML_ROW_BG = '#fff3cd'  # '■ Row N' heading-row highlight (matches the Excel fill)
+HTML_ROW_BG = '#fff3cd'  # 'Row N' heading-row highlight (matches the Excel fill)
 
 HTML_STYLE = """\
   body {
@@ -840,7 +832,7 @@ HTML_STYLE = """\
     font-size: 14px;
     padding: 8px;
   }
-  /* "■ Row N" heading rows are highlighted via inline background-color. */
+  /* "Row N" heading rows are highlighted via inline background-color. */
   code {
     background: rgba(175,184,193,.2);
     padding: .1em .3em;
@@ -896,13 +888,13 @@ def _html_layer_row(layer_name: str, n_cols: int) -> str:
 
 
 def _html_body_rows(rows: list[dict]) -> list[str]:
-    """Render the body of a (layer, mode) table. The '■ Row N' heading rows
+    """Render the body of a (layer, mode) table. The 'Row N' heading rows
     carry the key label + binding and are highlighted."""
     out: list[str] = []
     for row in rows:
         if row['kind'] == 'heading':
             out.append(f'<tr style="background-color:{HTML_ROW_BG}">')
-            out.append(f'<td>■ {_html_text(row["desc"])}</td>')
+            out.append(f'<td>{_html_text(row["desc"])}</td>')
             for key in row['keys']:
                 if key is None:
                     out.append('<td></td>')
@@ -937,11 +929,11 @@ def write_html(layers_data: list[tuple[str, list[str]]],
         body.append(f'<h1>{_html_inline(f"{layer_name} レイヤー キー割り当て一覧")}</h1>')
         body.append('<p>' + _html_inline(
             f'※ {len(bindings)} 個のバインディング位置を 1 表に集約。'
-            f'実機の物理配列に合わせて「■ Row N」セクション行 + 操作行を縦に並べる（左右分割は中央の空列で分離）。'
+            f'実機の物理配列に合わせて「Row N」セクション行 + 操作行を縦に並べる（左右分割は中央の空列で分離）。'
         ) + '</p>')
         body.append('<ul>')
         body.append('<li>' + _html_inline('各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。') + '</li>')
-        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。') + '</li>')
+        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。') + '</li>')
         body.append('</ul>')
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
             body.append(f'<h2>{_html_inline(mode_label)}</h2>')
@@ -958,7 +950,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
         body.append('<ul>')
         body.append('<li>' + _html_inline('各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。') + '</li>')
         body.append('<li>' + _html_inline('列は物理配列の左→右順。左右分割は中央の空列で分離する。') + '</li>')
-        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。') + '</li>')
+        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。') + '</li>')
         body.append('</ul>')
 
         # Positions that are `&none` in DEFAULT, plus the `&mo 7` center-column
