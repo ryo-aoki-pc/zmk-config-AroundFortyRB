@@ -539,128 +539,116 @@ def legacy_grid(total: int):
     return rows, list(range(max_w))
 
 
-def write_qwerty_sheet(ws, layer_name: str, bindings: list[str],
-                       behaviors: dict, macros: dict, mode: str,
-                       grid, display_cols) -> None:
-    """
-    Write one sheet laid out to match the physical keyboard. mode: 'action' / 'path'.
-    Each physical keyboard row gets its own block:
-      - Header row: 操作 (label) + key columns (key label + binding)
-      - 5 data rows (単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+)
-    Columns follow the physical left-to-right order with a blank split-gap column.
+def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
+                      behaviors: dict, macros: dict, mode: str,
+                      grid, display_cols, active_indices, is_single: bool) -> None:
+    """Write one mode sheet ('動作' or '経路') laid out to match the HTML/Markdown
+    tables: a single column header per table, '■ Row N' heading rows (highlighted)
+    that carry the key label + binding, then only the relevant operation rows.
+    Multiple layers are stacked vertically with a layer-name heading before each.
     """
     title_font = Font(bold=True, size=14, name='Yu Gothic UI')
-    subtitle_font = Font(size=10, italic=True, name='Yu Gothic UI', color='666666')
-    section_font = Font(bold=True, size=11, color='FFFFFF', name='Yu Gothic UI')
-    section_fill = PatternFill('solid', start_color='4472C4', end_color='4472C4', fill_type='solid')
+    layer_font = Font(bold=True, size=12, name='Yu Gothic UI')
     header_font = Font(bold=True, size=10, name='Yu Gothic UI')
-    header_fill = PatternFill('solid', start_color='D9E1F2', end_color='D9E1F2', fill_type='solid')
-    op_font = Font(bold=True, size=10, name='Yu Gothic UI')
-    op_fill = PatternFill('solid', start_color='F2F2F2', end_color='F2F2F2', fill_type='solid')
+    header_fill = PatternFill('solid', start_color='F6F8FA', end_color='F6F8FA', fill_type='solid')
+    row_font = Font(bold=True, size=10, name='Yu Gothic UI')
+    row_fill = PatternFill('solid', start_color='FFF3CD', end_color='FFF3CD', fill_type='solid')
+    op_font = Font(bold=True, size=9, name='Yu Gothic UI')
     body_font = Font(size=9, name='Yu Gothic UI')
 
-    thin = Side(style='thin', color='808080')
+    thin = Side(style='thin', color='D0D7DE')
     border = Border(left=thin, right=thin, top=thin, bottom=thin)
 
     mode_label = '動作' if mode == 'action' else '経路'
     n_cols = len(display_cols)
 
-    # Title
-    c = ws.cell(1, 1, f'{layer_name} レイヤー - {mode_label} (物理配列)')
-    c.font = title_font
-    c.alignment = Alignment(horizontal='left')
-
-    c = ws.cell(2, 1, '※ 物理キーボード行ごとに 5 操作 × キー列の表を縦に並べて出力（左右分割は空列で分離）。')
-    c.font = subtitle_font
-
     # Column widths
-    ws.column_dimensions['A'].width = 14
-    col_width = 24 if mode == 'action' else 36
+    ws.column_dimensions['A'].width = 22
+    col_width = 18 if mode == 'action' else 30
     for j in range(n_cols):
         width = 3 if display_cols[j] == GAP else col_width
         ws.column_dimensions[get_column_letter(2 + j)].width = width
 
-    current_row = 4
-    for i, row in enumerate(grid):
-        cells_idx = row['cells']
-        desc = ROW_DESCRIPTIONS.get(i + 1, f'Row {i + 1}')
+    # Sheet title
+    if is_single:
+        layer_name = layers_data[0][0]
+        title = f'{layer_name} レイヤー - {mode_label}'
+    else:
+        title = f'キー割り当て一覧 - {mode_label}'
+    c = ws.cell(1, 1, title)
+    c.font = title_font
+    r = 3
 
-        # Section title bar (spans operation column + all key columns)
-        c = ws.cell(current_row, 1, f'■ {desc}')
-        c.font = section_font
-        c.fill = section_fill
-        c.alignment = Alignment(horizontal='left', vertical='center', indent=1)
-        ws.merge_cells(start_row=current_row, start_column=1,
-                       end_row=current_row, end_column=n_cols + 1)
-        ws.row_dimensions[current_row].height = 22
-        current_row += 1
+    for layer_name, bindings in layers_data:
+        if not is_single:
+            c = ws.cell(r, 1, f'{layer_name} レイヤー')
+            c.font = layer_font
+            r += 1
 
-        # Header row: 操作 (col 1) + key label + binding (cols 2..)
-        c = ws.cell(current_row, 1, '操作')
-        c.font = header_font
-        c.fill = header_fill
-        c.alignment = Alignment(horizontal='center', vertical='center')
-        c.border = border
+        header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
+                                               grid, display_cols, active_indices)
+        if header is None:
+            r += 1
+            continue
 
-        for j in range(n_cols):
-            idx = cells_idx[j]
-            value = '' if idx is None else f'{get_label(idx)}\n{bindings[idx]}'
-            c = ws.cell(current_row, 2 + j, value)
+        # Column header row (操作 | 1 | 2 | ...).
+        for col, text in enumerate(header, start=1):
+            c = ws.cell(r, col, text)
             c.font = header_font
             c.fill = header_fill
             c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
             c.border = border
-        ws.row_dimensions[current_row].height = 42
-        current_row += 1
+        r += 1
 
-        # 5 data rows (one per operation)
-        for op_idx, op in enumerate(OPS):
-            r = current_row + op_idx
-
-            # Operation label (col 1)
-            c = ws.cell(r, 1, op)
-            c.font = op_font
-            c.fill = op_fill
-            c.alignment = Alignment(horizontal='center', vertical='center')
-            c.border = border
-
-            # Key cells
-            for j in range(n_cols):
-                idx = cells_idx[j]
-                if idx is None:
-                    value = ''
-                else:
-                    action, path = resolve(bindings[idx], behaviors, macros, op)
-                    value = action if mode == 'action' else path
-                c = ws.cell(r, 2 + j, value)
-                c.font = body_font
-                c.alignment = Alignment(wrap_text=True, vertical='center')
+        for row in rows:
+            if row['kind'] == 'heading':
+                c = ws.cell(r, 1, f'■ {row["desc"]}')
+                c.font = row_font
+                c.fill = row_fill
+                c.alignment = Alignment(horizontal='left', vertical='center')
                 c.border = border
-            ws.row_dimensions[r].height = 38
+                for j, key in enumerate(row['keys']):
+                    value = '' if key is None else f'{key[0]}\n{key[1]}'
+                    cc = ws.cell(r, 2 + j, value)
+                    cc.font = body_font
+                    cc.fill = row_fill
+                    cc.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+                    cc.border = border
+                ws.row_dimensions[r].height = 30
+            else:
+                c = ws.cell(r, 1, row['op'])
+                c.font = op_font
+                c.alignment = Alignment(horizontal='center', vertical='center')
+                c.border = border
+                for j, value in enumerate(row['values']):
+                    cc = ws.cell(r, 2 + j, value)
+                    cc.font = body_font
+                    cc.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+                    cc.border = border
+            r += 1
 
-        current_row += len(OPS) + 1  # 5 data rows + 1 blank
+        r += 1  # blank row between stacked tables
 
 
 def write_excel(layers_data: list[tuple[str, list[str]]],
                 behaviors: dict, macros: dict, output_path: Path,
                 grid, display_cols) -> None:
-    """Generate one Excel file. Single layer => sheets '動作'/'経路'.
-    Multiple layers => sheets '<layer> 動作'/'<layer> 経路' per layer."""
+    """Generate one Excel file matching the HTML/Markdown layout: two sheets
+    '動作' / '経路', each stacking every layer's table vertically."""
     wb = Workbook()
     is_single = len(layers_data) == 1
+    active_indices = None if is_single else _compute_active_indices(layers_data)
     first = True
-    for layer_name, bindings in layers_data:
-        for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
-            sheet_name = mode_label if is_single else f'{layer_name} {mode_label}'
-            sheet_name = sheet_name[:31]  # Excel sheet name limit
-            if first:
-                ws = wb.active
-                ws.title = sheet_name
-                first = False
-            else:
-                ws = wb.create_sheet(sheet_name)
-            write_qwerty_sheet(ws, layer_name, bindings, behaviors, macros, mode,
-                               grid, display_cols)
+    for _, mode in [('動作', 'action'), ('経路', 'path')]:
+        sheet_name = '動作' if mode == 'action' else '経路'
+        if first:
+            ws = wb.active
+            ws.title = sheet_name
+            first = False
+        else:
+            ws = wb.create_sheet(sheet_name)
+        _write_mode_sheet(ws, layers_data, behaviors, macros, mode,
+                          grid, display_cols, active_indices, is_single)
     wb.save(output_path)
 
 
@@ -710,28 +698,42 @@ def _normalize_cell(value: str) -> str:
     return value
 
 
-def _markdown_layer_mode_rows(bindings: list[str],
-                              behaviors: dict, macros: dict,
-                              mode: str,
-                              grid, display_cols,
-                              active_indices: set[int] | None = None) -> list[str]:
-    """Return one consolidated table for a (layer, mode) pair, laid out to match
-    the physical keyboard.
+def _compute_active_indices(layers_data: list[tuple[str, list[str]]]) -> set[int] | None:
+    """Binding indices visible across the multi-layer tables: positions that are
+    not `&none` in the DEFAULT layer and not the `&mo 7` center/raised thumb keys.
+    Returns None when there is no DEFAULT layer (=> show everything)."""
+    default_bindings = next((b for n, b in layers_data if n == 'DEFAULT'), None)
+    if default_bindings is None:
+        return None
+    always_hidden = {i for i, b in enumerate(default_bindings) if b.strip() == '&mo 7'}
+    return {i for i, b in enumerate(default_bindings)
+            if b.strip() != '&none' and i not in always_hidden}
 
-    Each physical row appears as a section data row (`■ Row N` + key labels/
-    bindings) followed by op data rows. Columns follow display_cols (physical
-    left-to-right, with a blank split-gap column). Non-tap op rows are dropped
-    per physical row when every cell matches the auto-derived form from the tap
-    value.
 
-    A column renders blank when its cell is empty / the split gap, or (when
-    active_indices is given) when that binding index is hidden. Physical rows
-    that end up with no visible cells are skipped entirely.
+def _build_layer_mode_table(bindings: list[str],
+                            behaviors: dict, macros: dict,
+                            mode: str,
+                            grid, display_cols,
+                            active_indices: set[int] | None = None):
+    """Compute the consolidated (layer, mode) table shared by Markdown and Excel.
+
+    Returns (header, rows):
+      header: list[str] column labels ('操作', '1'.., '' for gap columns), or
+              None when there is no grid/display layout.
+      rows:   list of dicts in display order:
+        {'kind': 'heading', 'desc': str,
+         'keys': [(label, binding) | None per display column]}
+        {'kind': 'detail', 'op': str,
+         'values': [str per display column]}   # normalized: '', '▽', '〃', or value
+
+    Layout rules (identical for both renderers): single column header; one heading
+    row per physical row carrying the key label + binding; the 単発タップ row always
+    present and other op rows only when they differ from the auto-derived tap form;
+    none/trans normalization; hidden inactive keys; skipped fully-blank rows.
+    Cell strings are raw (not escaped) — the Markdown renderer escapes them.
     """
-    lines: list[str] = []
     if not grid or not display_cols:
-        return lines
-    n_cols = len(display_cols)
+        return None, []
 
     def visible_idx(cell):
         """Binding index to render for a cell, or None for a blank cell."""
@@ -742,18 +744,17 @@ def _markdown_layer_mode_rows(bindings: list[str],
         return cell
 
     # Header: number the key columns, leave gap columns blank.
-    header_cells = ['操作']
+    header = ['操作']
     num = 0
     for col in display_cols:
         if col == GAP:
-            header_cells.append('')
+            header.append('')
         else:
             num += 1
-            header_cells.append(str(num))
-    lines.append('| ' + ' | '.join(header_cells) + ' |')
-    lines.append('|' + '|'.join(['---'] * (n_cols + 1)) + '|')
+            header.append(str(num))
 
     non_tap_ops = ('ホールド', 'ダブルタップ', 'Shift+', 'Ctrl+')
+    rows: list[dict] = []
 
     for i, row in enumerate(grid):
         idx_cells = [visible_idx(c) for c in row['cells']]
@@ -761,15 +762,9 @@ def _markdown_layer_mode_rows(bindings: list[str],
             continue
         desc = ROW_DESCRIPTIONS.get(i + 1, f'Row {i + 1}')
 
-        section_cells = [f'■ {_escape_md_cell(desc)}']
-        for idx in idx_cells:
-            if idx is None:
-                section_cells.append('')
-            else:
-                section_cells.append(
-                    f'{_escape_md_cell(get_label(idx))}<br>`{_escape_md_cell(bindings[idx])}`'
-                )
-        lines.append('| ' + ' | '.join(section_cells) + ' |')
+        keys = [None if idx is None else (get_label(idx), bindings[idx])
+                for idx in idx_cells]
+        rows.append({'kind': 'heading', 'desc': desc, 'keys': keys})
 
         # Resolve each op for the visible cells, keyed by column position.
         action_by_op: dict[str, dict[int, str]] = {}
@@ -787,21 +782,54 @@ def _markdown_layer_mode_rows(bindings: list[str],
                 visible_ops.append(op)
 
         for op in visible_ops:
-            row_cells = [_escape_md_cell(op)]
+            values: list[str] = []
             for j, idx in enumerate(idx_cells):
                 if idx is None:
-                    row_cells.append('')
+                    values.append('')
                     continue
                 if op != '単発タップ' and action_by_op[op][j] in _auto_forms(tap_actions[j], op):
                     # Derivable from the single-tap value: abbreviate (or leave
                     # blank when the tap itself is empty / does nothing).
-                    row_cells.append('' if tap_actions[j] == '' else '〃')
+                    values.append('' if tap_actions[j] == '' else '〃')
                     continue
                 action, path = resolve(bindings[idx], behaviors, macros, op)
-                value = action if mode == 'action' else path
-                cell = _normalize_cell(value)
-                row_cells.append(cell if cell in ('', '▽') else _escape_md_cell(cell))
-            lines.append('| ' + ' | '.join(row_cells) + ' |')
+                values.append(_normalize_cell(action if mode == 'action' else path))
+            rows.append({'kind': 'detail', 'op': op, 'values': values})
+
+    return header, rows
+
+
+def _markdown_layer_mode_rows(bindings: list[str],
+                              behaviors: dict, macros: dict,
+                              mode: str,
+                              grid, display_cols,
+                              active_indices: set[int] | None = None) -> list[str]:
+    """Render the shared (layer, mode) table (see `_build_layer_mode_table`) as
+    Markdown table lines, with a trailing blank line."""
+    header, rows = _build_layer_mode_table(bindings, behaviors, macros, mode,
+                                           grid, display_cols, active_indices)
+    if header is None:
+        return []
+
+    lines: list[str] = []
+    lines.append('| ' + ' | '.join(header) + ' |')
+    lines.append('|' + '|'.join(['---'] * len(header)) + '|')
+
+    for row in rows:
+        if row['kind'] == 'heading':
+            cells = [f'■ {_escape_md_cell(row["desc"])}']
+            for key in row['keys']:
+                if key is None:
+                    cells.append('')
+                else:
+                    label, binding = key
+                    cells.append(f'{_escape_md_cell(label)}<br>`{_escape_md_cell(binding)}`')
+            lines.append('| ' + ' | '.join(cells) + ' |')
+        else:
+            cells = [_escape_md_cell(row['op'])]
+            for value in row['values']:
+                cells.append(value if value in ('', '▽', '〃') else _escape_md_cell(value))
+            lines.append('| ' + ' | '.join(cells) + ' |')
 
     lines.append('')
     return lines
@@ -845,23 +873,9 @@ def write_markdown(layers_data: list[tuple[str, list[str]]],
         lines.append('- 各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「■ Row N」見出し。')
         lines.append('')
 
-        default_bindings = next(
-            (b for n, b in layers_data if n == 'DEFAULT'),
-            None,
-        )
-        # Positions assigned `&mo 7` in the DEFAULT layer (the center-column
-        # and raised thumb mo7 keys) are hidden in every layer's table.
-        always_hidden = (
-            {i for i, b in enumerate(default_bindings) if b.strip() == '&mo 7'}
-            if default_bindings is not None
-            else set()
-        )
-        active_indices = (
-            {i for i, b in enumerate(default_bindings)
-             if b.strip() != '&none' and i not in always_hidden}
-            if default_bindings is not None
-            else None
-        )
+        # Positions that are `&none` in DEFAULT, plus the `&mo 7` center-column
+        # and raised thumb keys, are hidden in every layer's table.
+        active_indices = _compute_active_indices(layers_data)
 
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
             lines.append(f'## {mode_label}')
