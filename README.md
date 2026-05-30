@@ -2,6 +2,12 @@
 
 Around Forty RBのファームウェアです。
 
+## キー割り当て一覧
+
+各レイヤーのキー割り当ては [KEYMAP.html](KEYMAP.html) にまとめています。ブラウザでレンダリング表示する場合は以下のリンクから閲覧できます。
+
+https://htmlpreview.github.io/?https://github.com/ryo-aoki-pc/zmk-config-AroundFortyRB/blob/custom/KEYMAP.html
+
 -------------------------------------------------------------------------
 mainブランチで実装済み
 -------------------------------------------------------------------------
