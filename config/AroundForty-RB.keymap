@@ -31,8 +31,18 @@
 / {
     combos { compatible = "zmk,combos"; };
 
+    /*
+     * カスタムビヘイビア命名規則
+     *   A. 構造: <prefix>_vim_<id>（prefix = macro_ / td_ / mm_）。
+     *      ノードラベル == ノード名、label = "<ラベルの大文字>" に揃える。
+     *   B. mm_ の <id>: キーに直接置くモーフは無修飾時の vim キー名で命名
+     *      （mm_vim_d / mm_vim_g など）。ベースが &none、またはネスト用
+     *      ヘルパーは「修飾+キーストローク」で命名（mm_vim_shift_4 /
+     *      mm_vim_ctrl_r / mm_vim_shift_d）。
+     */
+
     macros {
-        macro_vim_dd: macro_delete_line {
+        macro_vim_dd: macro_vim_dd {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
@@ -42,10 +52,10 @@
                 <&macro_wait_time 100>,
                 <&kp LC(X)>;
 
-            label = "MACRO_DELETE_LINE";
+            label = "MACRO_VIM_DD";
         };
 
-        macro_vim_yy: macro_yank_line {
+        macro_vim_yy: macro_vim_yy {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
@@ -55,7 +65,7 @@
                 <&macro_wait_time 100>,
                 <&kp LC(C)>;
 
-            label = "MACRO_YANK_LINE";
+            label = "MACRO_VIM_YY";
         };
 
         macro_vim_shift_d: macro_vim_shift_d {
@@ -204,36 +214,36 @@
             bindings = <&none>, <&macro_vim_yy>;
         };
 
-        mm_vim_shift_y: mm_vim_shift_y {
+        mm_vim_y: mm_vim_y {
             compatible = "zmk,behavior-mod-morph";
-            label = "MM_VIM_SHIFT_Y";
+            label = "MM_VIM_Y";
             bindings = <&td_vim_y>, <&macro_vim_shift_y>;
 
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        mm_vim_ctrl_u: mm_vim_ctrl_u {
+        mm_vim_u: mm_vim_u {
             compatible = "zmk,behavior-mod-morph";
-            label = "MM_VIM_CTRL_U";
+            label = "MM_VIM_U";
             bindings = <&kp LC(Z)>, <&kp PAGE_UP>;
 
             #binding-cells = <0>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
         };
 
-        mm_vim_shift_o: mm_vim_shift_o {
+        mm_vim_o: mm_vim_o {
             compatible = "zmk,behavior-mod-morph";
-            label = "MM_VIM_SHIFT_O";
+            label = "MM_VIM_O";
             bindings = <&macro_vim_o>, <&macro_vim_shift_o>;
 
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        mm_vim_ctrl_then_shift_d: mm_vim_ctrl_then_shift_d {
+        mm_vim_d: mm_vim_d {
             compatible = "zmk,behavior-mod-morph";
-            label = "MM_VIM_CTRL_THEN_SHIFT_D";
+            label = "MM_VIM_D";
             bindings = <&mm_vim_shift_d>, <&kp PAGE_DOWN>;
 
             #binding-cells = <0>;
@@ -326,15 +336,6 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        mm_vim_q: mm_vim_q {
-            compatible = "zmk,behavior-mod-morph";
-            label = "MM_VIM_Q";
-            bindings = <&kp ESCAPE>, <&kp LC(Q)>;
-
-            #binding-cells = <0>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
         mm_vim_w: mm_vim_w {
             compatible = "zmk,behavior-mod-morph";
             label = "MM_VIM_W";
@@ -368,10 +369,10 @@
 
         VIM_NORMAL_1 {
             bindings = <
-&none           &mm_vim_w   &kp LC(RIGHT)              &mm_vim_ctrl_r  &none                &mm_vim_shift_y  &mm_vim_ctrl_u  &none         &mm_vim_shift_o  &kp LC(V)
-&kp LCTRL       &none       &mm_vim_ctrl_then_shift_d  &none           &mm_vim_g            &kp LEFT         &mm_vim_j       &kp UP_ARROW  &kp RIGHT        &kp RCTRL
-&kp LEFT_SHIFT  &kp DELETE  &none                      &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n        &none           &none         &none            &kp RIGHT_SHIFT
-&none           &trans      &trans                     &none           &none         &mo 3  &lt 3 ENTER      &none           &none         &trans           &none
+&none           &mm_vim_w   &kp LC(RIGHT)  &mm_vim_ctrl_r  &none                &mm_vim_y    &mm_vim_u  &none         &mm_vim_o  &kp LC(V)
+&kp LCTRL       &none       &mm_vim_d      &none           &mm_vim_g            &kp LEFT     &mm_vim_j  &kp UP_ARROW  &kp RIGHT  &kp RCTRL
+&kp LEFT_SHIFT  &kp DELETE  &none          &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n    &none      &none         &none      &kp RIGHT_SHIFT
+&none           &trans      &trans         &none           &none         &mo 3  &lt 3 ENTER  &none      &none         &trans     &none
             >;
         };
 
