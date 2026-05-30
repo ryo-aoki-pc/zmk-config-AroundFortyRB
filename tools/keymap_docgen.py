@@ -405,40 +405,40 @@ def resolve_behavior(name: str, behaviors: dict, macros: dict, op: str, depth: i
 
         if op in ('タップ', 'ダブルタップ', 'ホールド'):
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, op, depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
 
         if op == 'Shift+':
             if is_shift:
                 sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
-                return (sub_a, f'{name}[1] → {sub_p}')
+                return (sub_a, f'{name}[1] ▸ {sub_p}')
             else:
                 sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Shift+', depth)
-                return (sub_a, f'{name}[0] → {sub_p}')
+                return (sub_a, f'{name}[0] ▸ {sub_p}')
 
         if op == 'Ctrl+':
             if is_ctrl:
                 sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
-                return (sub_a, f'{name}[1] → {sub_p}')
+                return (sub_a, f'{name}[1] ▸ {sub_p}')
             else:
                 sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Ctrl+', depth)
-                return (sub_a, f'{name}[0] → {sub_p}')
+                return (sub_a, f'{name}[0] ▸ {sub_p}')
 
     if compat == 'zmk,behavior-tap-dance':
         if op == 'タップ':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'タップ', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
         if op == 'ホールド':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'ホールド', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
         if op == 'ダブルタップ':
             sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
-            return (sub_a, f'{name}[1] → {sub_p}')
+            return (sub_a, f'{name}[1] ▸ {sub_p}')
         if op == 'Shift+':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Shift+', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
         if op == 'Ctrl+':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Ctrl+', depth)
-            return (sub_a, f'{name}[0] → {sub_p}')
+            return (sub_a, f'{name}[0] ▸ {sub_p}')
 
     return (f'未対応 behavior: {compat}', name)
 
@@ -701,11 +701,17 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                 c.font = op_font
                 c.alignment = Alignment(horizontal='center', vertical='center')
                 c.border = border
+                max_lines = 1
                 for j, value in enumerate(row['values']):
-                    cc = ws.cell(r, 2 + j, value)
+                    lines = _split_cell_lines(value)
+                    max_lines = max(max_lines, len(lines))
+                    cc = ws.cell(r, 2 + j, '\n'.join(lines))
                     cc.font = body_font
                     cc.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
                     cc.border = border
+                # Give multi-line route cells enough height to show every step.
+                if max_lines > 1:
+                    ws.row_dimensions[r].height = 15 * max_lines
             r += 1
 
 
@@ -764,6 +770,14 @@ def _normalize_cell(value: str) -> str:
     if value.startswith('未対応'):
         return ''
     return value
+
+
+def _split_cell_lines(value: str) -> list[str]:
+    """Split a cell value into display lines at each ' ▸ ' separator, keeping the
+    '▸' marker at the start of the continuation line. Values without a separator
+    (single bindings, '▽', empty, key labels that may contain '→') are returned
+    unchanged as a single-element list."""
+    return value.replace(' ▸ ', '\n▸ ').split('\n')
 
 
 def _compute_active_indices(layers_data: list[tuple[str, list[str]]]) -> set[int] | None:
@@ -985,7 +999,8 @@ def _html_body_rows(rows: list[dict]) -> list[str]:
             out.append('<tr>')
             out.append(f'<td>{_html_text(row["op"])}</td>')
             for value in row['values']:
-                out.append(f'<td>{_html_text(value)}</td>')
+                cell = '<br>'.join(_html_text(line) for line in _split_cell_lines(value))
+                out.append(f'<td>{cell}</td>')
             out.append('</tr>')
     return out
 
