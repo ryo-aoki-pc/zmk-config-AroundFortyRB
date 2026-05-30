@@ -6,6 +6,34 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/pointing.h>
 
+/*
+ * レイヤー番号の別名定義。
+ *   &mo / &lt / &to などの「経路（どのレイヤーへ移動するか）」を
+ *   数字ではなく名前で書けるようにして可読性を上げる。
+ *   ※ レイヤーノード名（DEFAULT 等）との衝突を避けるため別名にしている。
+ *
+ *   番号  別名      レイヤーノード     役割
+ *   ----  --------  ----------------   ------------------------------
+ *    0    BASE      DEFAULT            通常入力（QWERTY）
+ *    1    SYM       SYMBOL             記号・数字
+ *    2    VIM_N1    VIM_NORMAL_1       Vim ノーマル（1ページ目）
+ *    3    VIM_N2    VIM_NORMAL_2       Vim ノーマル（2ページ目）
+ *    4    MOUS      MOUSE              マウス移動
+ *    5    SCRL      SCROLL             スクロール／クリック
+ *    6    FUNC      FUNCTION           ファンクションキー
+ *    7    BT        BLUETOOTH          Bluetooth／出力切替
+ *    8    VISUAL    VIM_VISUAL         Vim ビジュアル
+ */
+#define BASE    0
+#define SYM     1
+#define VIM_N1  2
+#define VIM_N2  3
+#define MOUS    4
+#define SCRL    5
+#define FUNC    6
+#define BT      7
+#define VISUAL  8
+
 &mt {
     quick-tap-ms = <0>;
     tapping-term-ms = <150>;
@@ -26,7 +54,7 @@
     require-prior-idle-ms = <200>;
 };
 
-&mkp_input_listener { input-processors = <&zip_temp_layer 4 10000>; };
+&mkp_input_listener { input-processors = <&zip_temp_layer MOUS 10000>; };
 
 / {
     combos { compatible = "zmk,combos"; };
@@ -129,7 +157,7 @@
                 <&macro_wait_time 50>,
                 <&kp RIGHT>,
                 <&macro_wait_time 50>,
-                <&to 0>;
+                <&to BASE>;
 
             label = "MACRO_VIM_VISUAL_Y";
         };
@@ -143,7 +171,7 @@
                 <&macro_tap>,
                 <&kp LC(X)>,
                 <&macro_wait_time 50>,
-                <&to 0>;
+                <&to BASE>;
 
             label = "MACRO_VIM_VISUAL_CUT";
         };
@@ -157,7 +185,7 @@
                 <&macro_tap>,
                 <&kp LC(V)>,
                 <&macro_wait_time 50>,
-                <&to 0>;
+                <&to BASE>;
 
             label = "MACRO_VIM_VISUAL_P";
         };
@@ -170,7 +198,7 @@
                 <&macro_wait_time 50>,
                 <&kp LS(DOWN)>,
                 <&macro_wait_time 50>,
-                <&to 8>;
+                <&to VISUAL>;
 
             label = "MACRO_VIM_V_LINE";
         };
@@ -184,7 +212,7 @@
                 <&macro_tap>,
                 <&kp RIGHT>,
                 <&macro_wait_time 50>,
-                <&to 0>;
+                <&to BASE>;
 
             label = "MACRO_VIM_VISUAL_EXIT";
         };
@@ -305,7 +333,7 @@
         mm_vim_v: mm_vim_v {
             compatible = "zmk,behavior-mod-morph";
             label = "MM_VIM_V";
-            bindings = <&to 8>, <&macro_vim_v_line>;
+            bindings = <&to VISUAL>, <&macro_vim_v_line>;
 
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -351,10 +379,10 @@
 
         DEFAULT {
             bindings = <
-&kp Q               &kp W         &kp E         &kp R        &kp T               &kp Y        &kp U  &kp I      &kp O       &kp P
-&mt LEFT_CONTROL A  &kp S         &kp D         &kp F        &kp G               &kp H        &kp J  &kp K      &kp L       &mt RCTRL MINUS
-&mt LEFT_SHIFT Z    &kp X         &kp C         &kp V        &kp B        &mo 7  &kp N        &kp M  &kp COMMA  &kp PERIOD  &mt RIGHT_SHIFT SLASH
-&mo 6               &kp LEFT_WIN  &kp LEFT_ALT  &lt 2 SPACE  &lt 2 SPACE  &mo 1  &lt 1 ENTER  &mo 7  &mo 2      &mo 6       &mo 6
+&kp Q               &kp W         &kp E         &kp R             &kp T                      &kp Y          &kp U   &kp I       &kp O       &kp P
+&mt LEFT_CONTROL A  &kp S         &kp D         &kp F             &kp G                      &kp H          &kp J   &kp K       &kp L       &mt RCTRL MINUS
+&mt LEFT_SHIFT Z    &kp X         &kp C         &kp V             &kp B             &mo BT   &kp N          &kp M   &kp COMMA   &kp PERIOD  &mt RIGHT_SHIFT SLASH
+&mo FUNC            &kp LEFT_WIN  &kp LEFT_ALT  &lt VIM_N1 SPACE  &lt VIM_N1 SPACE  &mo SYM  &lt SYM ENTER  &mo BT  &mo VIM_N1  &mo FUNC    &mo FUNC
             >;
         };
 
@@ -362,17 +390,17 @@
             bindings = <
 &kp N1                 &kp N2     &kp N3            &kp N4             &kp N5              &kp N6         &kp N7         &kp N8            &kp N9         &kp N0
 &mt LCTRL TAB          &kp GRAVE  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp DELETE          &kp BACKSPACE  &kp SEMICOLON  &kp SINGLE_QUOTE  &kp BACKSLASH  &trans
-&mt LEFT_SHIFT ESCAPE  &none      &none             &none              &none        &none  &none          &kp EQUAL      &trans            &trans         &trans
-&none                  &trans     &trans            &lt 3 SPACE        &lt 3 SPACE  &none  &none          &none          &mo 3             &trans         &none
+&mt LEFT_SHIFT ESCAPE  &none      &none             &none              &none             &none  &none          &kp EQUAL      &trans            &trans         &trans
+&none                  &trans     &trans            &lt VIM_N2 SPACE   &lt VIM_N2 SPACE  &none  &none          &none          &mo VIM_N2        &trans         &none
             >;
         };
 
         VIM_NORMAL_1 {
             bindings = <
-&none           &mm_vim_w   &kp LC(RIGHT)  &mm_vim_ctrl_r  &none                &mm_vim_y    &mm_vim_u  &none         &mm_vim_o  &kp LC(V)
-&kp LCTRL       &none       &mm_vim_d      &none           &mm_vim_g            &kp LEFT     &mm_vim_j  &kp UP_ARROW  &kp RIGHT  &kp RCTRL
-&kp LEFT_SHIFT  &kp DELETE  &none          &mm_vim_v       &kp LC(LEFT)  &none  &mm_vim_n    &none      &none         &none      &kp RIGHT_SHIFT
-&none           &trans      &trans         &none           &none         &mo 3  &lt 3 ENTER  &none      &none         &trans     &none
+&none           &mm_vim_w   &kp LC(RIGHT)  &mm_vim_ctrl_r  &none                     &mm_vim_y         &mm_vim_u  &none         &mm_vim_o  &kp LC(V)
+&kp LCTRL       &none       &mm_vim_d      &none           &mm_vim_g                 &kp LEFT          &mm_vim_j  &kp UP_ARROW  &kp RIGHT  &kp RCTRL
+&kp LEFT_SHIFT  &kp DELETE  &none          &mm_vim_v       &kp LC(LEFT)  &none       &mm_vim_n         &none      &none         &none      &kp RIGHT_SHIFT
+&none           &trans      &trans         &none           &none         &mo VIM_N2  &lt VIM_N2 ENTER  &none      &none         &trans     &none
             >;
         };
 
@@ -387,10 +415,10 @@
 
         MOUSE {
             bindings = <
-&none  &none  &none  &none  &none         &none  &none  &none  &none  &none
-&none  &none  &none  &none  &none         &none  &none  &mo 5  &none  &none
-&none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
-&none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
+&none  &none  &none  &none  &none         &none  &none  &none     &none  &none
+&none  &none  &none  &none  &none         &none  &none  &mo SCRL  &none  &none
+&none  &none  &none  &none  &none  &none  &none  &none  &none     &none  &none
+&none  &none  &none  &none  &none  &none  &none  &none  &none     &none  &none
             >;
         };
 
