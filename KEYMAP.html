@@ -441,10 +441,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td>Y<br><code>&amp;mm_vim_shift_y</code></td>
-<td>U<br><code>&amp;mm_vim_ctrl_u</code></td>
+<td>Y<br><code>&amp;mm_vim_y</code></td>
+<td>U<br><code>&amp;mm_vim_u</code></td>
 <td>I<br><code>&amp;none</code></td>
-<td>O<br><code>&amp;mm_vim_shift_o</code></td>
+<td>O<br><code>&amp;mm_vim_o</code></td>
 <td>P<br><code>&amp;kp LC(V)</code></td>
 </tr>
 <tr>
@@ -515,7 +515,7 @@
 <td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
-<td>D<br><code>&amp;mm_vim_ctrl_then_shift_d</code></td>
+<td>D<br><code>&amp;mm_vim_d</code></td>
 <td>F<br><code>&amp;none</code></td>
 <td>G<br><code>&amp;mm_vim_g</code></td>
 <td></td>
@@ -1897,10 +1897,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td>Y<br><code>&amp;mm_vim_shift_y</code></td>
-<td>U<br><code>&amp;mm_vim_ctrl_u</code></td>
+<td>Y<br><code>&amp;mm_vim_y</code></td>
+<td>U<br><code>&amp;mm_vim_u</code></td>
 <td>I<br><code>&amp;none</code></td>
-<td>O<br><code>&amp;mm_vim_shift_o</code></td>
+<td>O<br><code>&amp;mm_vim_o</code></td>
 <td>P<br><code>&amp;kp LC(V)</code></td>
 </tr>
 <tr>
@@ -1913,10 +1913,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_y[0] → td_vim_y[0] → &amp;none</td>
-<td>mm_vim_ctrl_u[0] → &amp;kp LC(Z)</td>
+<td>mm_vim_y[0] → td_vim_y[0] → &amp;none</td>
+<td>mm_vim_u[0] → &amp;kp LC(Z)</td>
 <td></td>
-<td>mm_vim_shift_o[0] → macro_vim_o</td>
+<td>mm_vim_o[0] → macro_vim_o</td>
 <td>&amp;kp LC(V)</td>
 </tr>
 <tr>
@@ -1929,7 +1929,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_y[0] → td_vim_y[1] → macro_vim_yy</td>
+<td>mm_vim_y[0] → td_vim_y[1] → macro_vim_yy</td>
 <td>〃</td>
 <td></td>
 <td>〃</td>
@@ -1945,10 +1945,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_shift_y[1] → macro_vim_shift_y</td>
+<td>mm_vim_y[1] → macro_vim_shift_y</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_shift_o[1] → macro_vim_shift_o</td>
+<td>mm_vim_o[1] → macro_vim_shift_o</td>
 <td>〃</td>
 </tr>
 <tr>
@@ -1962,7 +1962,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>mm_vim_ctrl_u[1] → &amp;kp PAGE_UP</td>
+<td>mm_vim_u[1] → &amp;kp PAGE_UP</td>
 <td></td>
 <td>〃</td>
 <td>〃</td>
@@ -1971,7 +1971,7 @@
 <td>Row 2</td>
 <td>A<br><code>&amp;kp LCTRL</code></td>
 <td>S<br><code>&amp;none</code></td>
-<td>D<br><code>&amp;mm_vim_ctrl_then_shift_d</code></td>
+<td>D<br><code>&amp;mm_vim_d</code></td>
 <td>F<br><code>&amp;none</code></td>
 <td>G<br><code>&amp;mm_vim_g</code></td>
 <td></td>
@@ -1987,7 +1987,7 @@
 <td>タップ</td>
 <td>&amp;kp LCTRL</td>
 <td></td>
-<td>mm_vim_ctrl_then_shift_d[0] → mm_vim_shift_d[0] → td_vim_d[0] → &amp;none</td>
+<td>mm_vim_d[0] → mm_vim_shift_d[0] → td_vim_d[0] → &amp;none</td>
 <td></td>
 <td>mm_vim_g[0] → td_vim_g[0] → &amp;none</td>
 <td></td>
@@ -2003,7 +2003,7 @@
 <td>ダブルタップ</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_ctrl_then_shift_d[0] → mm_vim_shift_d[0] → td_vim_d[1] → macro_vim_dd</td>
+<td>mm_vim_d[0] → mm_vim_shift_d[0] → td_vim_d[1] → macro_vim_dd</td>
 <td></td>
 <td>mm_vim_g[0] → td_vim_g[1] → &amp;kp LC(HOME)</td>
 <td></td>
@@ -2019,7 +2019,7 @@
 <td>Shift+</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_ctrl_then_shift_d[0] → mm_vim_shift_d[1] → macro_vim_shift_d</td>
+<td>mm_vim_d[0] → mm_vim_shift_d[1] → macro_vim_shift_d</td>
 <td></td>
 <td>mm_vim_g[1] → &amp;kp LC(END)</td>
 <td></td>
@@ -2035,7 +2035,7 @@
 <td>Ctrl+</td>
 <td>〃</td>
 <td></td>
-<td>mm_vim_ctrl_then_shift_d[1] → &amp;kp PAGE_DOWN</td>
+<td>mm_vim_d[1] → &amp;kp PAGE_DOWN</td>
 <td></td>
 <td></td>
 <td></td>
