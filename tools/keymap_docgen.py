@@ -12,7 +12,7 @@ ZMK keymap (.keymap) の指定した 1 つ以上のレイヤーの全キー割�
          「経路」セクションに全レイヤーを再度並べる構成
 
 それぞれの表は、キーボード物理行ごとに以下の構造を持つ：
-  - 左端 1 列: 「操作」 = 単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+
+  - 左端 1 列: 「操作」 = タップ / ホールド / ダブルタップ / Shift+ / Ctrl+
   - 右側の列: その物理行のキーを QWERTY 順に並べたもの
 
 mod-morph (LSHIFT/RSHIFT, LCTL/RCTL), tap-dance, layer-tap, momentary-layer
@@ -234,7 +234,7 @@ def format_keycode(kc: str) -> str:
 # Resolution: binding × operation -> (action_description, path)
 # ============================================================================
 
-OPS = ('単発タップ', 'ホールド', 'ダブルタップ', 'Shift+', 'Ctrl+')
+OPS = ('タップ', 'ホールド', 'ダブルタップ', 'Shift+', 'Ctrl+')
 
 
 def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0) -> tuple[str, str]:
@@ -255,7 +255,7 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
         kc = m.group(1).strip()
         label = format_keycode(kc)
         path = f'&kp {kc}'
-        if op == '単発タップ':
+        if op == 'タップ':
             return (label, path)
         if op == 'ホールド':
             return (label, path)
@@ -273,7 +273,7 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
         key_label = format_keycode(key)
         mod_label = format_keycode(mod)
         path = f'&mt {mod} {key}'
-        if op == '単発タップ':
+        if op == 'タップ':
             return (key_label, path)
         if op == 'ホールド':
             return (mod_label, path)
@@ -290,7 +290,7 @@ def resolve(binding: str, behaviors: dict, macros: dict, op: str, depth: int = 0
         layer, key = m.group(1), m.group(2).strip()
         key_label = format_keycode(key)
         path = f'&lt {layer} {key}'
-        if op == '単発タップ':
+        if op == 'タップ':
             return (key_label, path)
         if op == 'ホールド':
             return (f'L{layer}', path)
@@ -334,13 +334,13 @@ def resolve_behavior(name: str, behaviors: dict, macros: dict, op: str, depth: i
         is_shift = 'LSFT' in mods or 'RSFT' in mods
         is_ctrl = 'LCTL' in mods or 'RCTL' in mods
 
-        if op in ('単発タップ', 'ダブルタップ', 'ホールド'):
+        if op in ('タップ', 'ダブルタップ', 'ホールド'):
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, op, depth)
             return (sub_a, f'{name}[0] → {sub_p}')
 
         if op == 'Shift+':
             if is_shift:
-                sub_a, sub_p = resolve(bindings[1], behaviors, macros, '単発タップ', depth)
+                sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
                 return (sub_a, f'{name}[1] → {sub_p}')
             else:
                 sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Shift+', depth)
@@ -348,21 +348,21 @@ def resolve_behavior(name: str, behaviors: dict, macros: dict, op: str, depth: i
 
         if op == 'Ctrl+':
             if is_ctrl:
-                sub_a, sub_p = resolve(bindings[1], behaviors, macros, '単発タップ', depth)
+                sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
                 return (sub_a, f'{name}[1] → {sub_p}')
             else:
                 sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Ctrl+', depth)
                 return (sub_a, f'{name}[0] → {sub_p}')
 
     if compat == 'zmk,behavior-tap-dance':
-        if op == '単発タップ':
-            sub_a, sub_p = resolve(bindings[0], behaviors, macros, '単発タップ', depth)
+        if op == 'タップ':
+            sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'タップ', depth)
             return (sub_a, f'{name}[0] → {sub_p}')
         if op == 'ホールド':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'ホールド', depth)
             return (sub_a, f'{name}[0] → {sub_p}')
         if op == 'ダブルタップ':
-            sub_a, sub_p = resolve(bindings[1], behaviors, macros, '単発タップ', depth)
+            sub_a, sub_p = resolve(bindings[1], behaviors, macros, 'タップ', depth)
             return (sub_a, f'{name}[1] → {sub_p}')
         if op == 'Shift+':
             sub_a, sub_p = resolve(bindings[0], behaviors, macros, 'Shift+', depth)
@@ -726,7 +726,7 @@ def _build_layer_mode_table(bindings: list[str],
          'values': [str per display column]}   # normalized: '', '▽', '〃', or value
 
     Layout rules (identical for both renderers): single column header; one heading
-    row per physical row carrying the key label + binding; the 単発タップ row always
+    row per physical row carrying the key label + binding; the タップ row always
     present and other op rows only when they differ from the auto-derived tap form;
     none/trans normalization; hidden inactive keys; skipped fully-blank rows.
     Cell strings are raw (not escaped) — the Markdown renderer escapes them.
@@ -772,9 +772,9 @@ def _build_layer_mode_table(bindings: list[str],
                 j: _normalize_cell(resolve(bindings[idx], behaviors, macros, op)[0])
                 for j, idx in enumerate(idx_cells) if idx is not None
             }
-        tap_actions = action_by_op['単発タップ']
+        tap_actions = action_by_op['タップ']
 
-        visible_ops = ['単発タップ']
+        visible_ops = ['タップ']
         for op in non_tap_ops:
             cells = action_by_op[op]
             if any(cells[j] not in _auto_forms(tap_actions[j], op) for j in cells):
@@ -786,7 +786,7 @@ def _build_layer_mode_table(bindings: list[str],
                 if idx is None:
                     values.append('')
                     continue
-                if op != '単発タップ' and action_by_op[op][j] in _auto_forms(tap_actions[j], op):
+                if op != 'タップ' and action_by_op[op][j] in _auto_forms(tap_actions[j], op):
                     # Derivable from the single-tap value: abbreviate (or leave
                     # blank when the tap itself is empty / does nothing).
                     values.append('' if tap_actions[j] == '' else '〃')
@@ -933,7 +933,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
         ) + '</p>')
         body.append('<ul>')
         body.append('<li>' + _html_inline('各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。') + '</li>')
-        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。') + '</li>')
+        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。') + '</li>')
         body.append('</ul>')
         for mode_label, mode in [('動作', 'action'), ('経路', 'path')]:
             body.append(f'<h2>{_html_inline(mode_label)}</h2>')
@@ -950,7 +950,7 @@ def write_html(layers_data: list[tuple[str, list[str]]],
         body.append('<ul>')
         body.append('<li>' + _html_inline('各 row セクション行に「キーラベル」と「バインディング (`&...`)」の 2 段表示でキー位置を示す。') + '</li>')
         body.append('<li>' + _html_inline('列は物理配列の左→右順。左右分割は中央の空列で分離する。') + '</li>')
-        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（単発タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。') + '</li>')
+        body.append('<li>' + _html_inline('各表の左端 1 列が「操作」（タップ / ホールド / ダブルタップ / Shift+ / Ctrl+）または「Row N」見出し。') + '</li>')
         body.append('</ul>')
 
         # Positions that are `&none` in DEFAULT, plus the `&mo 7` center-column
