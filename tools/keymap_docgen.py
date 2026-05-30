@@ -493,10 +493,10 @@ def summarize_macro(bindings: list[str]) -> str:
 KEY_LABELS = {
     0: 'Q', 1: 'W', 2: 'E', 3: 'R', 4: 'T', 5: 'Y', 6: 'U', 7: 'I', 8: 'O', 9: 'P',
     10: 'A', 11: 'S', 12: 'D', 13: 'F', 14: 'G', 15: 'H', 16: 'J', 17: 'K', 18: 'L', 19: '-',
-    20: 'Z', 21: 'X', 22: 'C', 23: 'V', 24: 'B', 25: '(center mo7)',
+    20: 'Z', 21: 'X', 22: 'C', 23: 'V', 24: 'B', 25: 'mo中央',
     26: 'N', 27: 'M', 28: ',', 29: '.', 30: '/',
     31: 'mo6 (L outer)', 32: 'LWin', 33: 'LAlt', 34: 'SPACE', 35: 'SPACE',
-    36: 'mo1 (L center)', 37: 'lt1 ENTER', 38: 'mo7 (raised)', 39: 'mo2',
+    36: 'mo1 (L center)', 37: 'lt1 ENTER', 38: 'mo上段', 39: 'mo2',
     40: 'mo6 (R)', 41: 'mo6 (R outer)',
 }
 
@@ -659,7 +659,8 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
             if row['kind'] == 'heading':
                 for j, key in enumerate(row['keys']):
                     if key is not None:
-                        col_max[j] = max(col_max[j], _disp_width(key[0]), _disp_width(key[1]))
+                        col_max[j] = max(col_max[j], _disp_width(key[0]),
+                                         _disp_width(format_binding_for_display(key[1])))
             else:
                 for j, value in enumerate(row['values']):
                     for line in _split_cell_lines(value):
@@ -701,7 +702,7 @@ def _write_mode_sheet(ws, layers_data: list[tuple[str, list[str]]],
                 c.alignment = Alignment(horizontal='left', vertical='center')
                 c.border = border
                 for j, key in enumerate(row['keys']):
-                    value = '' if key is None else f'{key[0]}\n{key[1]}'
+                    value = '' if key is None else f'{key[0]}\n{format_binding_for_display(key[1])}'
                     cc = ws.cell(r, 2 + j, value)
                     cc.font = body_font
                     cc.fill = row_fill
@@ -802,14 +803,12 @@ def _disp_width(s: str) -> int:
 
 def _compute_active_indices(layers_data: list[tuple[str, list[str]]]) -> set[int] | None:
     """Binding indices visible across the multi-layer tables: positions that are
-    not `&none` in the DEFAULT layer and not the `&mo 7` center/raised thumb keys.
+    not `&none` in the DEFAULT layer.
     Returns None when there is no DEFAULT layer (=> show everything)."""
     default_bindings = next((b for n, b in layers_data if n == 'DEFAULT'), None)
     if default_bindings is None:
         return None
-    always_hidden = {i for i, b in enumerate(default_bindings) if b.strip() == '&mo 7'}
-    return {i for i, b in enumerate(default_bindings)
-            if b.strip() != '&none' and i not in always_hidden}
+    return {i for i, b in enumerate(default_bindings) if b.strip() != '&none'}
 
 
 def _build_layer_mode_table(bindings: list[str],
