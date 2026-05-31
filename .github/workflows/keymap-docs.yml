@@ -4,7 +4,8 @@ on:
   push:
     paths:
       - 'config/AroundForty-RB.keymap'
-      - 'tools/keymap-docgen/keymap_docgen.py'
+      - 'tools/keymap-docgen'
+      - '.gitmodules'
       - 'tools/AroundForty-RB.layout.json'
       - '.github/workflows/keymap-docs.yml'
   workflow_dispatch:
