@@ -81,7 +81,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="layer-row"><th colspan="14">DEFAULT レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">BASE_QWERTY レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;kp Q</code></td>
@@ -215,12 +215,12 @@
 <td>mo6 (L outer)<br><code>&amp;mo FUNCTION</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
-<td>mo1 (L center)<br><code>&amp;mo SYMBOL</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_BASE SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_BASE SPACE</code></td>
+<td>mo1 (L center)<br><code>&amp;mo NUM_SYMBOL</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_NORMAL_1</code></td>
-<td>lt1 ENTER<br><code>&amp;lt SYMBOL ENTER</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_BASE</code></td>
+<td>lt1 ENTER<br><code>&amp;lt NUM_SYMBOL ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;mo FUNCTION</code></td>
@@ -258,7 +258,7 @@
 <td>〃</td>
 <td>〃</td>
 </tr>
-<tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">NUM_SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;kp N1</code></td>
@@ -392,11 +392,11 @@
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_SYM SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_SYM SPACE</code></td>
 <td>mo1 (L center)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_NORMAL_2</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td>lt1 ENTER<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
@@ -435,7 +435,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -617,7 +617,7 @@
 <td>LShift</td>
 <td>DEL</td>
 <td></td>
-<td>⇒VIM_VISUAL</td>
+<td>⇒VIM_VISUAL_BASE</td>
 <td>⌃←</td>
 <td></td>
 <td></td>
@@ -633,7 +633,7 @@
 <td>〃</td>
 <td>〃</td>
 <td></td>
-<td><span class="ml">HOME<br>▸ ⇧↓<br>▸ ⇒VIM_VISUAL</span></td>
+<td><span class="ml">HOME<br>▸ ⇧↓<br>▸ ⇒VIM_VISUAL_BASE</span></td>
 <td>〃</td>
 <td></td>
 <td></td>
@@ -651,10 +651,10 @@
 <td>LAlt<br><code>&amp;trans</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
-<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_2</code></td>
+<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td></td>
 <td>mo2<br><code>&amp;none</code></td>
-<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_2 ENTER</code></td>
+<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_SYM ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;trans</code></td>
@@ -692,7 +692,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_SYM レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -837,7 +837,7 @@
 <td>▽</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">MOUSE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">MOUSE_MOVE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -882,7 +882,7 @@
 <td></td>
 <td>H<br><code>&amp;none</code></td>
 <td>J<br><code>&amp;none</code></td>
-<td>K<br><code>&amp;mo SCROLL</code></td>
+<td>K<br><code>&amp;mo MOUSE_SCROLL</code></td>
 <td>L<br><code>&amp;none</code></td>
 <td>-<br><code>&amp;none</code></td>
 </tr>
@@ -966,7 +966,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">SCROLL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">MOUSE_SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -1353,7 +1353,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_VISUAL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">VIM_VISUAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -1380,11 +1380,11 @@
 <td></td>
 <td></td>
 <td></td>
-<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃C<br>▸ →<br>▸ ⇒DEFAULT</span></td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃C<br>▸ →<br>▸ ⇒BASE_QWERTY</span></td>
 <td></td>
 <td></td>
 <td></td>
-<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃V<br>▸ ⇒DEFAULT</span></td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃V<br>▸ ⇒BASE_QWERTY</span></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -1406,7 +1406,7 @@
 <td>タップ</td>
 <td>LCtrl</td>
 <td></td>
-<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒DEFAULT</span></td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒BASE_QWERTY</span></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1469,9 +1469,9 @@
 <tr>
 <td>タップ</td>
 <td>LShift</td>
-<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒DEFAULT</span></td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒BASE_QWERTY</span></td>
 <td></td>
-<td><span class="ml">LShift<br>▸ RShift<br>▸ →<br>▸ ⇒DEFAULT</span></td>
+<td><span class="ml">LShift<br>▸ RShift<br>▸ →<br>▸ ⇒BASE_QWERTY</span></td>
 <td>⇧⌃←</td>
 <td></td>
 <td></td>
@@ -1537,7 +1537,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="layer-row"><th colspan="14">DEFAULT レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">BASE_QWERTY レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;kp Q</code></td>
@@ -1671,12 +1671,12 @@
 <td>mo6 (L outer)<br><code>&amp;mo FUNCTION</code></td>
 <td>LWin<br><code>&amp;kp LEFT_WIN</code></td>
 <td>LAlt<br><code>&amp;kp LEFT_ALT</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_1 SPACE</code></td>
-<td>mo1 (L center)<br><code>&amp;mo SYMBOL</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_BASE SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_BASE SPACE</code></td>
+<td>mo1 (L center)<br><code>&amp;mo NUM_SYMBOL</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_NORMAL_1</code></td>
-<td>lt1 ENTER<br><code>&amp;lt SYMBOL ENTER</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_BASE</code></td>
+<td>lt1 ENTER<br><code>&amp;lt NUM_SYMBOL ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;mo FUNCTION</code></td>
@@ -1687,12 +1687,12 @@
 <td>&amp;mo FUNCTION</td>
 <td>&amp;kp LEFT_WIN</td>
 <td>&amp;kp LEFT_ALT</td>
-<td>&amp;lt VIM_NORMAL_1 SPACE</td>
-<td>&amp;lt VIM_NORMAL_1 SPACE</td>
-<td>&amp;mo SYMBOL</td>
+<td>&amp;lt VIM_NORMAL_BASE SPACE</td>
+<td>&amp;lt VIM_NORMAL_BASE SPACE</td>
+<td>&amp;mo NUM_SYMBOL</td>
 <td></td>
-<td>&amp;mo VIM_NORMAL_1</td>
-<td>&amp;lt SYMBOL ENTER</td>
+<td>&amp;mo VIM_NORMAL_BASE</td>
+<td>&amp;lt NUM_SYMBOL ENTER</td>
 <td></td>
 <td></td>
 <td>&amp;mo FUNCTION</td>
@@ -1703,18 +1703,18 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td>&amp;lt VIM_NORMAL_1 SPACE</td>
-<td>&amp;lt VIM_NORMAL_1 SPACE</td>
+<td>&amp;lt VIM_NORMAL_BASE SPACE</td>
+<td>&amp;lt VIM_NORMAL_BASE SPACE</td>
 <td>〃</td>
 <td></td>
 <td>〃</td>
-<td>&amp;lt SYMBOL ENTER</td>
+<td>&amp;lt NUM_SYMBOL ENTER</td>
 <td></td>
 <td></td>
 <td>〃</td>
 <td>〃</td>
 </tr>
-<tr class="layer-row"><th colspan="14">SYMBOL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">NUM_SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;kp N1</code></td>
@@ -1848,11 +1848,11 @@
 <td>mo6 (L outer)<br><code>&amp;none</code></td>
 <td>LWin<br><code>&amp;trans</code></td>
 <td>LAlt<br><code>&amp;trans</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
-<td>SPACE<br><code>&amp;lt VIM_NORMAL_2 SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_SYM SPACE</code></td>
+<td>SPACE<br><code>&amp;lt VIM_NORMAL_SYM SPACE</code></td>
 <td>mo1 (L center)<br><code>&amp;none</code></td>
 <td></td>
-<td>mo2<br><code>&amp;mo VIM_NORMAL_2</code></td>
+<td>mo2<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td>lt1 ENTER<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
@@ -1864,11 +1864,11 @@
 <td></td>
 <td>▽</td>
 <td>▽</td>
-<td>&amp;lt VIM_NORMAL_2 SPACE</td>
-<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_SYM SPACE</td>
+<td>&amp;lt VIM_NORMAL_SYM SPACE</td>
 <td></td>
 <td></td>
-<td>&amp;mo VIM_NORMAL_2</td>
+<td>&amp;mo VIM_NORMAL_SYM</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1880,8 +1880,8 @@
 <td></td>
 <td>〃</td>
 <td>〃</td>
-<td>&amp;lt VIM_NORMAL_2 SPACE</td>
-<td>&amp;lt VIM_NORMAL_2 SPACE</td>
+<td>&amp;lt VIM_NORMAL_SYM SPACE</td>
+<td>&amp;lt VIM_NORMAL_SYM SPACE</td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -1891,7 +1891,7 @@
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_1 レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2073,7 +2073,7 @@
 <td>&amp;kp LEFT_SHIFT</td>
 <td>&amp;kp DELETE</td>
 <td></td>
-<td><span class="ml">mm_vim_v[0]<br>▸ &amp;to VIM_VISUAL</span></td>
+<td><span class="ml">mm_vim_v[0]<br>▸ &amp;to VIM_VISUAL_BASE</span></td>
 <td>&amp;kp LC(LEFT)</td>
 <td></td>
 <td></td>
@@ -2107,10 +2107,10 @@
 <td>LAlt<br><code>&amp;trans</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
 <td>SPACE<br><code>&amp;none</code></td>
-<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_2</code></td>
+<td>mo1 (L center)<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td></td>
 <td>mo2<br><code>&amp;none</code></td>
-<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_2 ENTER</code></td>
+<td>lt1 ENTER<br><code>&amp;lt VIM_NORMAL_SYM ENTER</code></td>
 <td></td>
 <td></td>
 <td>mo6 (R)<br><code>&amp;trans</code></td>
@@ -2123,10 +2123,10 @@
 <td>▽</td>
 <td></td>
 <td></td>
-<td>&amp;mo VIM_NORMAL_2</td>
+<td>&amp;mo VIM_NORMAL_SYM</td>
 <td></td>
 <td></td>
-<td>&amp;lt VIM_NORMAL_2 ENTER</td>
+<td>&amp;lt VIM_NORMAL_SYM ENTER</td>
 <td></td>
 <td></td>
 <td>▽</td>
@@ -2142,13 +2142,13 @@
 <td>〃</td>
 <td></td>
 <td></td>
-<td>&amp;lt VIM_NORMAL_2 ENTER</td>
+<td>&amp;lt VIM_NORMAL_SYM ENTER</td>
 <td></td>
 <td></td>
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_2 レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">VIM_NORMAL_SYM レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2293,7 +2293,7 @@
 <td>▽</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">MOUSE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">MOUSE_MOVE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2338,7 +2338,7 @@
 <td></td>
 <td>H<br><code>&amp;none</code></td>
 <td>J<br><code>&amp;none</code></td>
-<td>K<br><code>&amp;mo SCROLL</code></td>
+<td>K<br><code>&amp;mo MOUSE_SCROLL</code></td>
 <td>L<br><code>&amp;none</code></td>
 <td>-<br><code>&amp;none</code></td>
 </tr>
@@ -2354,7 +2354,7 @@
 <td></td>
 <td></td>
 <td></td>
-<td>&amp;mo SCROLL</td>
+<td>&amp;mo MOUSE_SCROLL</td>
 <td></td>
 <td></td>
 </tr>
@@ -2422,7 +2422,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">SCROLL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">MOUSE_SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
@@ -2809,7 +2809,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_VISUAL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="14">VIM_VISUAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>Q<br><code>&amp;none</code></td>
