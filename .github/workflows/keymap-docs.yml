@@ -4,7 +4,9 @@ on:
   push:
     paths:
       - 'config/AroundForty-RB.keymap'
-      - 'tools/keymap_docgen.py'
+      - 'tools/keymap-docgen'
+      - '.gitmodules'
+      - 'tools/AroundForty-RB.layout.json'
       - '.github/workflows/keymap-docs.yml'
   workflow_dispatch:
 
@@ -17,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,7 +31,7 @@ jobs:
         run: pip install openpyxl
 
       - name: Regenerate KEYMAP docs
-        run: python tools/keymap_docgen.py config/AroundForty-RB.keymap -o KEYMAP.xlsx
+        run: python tools/keymap-docgen/keymap_docgen.py config/AroundForty-RB.keymap -l tools/AroundForty-RB.layout.json -o KEYMAP.xlsx
 
       - name: Commit KEYMAP docs if changed
         if: github.event_name != 'pull_request'
