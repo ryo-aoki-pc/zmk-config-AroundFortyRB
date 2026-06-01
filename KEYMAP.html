@@ -58,8 +58,9 @@
     position: absolute;
     box-sizing: border-box;
     border: 1px solid #b9c0c8;
-    border-radius: 6px;
-    background: #fbfcfd;
+    border-radius: 7px;
+    background: linear-gradient(180deg, #ffffff 0%, #eef1f4 100%);
+    box-shadow: inset 0 1px 0 #ffffff, inset 0 -2px 1px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.12);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,7 +75,7 @@
   .key .kl { font-size: 8px; color: #8a939b; align-self: flex-start; max-width: 100%; overflow: hidden; }
   .key .kt { font-size: 12px; font-weight: 600; color: #1f2328; max-width: 100%; overflow: hidden; }
   .key .kh { font-size: 9px; color: #0969da; max-width: 100%; overflow: hidden; }
-  .key.none { background: #f0f1f2; border-style: dashed; opacity: .45; }
+  .key.none { background: #f0f1f2; border-style: dashed; opacity: .45; box-shadow: none; }
   .key.trans { background: #f7f8fa; }
   .key.trans .kt { color: #8a939b; font-weight: 400; }
 </style>
@@ -511,11 +512,10 @@
 <th>9</th>
 <th>10</th>
 <th>11</th>
-<th>12</th>
 </tr>
 </thead>
 <tbody>
-<tr class="layer-row"><th colspan="14">BASE_QWERTY レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">BASE_QWERTY レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;kp Q</code></td>
@@ -523,7 +523,6 @@
 <td>pos 2<br><code>&amp;kp E</code></td>
 <td>pos 3<br><code>&amp;kp R</code></td>
 <td>pos 4<br><code>&amp;kp T</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;kp Y</code></td>
@@ -541,7 +540,6 @@
 <td>T</td>
 <td></td>
 <td></td>
-<td></td>
 <td>Y</td>
 <td>U</td>
 <td>I</td>
@@ -555,7 +553,6 @@
 <td>pos 12<br><code>&amp;kp D</code></td>
 <td>pos 13<br><code>&amp;kp F</code></td>
 <td>pos 14<br><code>&amp;kp G</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;kp H</code></td>
@@ -573,7 +570,6 @@
 <td>G</td>
 <td></td>
 <td></td>
-<td></td>
 <td>H</td>
 <td>J</td>
 <td>K</td>
@@ -587,7 +583,6 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -605,7 +600,6 @@
 <td>pos 24<br><code>&amp;kp B</code></td>
 <td>pos 25<br><code>&amp;mo BLUETOOTH</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;mo BLUETOOTH</code></td>
 <td>pos 26<br><code>&amp;kp N</code></td>
 <td>pos 27<br><code>&amp;kp M</code></td>
 <td>pos 28<br><code>&amp;kp COMMA</code></td>
@@ -621,7 +615,6 @@
 <td>B</td>
 <td>L7</td>
 <td></td>
-<td>L7</td>
 <td>N</td>
 <td>M</td>
 <td>,</td>
@@ -641,7 +634,6 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td>〃</td>
 <td>RShift</td>
 </tr>
 <tr style="background-color:#fff3cd">
@@ -653,10 +645,9 @@
 <td>pos 35<br><code>&amp;lt VIM_NORMAL_BASE SPACE</code></td>
 <td>pos 36<br><code>&amp;mo NUM_SYMBOL</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;mo VIM_NORMAL_BASE</code></td>
 <td>pos 37<br><code>&amp;lt NUM_SYMBOL ENTER</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;mo BLUETOOTH</code></td>
+<td>pos 39<br><code>&amp;mo VIM_NORMAL_BASE</code></td>
 <td>pos 40<br><code>&amp;mo FUNCTION</code></td>
 <td>pos 41<br><code>&amp;mo FUNCTION</code></td>
 </tr>
@@ -669,10 +660,9 @@
 <td>SPACE</td>
 <td>L1</td>
 <td></td>
-<td>L2</td>
 <td>ENTER</td>
-<td></td>
-<td></td>
+<td>L7</td>
+<td>L2</td>
 <td>L6</td>
 <td>L6</td>
 </tr>
@@ -685,14 +675,13 @@
 <td>L2</td>
 <td>〃</td>
 <td></td>
-<td>〃</td>
 <td>L1</td>
-<td></td>
-<td></td>
+<td>〃</td>
+<td>〃</td>
 <td>〃</td>
 <td>〃</td>
 </tr>
-<tr class="layer-row"><th colspan="14">NUM_SYMBOL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">NUM_SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;kp N1</code></td>
@@ -700,7 +689,6 @@
 <td>pos 2<br><code>&amp;kp N3</code></td>
 <td>pos 3<br><code>&amp;kp N4</code></td>
 <td>pos 4<br><code>&amp;kp N5</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;kp N6</code></td>
@@ -718,7 +706,6 @@
 <td>5</td>
 <td></td>
 <td></td>
-<td></td>
 <td>6</td>
 <td>7</td>
 <td>8</td>
@@ -732,7 +719,6 @@
 <td>pos 12<br><code>&amp;kp LEFT_BRACKET</code></td>
 <td>pos 13<br><code>&amp;kp RIGHT_BRACKET</code></td>
 <td>pos 14<br><code>&amp;kp DELETE</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;kp BACKSPACE</code></td>
@@ -750,7 +736,6 @@
 <td>DEL</td>
 <td></td>
 <td></td>
-<td></td>
 <td>BS</td>
 <td>;</td>
 <td>'</td>
@@ -764,7 +749,6 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -782,7 +766,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;kp EQUAL</code></td>
 <td>pos 28<br><code>&amp;trans</code></td>
@@ -792,7 +775,6 @@
 <tr>
 <td>タップ</td>
 <td>ESC</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -815,7 +797,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -830,10 +811,9 @@
 <td>pos 35<br><code>&amp;lt VIM_NORMAL_SYM SPACE</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td>pos 40<br><code>&amp;trans</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -846,10 +826,9 @@
 <td>SPACE</td>
 <td></td>
 <td></td>
+<td></td>
+<td></td>
 <td>L3</td>
-<td></td>
-<td></td>
-<td></td>
 <td>▽</td>
 <td></td>
 </tr>
@@ -862,14 +841,13 @@
 <td>L3</td>
 <td></td>
 <td></td>
+<td></td>
+<td></td>
 <td>〃</td>
-<td></td>
-<td></td>
-<td></td>
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_BASE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">VIM_NORMAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -877,7 +855,6 @@
 <td>pos 2<br><code>&amp;kp LC(RIGHT)</code></td>
 <td>pos 3<br><code>&amp;mm_vim_ctrl_r</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;mm_vim_y</code></td>
@@ -891,7 +868,6 @@
 <td></td>
 <td>⌃→</td>
 <td>⌃→</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -911,7 +887,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td><span class="ml">HOME<br>▸ ⇧END<br>▸ ⌃C</span></td>
 <td>〃</td>
 <td></td>
@@ -923,7 +898,6 @@
 <td></td>
 <td>〃</td>
 <td>〃</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -944,7 +918,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>PgUp</td>
 <td></td>
 <td>〃</td>
@@ -959,7 +932,6 @@
 <td>pos 14<br><code>&amp;mm_vim_g</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;kp LEFT</code></td>
 <td>pos 16<br><code>&amp;mm_vim_j</code></td>
 <td>pos 17<br><code>&amp;kp UP_ARROW</code></td>
@@ -969,7 +941,6 @@
 <tr>
 <td>タップ</td>
 <td>LCtrl</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -991,7 +962,6 @@
 <td>⌃HOME</td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -1007,7 +977,6 @@
 <td>⌃END</td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td><span class="ml">END<br>▸ DEL<br>▸ SPACE</span></td>
 <td>〃</td>
@@ -1019,7 +988,6 @@
 <td>〃</td>
 <td></td>
 <td>PgDn</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1039,7 +1007,6 @@
 <td>pos 24<br><code>&amp;kp LC(LEFT)</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;mm_vim_n</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1053,7 +1020,6 @@
 <td></td>
 <td>⇒VIM_VISUAL_BASE</td>
 <td>⌃←</td>
-<td></td>
 <td></td>
 <td></td>
 <td>F3</td>
@@ -1071,7 +1037,6 @@
 <td>〃</td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td></td>
 <td></td>
@@ -1087,10 +1052,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;lt VIM_NORMAL_SYM ENTER</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;trans</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -1102,7 +1066,6 @@
 <td></td>
 <td></td>
 <td>L3</td>
-<td></td>
 <td></td>
 <td>ENTER</td>
 <td></td>
@@ -1119,14 +1082,13 @@
 <td></td>
 <td>〃</td>
 <td></td>
-<td></td>
 <td>L3</td>
 <td></td>
 <td></td>
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_SYM レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">VIM_NORMAL_SYM レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -1134,7 +1096,6 @@
 <td>pos 2<br><code>&amp;none</code></td>
 <td>pos 3<br><code>&amp;mm_vim_shift_4</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;mm_vim_shift_6</code></td>
@@ -1145,7 +1106,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1168,7 +1128,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>HOME</td>
 <td></td>
 <td></td>
@@ -1184,7 +1143,6 @@
 <td>pos 14<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;kp LEFT</code></td>
 <td>pos 16<br><code>&amp;none</code></td>
 <td>pos 17<br><code>&amp;none</code></td>
@@ -1194,7 +1152,6 @@
 <tr>
 <td>タップ</td>
 <td>LCtrl</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1216,7 +1173,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1226,7 +1182,6 @@
 <tr>
 <td>タップ</td>
 <td>LShift</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1248,10 +1203,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;trans</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -1267,11 +1221,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>▽</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">MOUSE_MOVE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">MOUSE_MOVE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -1279,7 +1232,6 @@
 <td>pos 2<br><code>&amp;none</code></td>
 <td>pos 3<br><code>&amp;none</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;none</code></td>
@@ -1302,7 +1254,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -1313,7 +1264,6 @@
 <td>pos 14<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;none</code></td>
 <td>pos 16<br><code>&amp;none</code></td>
 <td>pos 17<br><code>&amp;mo MOUSE_SCROLL</code></td>
@@ -1322,7 +1272,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1345,7 +1294,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1354,7 +1302,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1377,10 +1324,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -1398,9 +1344,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">MOUSE_SCROLL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">MOUSE_SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -1408,7 +1353,6 @@
 <td>pos 2<br><code>&amp;none</code></td>
 <td>pos 3<br><code>&amp;none</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;none</code></td>
@@ -1431,7 +1375,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -1440,7 +1383,6 @@
 <td>pos 12<br><code>&amp;none</code></td>
 <td>pos 13<br><code>&amp;none</code></td>
 <td>pos 14<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;none</code></td>
@@ -1463,7 +1405,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 3</td>
@@ -1474,7 +1415,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;mkp MB4</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1483,7 +1423,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1506,10 +1445,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -1527,9 +1465,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">FUNCTION レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">FUNCTION レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;kp F1</code></td>
@@ -1537,7 +1474,6 @@
 <td>pos 2<br><code>&amp;kp F3</code></td>
 <td>pos 3<br><code>&amp;kp F4</code></td>
 <td>pos 4<br><code>&amp;kp F5</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;kp F6</code></td>
@@ -1555,7 +1491,6 @@
 <td>F5</td>
 <td></td>
 <td></td>
-<td></td>
 <td>F6</td>
 <td>F7</td>
 <td>F8</td>
@@ -1569,7 +1504,6 @@
 <td>pos 12<br><code>&amp;none</code></td>
 <td>pos 13<br><code>&amp;none</code></td>
 <td>pos 14<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;none</code></td>
@@ -1592,7 +1526,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 3</td>
@@ -1603,7 +1536,6 @@
 <td>pos 24<br><code>&amp;bootloader</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;bootloader</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1612,7 +1544,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1635,10 +1566,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -1656,9 +1586,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">BLUETOOTH レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">BLUETOOTH レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;bt BT_SEL 0</code></td>
@@ -1666,7 +1595,6 @@
 <td>pos 2<br><code>&amp;bt BT_SEL 2</code></td>
 <td>pos 3<br><code>&amp;bt BT_SEL 3</code></td>
 <td>pos 4<br><code>&amp;bt BT_SEL 4</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;none</code></td>
@@ -1689,7 +1617,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -1698,7 +1625,6 @@
 <td>pos 12<br><code>&amp;none</code></td>
 <td>pos 13<br><code>&amp;none</code></td>
 <td>pos 14<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;none</code></td>
@@ -1721,7 +1647,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 3</td>
@@ -1732,7 +1657,6 @@
 <td>pos 24<br><code>&amp;out OUT_BLE</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1753,7 +1677,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 4</td>
@@ -1764,10 +1687,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -1785,9 +1707,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_VISUAL_BASE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">VIM_VISUAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -1795,7 +1716,6 @@
 <td>pos 2<br><code>&amp;kp LS(LC(RIGHT))</code></td>
 <td>pos 3<br><code>&amp;none</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;macro_vim_visual_y</code></td>
@@ -1809,7 +1729,6 @@
 <td></td>
 <td>⇧⌃→</td>
 <td>⇧⌃→</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1829,7 +1748,6 @@
 <td>pos 14<br><code>&amp;mm_vim_visual_g</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;kp LS(LEFT)</code></td>
 <td>pos 16<br><code>&amp;kp LS(DOWN)</code></td>
 <td>pos 17<br><code>&amp;kp LS(UP)</code></td>
@@ -1841,7 +1759,6 @@
 <td>LCtrl</td>
 <td></td>
 <td><span class="ml">LShift<br>▸ RShift<br>▸ ⌃X<br>▸ ⇒BASE_QWERTY</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1861,7 +1778,6 @@
 <td>⇧⌃HOME</td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -1875,7 +1791,6 @@
 <td>〃</td>
 <td></td>
 <td>⇧⌃END</td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -1893,7 +1808,6 @@
 <td>pos 24<br><code>&amp;kp LS(LC(LEFT))</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;kp F3</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -1907,7 +1821,6 @@
 <td></td>
 <td><span class="ml">LShift<br>▸ RShift<br>▸ →<br>▸ ⇒BASE_QWERTY</span></td>
 <td>⇧⌃←</td>
-<td></td>
 <td></td>
 <td></td>
 <td>F3</td>
@@ -1925,16 +1838,14 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1967,11 +1878,10 @@
 <th>9</th>
 <th>10</th>
 <th>11</th>
-<th>12</th>
 </tr>
 </thead>
 <tbody>
-<tr class="layer-row"><th colspan="14">BASE_QWERTY レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">BASE_QWERTY レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;kp Q</code></td>
@@ -1979,7 +1889,6 @@
 <td>pos 2<br><code>&amp;kp E</code></td>
 <td>pos 3<br><code>&amp;kp R</code></td>
 <td>pos 4<br><code>&amp;kp T</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;kp Y</code></td>
@@ -1997,7 +1906,6 @@
 <td>&amp;kp T</td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;kp Y</td>
 <td>&amp;kp U</td>
 <td>&amp;kp I</td>
@@ -2011,7 +1919,6 @@
 <td>pos 12<br><code>&amp;kp D</code></td>
 <td>pos 13<br><code>&amp;kp F</code></td>
 <td>pos 14<br><code>&amp;kp G</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;kp H</code></td>
@@ -2029,7 +1936,6 @@
 <td>&amp;kp G</td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;kp H</td>
 <td>&amp;kp J</td>
 <td>&amp;kp K</td>
@@ -2043,7 +1949,6 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -2061,7 +1966,6 @@
 <td>pos 24<br><code>&amp;kp B</code></td>
 <td>pos 25<br><code>&amp;mo BLUETOOTH</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;mo BLUETOOTH</code></td>
 <td>pos 26<br><code>&amp;kp N</code></td>
 <td>pos 27<br><code>&amp;kp M</code></td>
 <td>pos 28<br><code>&amp;kp COMMA</code></td>
@@ -2077,7 +1981,6 @@
 <td>&amp;kp B</td>
 <td>&amp;mo BLUETOOTH</td>
 <td></td>
-<td>&amp;mo BLUETOOTH</td>
 <td>&amp;kp N</td>
 <td>&amp;kp M</td>
 <td>&amp;kp COMMA</td>
@@ -2097,7 +2000,6 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td>〃</td>
 <td>&amp;mt RIGHT_SHIFT SLASH</td>
 </tr>
 <tr style="background-color:#fff3cd">
@@ -2109,10 +2011,9 @@
 <td>pos 35<br><code>&amp;lt VIM_NORMAL_BASE SPACE</code></td>
 <td>pos 36<br><code>&amp;mo NUM_SYMBOL</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;mo VIM_NORMAL_BASE</code></td>
 <td>pos 37<br><code>&amp;lt NUM_SYMBOL ENTER</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;mo BLUETOOTH</code></td>
+<td>pos 39<br><code>&amp;mo VIM_NORMAL_BASE</code></td>
 <td>pos 40<br><code>&amp;mo FUNCTION</code></td>
 <td>pos 41<br><code>&amp;mo FUNCTION</code></td>
 </tr>
@@ -2125,10 +2026,9 @@
 <td>&amp;lt VIM_NORMAL_BASE SPACE</td>
 <td>&amp;mo NUM_SYMBOL</td>
 <td></td>
-<td>&amp;mo VIM_NORMAL_BASE</td>
 <td>&amp;lt NUM_SYMBOL ENTER</td>
-<td></td>
-<td></td>
+<td>&amp;mo BLUETOOTH</td>
+<td>&amp;mo VIM_NORMAL_BASE</td>
 <td>&amp;mo FUNCTION</td>
 <td>&amp;mo FUNCTION</td>
 </tr>
@@ -2141,14 +2041,13 @@
 <td>&amp;lt VIM_NORMAL_BASE SPACE</td>
 <td>〃</td>
 <td></td>
-<td>〃</td>
 <td>&amp;lt NUM_SYMBOL ENTER</td>
-<td></td>
-<td></td>
+<td>〃</td>
+<td>〃</td>
 <td>〃</td>
 <td>〃</td>
 </tr>
-<tr class="layer-row"><th colspan="14">NUM_SYMBOL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">NUM_SYMBOL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;kp N1</code></td>
@@ -2156,7 +2055,6 @@
 <td>pos 2<br><code>&amp;kp N3</code></td>
 <td>pos 3<br><code>&amp;kp N4</code></td>
 <td>pos 4<br><code>&amp;kp N5</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;kp N6</code></td>
@@ -2174,7 +2072,6 @@
 <td>&amp;kp N5</td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;kp N6</td>
 <td>&amp;kp N7</td>
 <td>&amp;kp N8</td>
@@ -2188,7 +2085,6 @@
 <td>pos 12<br><code>&amp;kp LEFT_BRACKET</code></td>
 <td>pos 13<br><code>&amp;kp RIGHT_BRACKET</code></td>
 <td>pos 14<br><code>&amp;kp DELETE</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;kp BACKSPACE</code></td>
@@ -2206,7 +2102,6 @@
 <td>&amp;kp DELETE</td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;kp BACKSPACE</td>
 <td>&amp;kp SEMICOLON</td>
 <td>&amp;kp SINGLE_QUOTE</td>
@@ -2220,7 +2115,6 @@
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -2238,7 +2132,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;kp EQUAL</code></td>
 <td>pos 28<br><code>&amp;trans</code></td>
@@ -2248,7 +2141,6 @@
 <tr>
 <td>タップ</td>
 <td>&amp;mt LEFT_SHIFT ESCAPE</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2271,7 +2163,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -2286,10 +2177,9 @@
 <td>pos 35<br><code>&amp;lt VIM_NORMAL_SYM SPACE</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td>pos 40<br><code>&amp;trans</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -2302,10 +2192,9 @@
 <td>&amp;lt VIM_NORMAL_SYM SPACE</td>
 <td></td>
 <td></td>
+<td></td>
+<td></td>
 <td>&amp;mo VIM_NORMAL_SYM</td>
-<td></td>
-<td></td>
-<td></td>
 <td>▽</td>
 <td></td>
 </tr>
@@ -2318,14 +2207,13 @@
 <td>&amp;lt VIM_NORMAL_SYM SPACE</td>
 <td></td>
 <td></td>
+<td></td>
+<td></td>
 <td>〃</td>
-<td></td>
-<td></td>
-<td></td>
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_BASE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">VIM_NORMAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -2333,7 +2221,6 @@
 <td>pos 2<br><code>&amp;kp LC(RIGHT)</code></td>
 <td>pos 3<br><code>&amp;mm_vim_ctrl_r</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;mm_vim_y</code></td>
@@ -2348,7 +2235,6 @@
 <td><span class="ml">mm_vim_w[0]<br>▸ &amp;kp LC(RIGHT)</span></td>
 <td>&amp;kp LC(RIGHT)</td>
 <td><span class="ml">mm_vim_ctrl_r[0]<br>▸ &amp;none</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2367,7 +2253,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td><span class="ml">mm_vim_y[0]<br>▸ td_vim_y[1]<br>▸ macro_vim_yy</span></td>
 <td>〃</td>
 <td></td>
@@ -2379,7 +2264,6 @@
 <td></td>
 <td>〃</td>
 <td>〃</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2400,7 +2284,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td><span class="ml">mm_vim_u[1]<br>▸ &amp;kp PAGE_UP</span></td>
 <td></td>
 <td>〃</td>
@@ -2413,7 +2296,6 @@
 <td>pos 12<br><code>&amp;mm_vim_d</code></td>
 <td>pos 13<br><code>&amp;none</code></td>
 <td>pos 14<br><code>&amp;mm_vim_g</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;kp LEFT</code></td>
@@ -2431,7 +2313,6 @@
 <td><span class="ml">mm_vim_g[0]<br>▸ td_vim_g[0]<br>▸ &amp;none</span></td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;kp LEFT</td>
 <td><span class="ml">mm_vim_j[0]<br>▸ &amp;kp DOWN</span></td>
 <td>&amp;kp UP_ARROW</td>
@@ -2445,7 +2326,6 @@
 <td><span class="ml">mm_vim_d[0]<br>▸ mm_vim_shift_d[0]<br>▸ td_vim_d[1]<br>▸ macro_vim_dd</span></td>
 <td></td>
 <td><span class="ml">mm_vim_g[0]<br>▸ td_vim_g[1]<br>▸ &amp;kp LC(HOME)</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -2463,7 +2343,6 @@
 <td><span class="ml">mm_vim_g[1]<br>▸ &amp;kp LC(END)</span></td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td><span class="ml">mm_vim_j[1]<br>▸ macro_vim_join</span></td>
 <td>〃</td>
@@ -2475,7 +2354,6 @@
 <td>〃</td>
 <td></td>
 <td><span class="ml">mm_vim_d[1]<br>▸ &amp;kp PAGE_DOWN</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2495,7 +2373,6 @@
 <td>pos 24<br><code>&amp;kp LC(LEFT)</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;mm_vim_n</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -2509,7 +2386,6 @@
 <td></td>
 <td><span class="ml">mm_vim_v[0]<br>▸ &amp;to VIM_VISUAL_BASE</span></td>
 <td>&amp;kp LC(LEFT)</td>
-<td></td>
 <td></td>
 <td></td>
 <td><span class="ml">mm_vim_n[0]<br>▸ &amp;kp F3</span></td>
@@ -2527,7 +2403,6 @@
 <td>〃</td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td></td>
 <td></td>
@@ -2543,10 +2418,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;mo VIM_NORMAL_SYM</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;lt VIM_NORMAL_SYM ENTER</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;trans</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -2558,7 +2432,6 @@
 <td></td>
 <td></td>
 <td>&amp;mo VIM_NORMAL_SYM</td>
-<td></td>
 <td></td>
 <td>&amp;lt VIM_NORMAL_SYM ENTER</td>
 <td></td>
@@ -2575,14 +2448,13 @@
 <td></td>
 <td>〃</td>
 <td></td>
-<td></td>
 <td>&amp;lt VIM_NORMAL_SYM ENTER</td>
 <td></td>
 <td></td>
 <td>〃</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_NORMAL_SYM レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">VIM_NORMAL_SYM レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -2590,7 +2462,6 @@
 <td>pos 2<br><code>&amp;none</code></td>
 <td>pos 3<br><code>&amp;mm_vim_shift_4</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;mm_vim_shift_6</code></td>
@@ -2605,7 +2476,6 @@
 <td></td>
 <td></td>
 <td><span class="ml">mm_vim_shift_4[0]<br>▸ &amp;none</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2624,7 +2494,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td><span class="ml">mm_vim_shift_6[1]<br>▸ &amp;kp HOME</span></td>
 <td></td>
 <td></td>
@@ -2640,7 +2509,6 @@
 <td>pos 14<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;kp LEFT</code></td>
 <td>pos 16<br><code>&amp;none</code></td>
 <td>pos 17<br><code>&amp;none</code></td>
@@ -2650,7 +2518,6 @@
 <tr>
 <td>タップ</td>
 <td>&amp;kp LCTRL</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2672,7 +2539,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -2682,7 +2548,6 @@
 <tr>
 <td>タップ</td>
 <td>&amp;kp LEFT_SHIFT</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2704,10 +2569,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;trans</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -2723,11 +2587,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>▽</td>
 <td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">MOUSE_MOVE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">MOUSE_MOVE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -2735,7 +2598,6 @@
 <td>pos 2<br><code>&amp;none</code></td>
 <td>pos 3<br><code>&amp;none</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;none</code></td>
@@ -2758,7 +2620,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -2769,7 +2630,6 @@
 <td>pos 14<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;none</code></td>
 <td>pos 16<br><code>&amp;none</code></td>
 <td>pos 17<br><code>&amp;mo MOUSE_SCROLL</code></td>
@@ -2778,7 +2638,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2801,7 +2660,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -2810,7 +2668,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2833,10 +2690,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -2854,9 +2710,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">MOUSE_SCROLL レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">MOUSE_SCROLL レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -2864,7 +2719,6 @@
 <td>pos 2<br><code>&amp;none</code></td>
 <td>pos 3<br><code>&amp;none</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;none</code></td>
@@ -2887,7 +2741,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 2</td>
@@ -2898,7 +2751,6 @@
 <td>pos 14<br><code>&amp;none</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;none</code></td>
 <td>pos 16<br><code>&amp;mkp MB1</code></td>
 <td>pos 17<br><code>&amp;none</code></td>
@@ -2907,7 +2759,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2930,7 +2781,6 @@
 <td>pos 24<br><code>&amp;none</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;mkp MB4</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -2939,7 +2789,6 @@
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -2962,10 +2811,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -2983,9 +2831,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">FUNCTION レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">FUNCTION レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;kp F1</code></td>
@@ -2993,7 +2840,6 @@
 <td>pos 2<br><code>&amp;kp F3</code></td>
 <td>pos 3<br><code>&amp;kp F4</code></td>
 <td>pos 4<br><code>&amp;kp F5</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;kp F6</code></td>
@@ -3011,7 +2857,6 @@
 <td>&amp;kp F5</td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;kp F6</td>
 <td>&amp;kp F7</td>
 <td>&amp;kp F8</td>
@@ -3025,7 +2870,6 @@
 <td>pos 12<br><code>&amp;none</code></td>
 <td>pos 13<br><code>&amp;none</code></td>
 <td>pos 14<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;none</code></td>
@@ -3046,7 +2890,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;sys_reset</td>
 <td></td>
 </tr>
@@ -3059,7 +2902,6 @@
 <td>pos 24<br><code>&amp;bootloader</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;bootloader</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -3073,7 +2915,6 @@
 <td></td>
 <td></td>
 <td>&amp;bootloader</td>
-<td></td>
 <td></td>
 <td></td>
 <td>&amp;bootloader</td>
@@ -3091,10 +2932,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -3112,9 +2952,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">BLUETOOTH レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">BLUETOOTH レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;bt BT_SEL 0</code></td>
@@ -3122,7 +2961,6 @@
 <td>pos 2<br><code>&amp;bt BT_SEL 2</code></td>
 <td>pos 3<br><code>&amp;bt BT_SEL 3</code></td>
 <td>pos 4<br><code>&amp;bt BT_SEL 4</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;none</code></td>
@@ -3141,7 +2979,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 <td>&amp;out OUT_USB</td>
 <td></td>
 <td></td>
@@ -3154,7 +2991,6 @@
 <td>pos 12<br><code>&amp;none</code></td>
 <td>pos 13<br><code>&amp;none</code></td>
 <td>pos 14<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 15<br><code>&amp;none</code></td>
@@ -3177,7 +3013,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 3</td>
@@ -3188,7 +3023,6 @@
 <td>pos 24<br><code>&amp;out OUT_BLE</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;none</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -3209,7 +3043,6 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr style="background-color:#fff3cd">
 <td>Row 4</td>
@@ -3220,10 +3053,9 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
@@ -3241,9 +3073,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-<tr class="layer-row"><th colspan="14">VIM_VISUAL_BASE レイヤー</th></tr>
+<tr class="layer-row"><th colspan="13">VIM_VISUAL_BASE レイヤー</th></tr>
 <tr style="background-color:#fff3cd">
 <td>Row 1</td>
 <td>pos 0<br><code>&amp;none</code></td>
@@ -3251,7 +3082,6 @@
 <td>pos 2<br><code>&amp;kp LS(LC(RIGHT))</code></td>
 <td>pos 3<br><code>&amp;none</code></td>
 <td>pos 4<br><code>&amp;none</code></td>
-<td></td>
 <td></td>
 <td></td>
 <td>pos 5<br><code>&amp;macro_vim_visual_y</code></td>
@@ -3265,7 +3095,6 @@
 <td></td>
 <td>&amp;kp LS(LC(RIGHT))</td>
 <td>&amp;kp LS(LC(RIGHT))</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -3285,7 +3114,6 @@
 <td>pos 14<br><code>&amp;mm_vim_visual_g</code></td>
 <td></td>
 <td></td>
-<td></td>
 <td>pos 15<br><code>&amp;kp LS(LEFT)</code></td>
 <td>pos 16<br><code>&amp;kp LS(DOWN)</code></td>
 <td>pos 17<br><code>&amp;kp LS(UP)</code></td>
@@ -3299,7 +3127,6 @@
 <td>macro_vim_visual_cut</td>
 <td></td>
 <td><span class="ml">mm_vim_visual_g[0]<br>▸ td_vim_visual_g[0]<br>▸ &amp;none</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td>&amp;kp LS(LEFT)</td>
@@ -3317,7 +3144,6 @@
 <td><span class="ml">mm_vim_visual_g[0]<br>▸ td_vim_visual_g[1]<br>▸ &amp;kp LS(LC(HOME))</span></td>
 <td></td>
 <td></td>
-<td></td>
 <td>〃</td>
 <td>〃</td>
 <td>〃</td>
@@ -3331,7 +3157,6 @@
 <td>〃</td>
 <td></td>
 <td><span class="ml">mm_vim_visual_g[1]<br>▸ &amp;kp LS(LC(END))</span></td>
-<td></td>
 <td></td>
 <td></td>
 <td>〃</td>
@@ -3349,7 +3174,6 @@
 <td>pos 24<br><code>&amp;kp LS(LC(LEFT))</code></td>
 <td>pos 25<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 38<br><code>&amp;none</code></td>
 <td>pos 26<br><code>&amp;kp F3</code></td>
 <td>pos 27<br><code>&amp;none</code></td>
 <td>pos 28<br><code>&amp;none</code></td>
@@ -3363,7 +3187,6 @@
 <td></td>
 <td>macro_vim_visual_exit</td>
 <td>&amp;kp LS(LC(LEFT))</td>
-<td></td>
 <td></td>
 <td></td>
 <td>&amp;kp F3</td>
@@ -3381,16 +3204,14 @@
 <td>pos 35<br><code>&amp;none</code></td>
 <td>pos 36<br><code>&amp;none</code></td>
 <td></td>
-<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 37<br><code>&amp;none</code></td>
-<td></td>
-<td></td>
+<td>pos 38<br><code>&amp;none</code></td>
+<td>pos 39<br><code>&amp;none</code></td>
 <td>pos 40<br><code>&amp;none</code></td>
 <td>pos 41<br><code>&amp;none</code></td>
 </tr>
 <tr>
 <td>タップ</td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
