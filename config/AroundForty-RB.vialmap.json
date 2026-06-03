@@ -24,6 +24,6 @@
 
   "unmapped_keys": "passthrough",
 
-  "_comment_vil_emit_key_override": "一部の vial-gui ビルドはキーオーバーライドの .vil 取り込みでクラッシュする (KeyOverrideEntry が keycode を int 化し、表示が int を扱えない)。そのため .vil には KO を含めず、KO はファームウェアの EEPROM デフォルト (zmk_keymap_defaults.inc) で投入する。",
-  "vil_emit_key_override": false
+  "_comment_vil_emit_key_override": "キーオーバーライドのトリガーはキャリアのカスタムキーコード (QK_KB_3.. = USER03..) を使うため、vial.json でそれらを定義したファームウェア (vial-qmk-kq-mini PR #4) が必要。そのファームウェア前提で .vil にキーオーバーライドを含める。未対応ファームウェアの場合は false にして EEPROM デフォルト (.inc) から投入する。",
+  "vil_emit_key_override": true
 }

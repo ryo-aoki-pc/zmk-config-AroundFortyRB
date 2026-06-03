@@ -132,8 +132,9 @@
 
 ### vial.json customKeycodes 追記用スニペット
 
-Vial GUI 上でキャリアに名前を表示するには、vial.json の `customKeycodes` 配列に
-以下を追記してください (既存の3エントリの後ろに):
+これらのキャリアはファームウェアの `vial.json` の `customKeycodes` で定義が必要です。
+未定義のファームウェアでは Vial GUI がキャリアを解決できず、`.vil` の
+キーオーバーライド取り込み時にクラッシュします (`argument of type 'int' is not iterable`)。以下を `customKeycodes` 配列に追記してください (既存の3エントリの後ろに):
 
 ```json
 [
@@ -204,8 +205,4 @@ vial-gui の取り込み経路を通らないため、GUI のバージョン差�
 
 `File → Load saved layout...` で生成された `.vil` を読み込みます
 (Quantizer Mini を接続した状態で)。
-レイヤー・マクロ・タップダンスが書き込まれます。
-
-> ⚠️ **キーオーバーライドはこの `.vil` には含めていません** (`vil_emit_key_override: false`)。
-> 一部の vial-gui ビルドはキーオーバーライドの取り込みに失敗し (`argument of type 'int' is not iterable`)、
-> クラッシュするためです。キーオーバーライド (モッドモーフ変換) は方法A (ファームウェア EEPROM デフォルト) で投入してください。
+レイヤー・マクロ・タップダンス・キーオーバーライドが書き込まれます。
