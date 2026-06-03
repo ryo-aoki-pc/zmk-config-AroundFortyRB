@@ -86,10 +86,10 @@
 
 | Vial | ZMK | 1打 | 2打 | term |
 |---|---|---|---|---|
-| TD(0) | td_vim_d | KC_NO | QK_MACRO_0 | 150ms |
-| TD(1) | td_vim_y | KC_NO | QK_MACRO_1 | 150ms |
-| TD(2) | td_vim_g | KC_NO | LCTL(KC_HOME) | 150ms |
-| TD(3) | td_vim_visual_g | KC_NO | LSFT(LCTL(KC_HOME)) | 150ms |
+| TD(0) | td_vim_d | KC_NO | QK_MACRO_0 | 200ms |
+| TD(1) | td_vim_y | KC_NO | QK_MACRO_1 | 200ms |
+| TD(2) | td_vim_g | KC_NO | LCTL(KC_HOME) | 200ms |
+| TD(3) | td_vim_visual_g | KC_NO | LSFT(LCTL(KC_HOME)) | 200ms |
 
 ## キーオーバーライド (モッドモーフ変換)
 

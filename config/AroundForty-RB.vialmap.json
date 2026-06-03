@@ -18,6 +18,7 @@
   "layout_options": 1,
 
   "tapping_term_ms": 150,
+  "tap_dance_tapping_term_ms": 200,
   "settings": {
     "22": 1
   },
