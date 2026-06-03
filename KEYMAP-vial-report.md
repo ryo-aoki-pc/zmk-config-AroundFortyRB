@@ -196,10 +196,14 @@
 ### 方法A: ファームウェア組込 (推奨・確実)
 
 生成された `.inc` を vial-qmk の
-`keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/` に配置し、keymap.c の末尾で
-`#include` してビルド・書き込みます。EEPROM (再)初期化時に、レイヤー・マクロ・
-タップダンス・**キーオーバーライド**を含む全設定が EEPROM に直接書き込まれます。
-vial-gui の取り込み経路を通らないため、GUI のバージョン差異の影響を受けません。
+`keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/` に配置し、keymap.c に組み込みます
+(`.inc` 冒頭のコメント参照: ① `void zmk_keymap_apply_if_outdated(void);` を前方宣言、
+② `keyboard_post_init_user()` の末尾で呼び出し、③ ファイル末尾で `#include`)。
+
+**ビルドして書き込むだけで**、レイヤー・マクロ・タップダンス・**キーオーバーライド**を
+含む全設定が次回起動時に EEPROM へ自動適用されます (キーマップ内容のハッシュを保存し、
+変更を検出したときだけ適用するため、その後の Vial 編集は保持されます)。
+vial-gui の取り込み経路を通らないため、GUI のバージョン差異の影響も受けません。
 
 ### 方法B: Vial GUI で .vil を読み込む
 
