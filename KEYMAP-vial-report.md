@@ -192,8 +192,20 @@ Vial GUI 上でキャリアに名前を表示するには、vial.json の `custo
 
 ## 使い方
 
-1. **Vial GUI**: `File → Load saved layout...` で生成された `.vil` を読み込む
-   (Quantizer Mini を接続した状態で)。レイヤー・マクロ・タップダンス・キーオーバーライドが書き込まれます。
-2. **ファームウェア組込 (任意)**: 生成された `.inc` を vial-qmk の
-   `keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/` に配置し、keymap.c の末尾で
-   `#include` してビルドすると、EEPROM リセット時のデフォルトとして同じ内容が適用されます。
+### 方法A: ファームウェア組込 (推奨・確実)
+
+生成された `.inc` を vial-qmk の
+`keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/` に配置し、keymap.c の末尾で
+`#include` してビルド・書き込みます。EEPROM (再)初期化時に、レイヤー・マクロ・
+タップダンス・**キーオーバーライド**を含む全設定が EEPROM に直接書き込まれます。
+vial-gui の取り込み経路を通らないため、GUI のバージョン差異の影響を受けません。
+
+### 方法B: Vial GUI で .vil を読み込む
+
+`File → Load saved layout...` で生成された `.vil` を読み込みます
+(Quantizer Mini を接続した状態で)。
+レイヤー・マクロ・タップダンスが書き込まれます。
+
+> ⚠️ **キーオーバーライドはこの `.vil` には含めていません** (`vil_emit_key_override: false`)。
+> 一部の vial-gui ビルドはキーオーバーライドの取り込みに失敗し (`argument of type 'int' is not iterable`)、
+> クラッシュするためです。キーオーバーライド (モッドモーフ変換) は方法A (ファームウェア EEPROM デフォルト) で投入してください。
