@@ -53,7 +53,7 @@
 | 28 | `&kp COMMA` | (7, 6) |
 | 29 | `&kp PERIOD` | (7, 7) |
 | 30 | `&mt RIGHT_SHIFT SLASH` | (8, 0) |
-| 31 | `&mo 6 → KC_APPLICATION (設定による割当)` | (13, 5) |
+| 31 | `&mo 6 → KC_GRAVE (設定による割当)` | (7, 5) |
 | 32 | `&kp LEFT_WIN` | (0, 3) |
 | 33 | `&kp LEFT_ALT` | (0, 2) |
 | 34 | `&lt 2 SPACE` | (6, 4) |
@@ -62,8 +62,8 @@
 | 37 | `&lt 1 ENTER` | (6, 0) |
 | 38 | `&mo 7 (マップ対象外)` | — |
 | 39 | `&mo 2 → KC_CAPS_LOCK (設定による割当)` | (8, 1) |
-| 40 | `&mo 6 → KC_APPLICATION (設定による割当)` | (13, 5) |
-| 41 | `&mo 6 → KC_APPLICATION (設定による割当)` | (13, 5) |
+| 40 | `&mo 6 → KC_GRAVE (設定による割当)` | (7, 5) |
+| 41 | `&mo 6 → KC_GRAVE (設定による割当)` | (7, 5) |
 
 ## マクロ
 

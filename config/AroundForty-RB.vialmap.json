@@ -7,7 +7,7 @@
   "identityless_positions": {
     "&mo SYM": "RIGHT_ALT",
     "&mo VIM_BASE": "CAPS_LOCK",
-    "&mo FUNC": "APPLICATION",
+    "&mo FUNC": "GRAVE",
     "&mo BT": null
   },
 
