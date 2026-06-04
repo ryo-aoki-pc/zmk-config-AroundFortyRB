@@ -11,14 +11,14 @@ https://htmlpreview.github.io/?https://github.com/ryo-aoki-pc/zmk-config-AroundF
 ## Vial キーマップへの変換 (Keyboard Quantizer Mini)
 
 このキーマップを [Keyboard Quantizer Mini](https://github.com/ryo-aoki-pc/vial-qmk-kq-mini)
-(USB キーボードコンバーター) 上で再現するための Vial キーマップを、
+(USB キーボードコンバーター) 上で再現するため、
 [zmk-keymap-docgen の zmk_to_vial.py](https://github.com/ryo-aoki-pc/zmk-keymap-docgen)
-で自動生成しています。
+でファームウェアの EEPROM デフォルト (`.inc`) を生成し、上記リポジトリに同梱しています
+(フラッシュするだけで適用されます)。変換後の Vial キーマップは同リポジトリの
+`KEYMAP.html` で物理レイアウト表示として確認できます。
 
 | ファイル | 用途 |
 |---------|------|
-| [KEYMAP.vil](KEYMAP.vil) | Vial GUI の `File → Load saved layout...` で読み込む (Quantizer Mini 接続状態で) |
-| [KEYMAP-vial-report.md](KEYMAP-vial-report.md) | 変換内容のレポート (キー配置・マクロ・キーオーバーライド一覧) |
 | `config/AroundForty-RB.vialmap.json` | 変換設定 (除外レイヤー・レイヤーキーの物理キー割当など) |
 
 ### レイヤーキーの割当 (US 配列)
@@ -37,11 +37,11 @@ BASE レイヤーでキーコードを持たないレイヤーキーは、接続
 
 ```sh
 # zmk-keymap-docgen をクローンした場所を指定して実行
+# 本来の出力はファームウェア用の .inc。.vil / レポートは一時ファイルへ出力する。
 python3 ../zmk-keymap-docgen/zmk_to_vial.py config/AroundForty-RB.keymap \
     -m config/AroundForty-RB.vialmap.json \
-    --vil KEYMAP.vil \
-    --report KEYMAP-vial-report.md \
-    --inc ../vial-qmk-kq-mini/keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/zmk_keymap_defaults.inc
+    --inc ../vial-qmk-kq-mini/keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/zmk_keymap_defaults.inc \
+    --vil /tmp/AroundForty-RB.vil --report /tmp/AroundForty-RB_vial_report.md
 ```
 
 ## 命名規則（カスタムビヘイビア）
