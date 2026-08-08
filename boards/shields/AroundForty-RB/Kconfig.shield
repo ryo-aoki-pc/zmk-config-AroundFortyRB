@@ -1,5 +1,5 @@
-config SHIELD_ARROUNDFORTY_RB_R
+config SHIELD_AROUNDFORTY_RB_R
     def_bool $(shields_list_contains,AroundForty-RB_R)
 
-config SHIELD_ARROUNDFORTY_RB_L
+config SHIELD_AROUNDFORTY_RB_L
     def_bool $(shields_list_contains,AroundForty-RB_L)
