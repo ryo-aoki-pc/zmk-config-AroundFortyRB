@@ -1,22 +1,10 @@
-if SHIELD_AROUNDFORTY_RB_R
+if SHIELD_AROUNDFORTY_RB_L || SHIELD_AROUNDFORTY_RB_R
+    config ZMK_KEYBOARD_NAME
+        default "AroundFortyRB"
 
-config ZMK_KEYBOARD_NAME
-    default "AroundFortyRB"
+    config ZMK_SPLIT
+        default y
 
-config ZMK_SPLIT
-    default y
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
-endif
-
-if SHIELD_AROUNDFORTY_RB_L
-
-config ZMK_KEYBOARD_NAME
-    default "AroundFortyRB"
-
-config ZMK_SPLIT
-    default y
-
+    config ZMK_POINTING
+        default y
 endif
