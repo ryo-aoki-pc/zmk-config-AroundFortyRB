@@ -4,5 +4,9 @@ name: AroundForty-RB
 type: shield
 url: https://github.com/razilyis/zmk-config-AroundForty-RB
 requires: [seeeduino_xiao_ble]
+siblings:
+  - AroundForty-RB_L
+  - AroundForty-RB_R
 features:
   - keys
+  - pointer
