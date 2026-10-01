@@ -8,6 +8,9 @@ manifest:
     # RGB Widgetモジュール
     - name: caksoylar
       url-base: https://github.com/caksoylar
+    # カーソルの加速モジュール
+    - name: ryo-aoki-pc
+      url-base: https://github.com/ryo-aoki-pc
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -19,5 +22,15 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3
+    # トラックボールのレポートを BLE で送る間隔をまとめる入力プロセッサ (AroundForty-RB_R.overlay の trackball_rate_limit)。
+    # main (b056cb1 以降) は ZMK v0.3.0 に無い zmk_endpoint_get_selected() を使うため、
+    # v0.3.0 にある zmk_endpoints_selected() を使う最後のコミットに固定する (KUKEY42 と同じ)
+    - name: zmk-input-processor-report-rate-limit
+      remote: badjeff
+      revision: f43f37aae7aaa7bf0ec4d432683b873a7e3a8efa
+    # トラックボールの速さに応じてカーソルに倍率を掛ける入力プロセッサ (AroundForty-RB_R.overlay の trackball_accel)
+    - name: zmk-input-processor-xy-accel
+      remote: ryo-aoki-pc
+      revision: a5233f76a88b369dfebc37371f8244c89df2d0d4
   self:
     path: config
