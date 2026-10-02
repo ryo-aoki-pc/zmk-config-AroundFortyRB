@@ -8,41 +8,12 @@ Around Forty RBのファームウェアです。
 
 https://htmlpreview.github.io/?https://github.com/ryo-aoki-pc/zmk-config-AroundFortyRB/blob/custom/KEYMAP.html
 
-## Vial キーマップへの変換 (Keyboard Quantizer Mini)
+## Keyboard Quantizer Mini (Vial) のキーマップ
 
-このキーマップを [Keyboard Quantizer Mini](https://github.com/ryo-aoki-pc/vial-qmk-kq-mini)
-(USB キーボードコンバーター) 上で再現するため、
-[zmk-keymap-docgen の zmk_to_vial.py](https://github.com/ryo-aoki-pc/zmk-keymap-docgen)
-でファームウェアの EEPROM デフォルト (`.inc`) を生成し、上記リポジトリに同梱しています
-(フラッシュするだけで適用されます)。変換後の Vial キーマップは同リポジトリの
-`KEYMAP.html` で物理レイアウト表示として確認できます。
-
-| ファイル | 用途 |
-|---------|------|
-| `config/AroundForty-RB.vialmap.json` | 変換設定 (除外レイヤー・レイヤーキーの物理キー割当など) |
-
-### レイヤーキーの割当 (US 配列)
-
-BASE レイヤーでキーコードを持たないレイヤーキーは、接続したキーボードの以下のキーに割り当てています
-(`config/AroundForty-RB.vialmap.json` で変更可能):
-
-| ZMK | 接続キーボードのキー |
-|-----|--------------------|
-| `&mo SYM` (数字・記号レイヤー) | 右 Alt |
-| `&mo VIM_BASE` (Vim ノーマルモード) | CapsLock |
-| `&mo FUNC` (ファンクションレイヤー) | Menu / Application |
-| `&mo BT` (Bluetooth レイヤー) | 割当なし (Quantizer では不要) |
-
-### 再生成方法
-
-```sh
-# zmk-keymap-docgen をクローンした場所を指定して実行
-# 本来の出力はファームウェア用の .inc。.vil / レポートは一時ファイルへ出力する。
-python3 ../zmk-keymap-docgen/zmk_to_vial.py config/AroundForty-RB.keymap \
-    -m config/AroundForty-RB.vialmap.json \
-    --inc ../vial-qmk-kq-mini/keyboards/sekigon/keyboard_quantizer/mini/keymaps/vial/zmk_keymap_defaults.inc \
-    --vil /tmp/AroundForty-RB.vil --report /tmp/AroundForty-RB_vial_report.md
-```
+[Keyboard Quantizer Mini](https://github.com/ryo-aoki-pc/vial-qmk-kq-mini) の EEPROM デフォルトは、
+このリポジトリではなく基準の [zmk-config-LisM](https://github.com/ryo-aoki-pc/zmk-config-LisM) のキーマップ
+(`config/lism.keymap` + `config/lism.vialmap.json`) から生成しています。変換の設定と再生成の方法は
+zmk-config-LisM の README を参照してください。
 
 ## 命名規則（カスタムビヘイビア）
 
