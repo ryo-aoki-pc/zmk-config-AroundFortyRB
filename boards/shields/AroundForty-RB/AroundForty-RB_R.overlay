@@ -19,17 +19,6 @@
 };
 
 / {
-    /* スクロール方向をいつでも反転できるようにするための設定 */
-    /* 反転させたい場合は compatible を "zmk,input_processor_xy_to_scroll" に変え、*/
-    /* 下の scroll-layer のマッパー参照先を &zip_xy_to_scroll_mapper_tune に変更してください */
-    zip_xy_to_scroll_mapper_tune: zip_xy_to_scroll_mapper_tune {
-        compatible = "zmk,input_processor_xy_to_scroll";
-        #input-processor-cells = <0>;
-        /* 必要に応じてコメントを外して反転 */
-        // scroll-y-invert;
-        // scroll-x-invert;
-    };
-
     // カーソルの加速 (zmk-input-processor-xy-accel)。LisM と同じ値。ボールを転がす速さ (カウント/秒) に
     // 応じて移動量に倍率 (1000 = 等倍) を掛ける。速さ 0 で min-factor、speed-threshold で等倍、
     // speed-max 以上で max-factor になり、その間は直線で補間する。ゆっくり動かしたときは
@@ -86,6 +75,7 @@
         scroll-layer {
             layers = <9>;
             input-processors =
+                <&zip_temp_layer 8 10000>,  // 8 = MOUS (スクロール中も MOUS を維持する)
                 <&zip_xy_to_scroll_mapper>,
                 <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
                 <&zip_scroll_scaler 1 32>;
@@ -132,7 +122,6 @@
         y-input-code = <INPUT_REL_Y>;
         cpi = <800>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        force-awake;
     };
 };
 

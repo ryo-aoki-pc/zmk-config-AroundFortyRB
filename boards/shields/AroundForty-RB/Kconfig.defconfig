@@ -2,6 +2,9 @@ if SHIELD_AROUNDFORTY_RB_L || SHIELD_AROUNDFORTY_RB_R
     config ZMK_KEYBOARD_NAME
         default "AroundFortyRB"
 
+    config NFCT_PINS_AS_GPIOS
+        default y
+
     config ZMK_SPLIT
         default y
 
